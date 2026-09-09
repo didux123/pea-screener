@@ -172,7 +172,7 @@ def test_rapports_ecrits(base, cfg):
     run_id = R.persist_run(base, run_screen(A.load_pit(base, AS_OF), overrides_path=cfg.overrides_path), cfg)
     chemins = write_reports(base, run_id, cfg)
     noms = {c.name for c in chemins}
-    assert noms == {"ranking.csv", "excluded.csv", "coverage.csv", "ranking.html"}
+    assert noms == {"ranking.csv", "excluded.csv", "coverage.csv", "ranking.html", "data.json"}
     for chemin in chemins:
         assert chemin.is_file() and chemin.stat().st_size > 0
     html = (cfg.reports_dir / "latest" / "ranking.html").read_text(encoding="utf-8")
@@ -180,6 +180,46 @@ def test_rapports_ecrits(base, cfg):
     assert "non_eligible_pea" in html          # les raisons d'exclusion sont visibles
     assert str(AS_OF) in html
     assert (cfg.reports_dir / "index.html").is_file()
+
+
+def test_export_pour_l_interface(base, cfg):
+    """Le fichier data.json est un contrat : noms de champs fixes, absence codée en null."""
+    import json
+
+    from pea.screen.report import write_reports
+
+    run_id = R.persist_run(base, run_screen(A.load_pit(base, AS_OF), overrides_path=cfg.overrides_path), cfg)
+    write_reports(base, run_id, cfg)
+    payload = json.loads((cfg.reports_dir / "latest" / "data.json").read_text(encoding="utf-8"))
+
+    assert payload["as_of"] == AS_OF.isoformat()
+    assert payload["regime"] == "live"
+    assert payload["univers"]["examinees"] == 12
+    assert payload["derniere_information_utilisee"] <= AS_OF.isoformat()
+
+    valeur = payload["valeurs"][0]
+    assert valeur["rang"] == 1
+    assert set(valeur["blocs"]) == {
+        "croissance_qualite", "momentum", "valorisation", "bilan", "consensus"
+    }
+    assert "ve_sur_resultat_op" in valeur["metriques"]
+    assert valeur["metriques"]["ve_sur_resultat_op"]["classe_dans_le_secteur"] is True
+    assert valeur["metriques"]["marge_operationnelle"]["unite"] == "pourcent"
+
+    # Une donnée absente vaut null, jamais zéro : c'est la règle la plus importante.
+    manquantes = [
+        m for m in valeur["metriques"].values() if m["valeur"] is None
+    ]
+    assert all(m["valeur"] is None for m in manquantes)
+    assert isinstance(valeur["champs_manquants"], list)
+    assert valeur["dossier"] is None            # les dossiers arrivent au lot 2
+
+    # Les valeurs écartées portent leurs raisons.
+    assert payload["ecartees"] and payload["ecartees"][0]["raisons"]
+    assert payload["raisons_exclusion"][0]["valeurs"] >= 1
+    # La couverture est triée du champ le moins renseigné au plus renseigné.
+    presents = [c["present"] for c in payload["couverture_par_champ"]]
+    assert presents == sorted(presents)
 
 
 def test_rapport_reconstitue_porte_l_avertissement(base, cfg):

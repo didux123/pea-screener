@@ -1,0 +1,3388 @@
+{
+ "genere_le": "2026-09-09T12:10:23Z",
+ "as_of": "2026-09-09",
+ "regime": "live",
+ "survivorship_complete": true,
+ "version_code": "01770fd-dirty",
+ "derniere_information_utilisee": "2026-09-09",
+ "derniere_recuperation_utilisee": "2026-09-08T00:00:00Z",
+ "univers": {
+  "examinees": 60,
+  "classees": 24,
+  "ecartees": 36
+ },
+ "couverture_moyenne": 1.0,
+ "valeurs": [
+  {
+   "rang": 1,
+   "decile": 1,
+   "isin": "FR0000000001",
+   "ticker": "S1.PA",
+   "nom": "BELVEDER GROUP",
+   "secteur": "Industrials",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 78.92361111111111,
+   "blocs": {
+    "croissance_qualite": 84.72222222222221,
+    "momentum": 68.75,
+    "valorisation": 90.97222222222221,
+    "bilan": 66.66666666666667,
+    "consensus": 72.22222222222223
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.27203930429332046,
+     "percentile": 89.58333333333333,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.2969818390931016,
+     "percentile": 89.58333333333333,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.250769337355538,
+     "percentile": 77.08333333333333,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.014194490793709741,
+     "percentile": 77.08333333333333,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.2006154698844304,
+     "percentile": 77.08333333333333,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 1.2845196938789305,
+     "percentile": 97.91666666666667,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.42232093503702717,
+     "percentile": 77.08333333333333,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.10599915757286715,
+     "percentile": 72.91666666666667,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.08681740636429702,
+     "percentile": 56.25,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 20.382387152889645,
+     "percentile": 89.58333333333333,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.0438413665938684,
+     "percentile": 93.75,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 29.299262173514958,
+     "percentile": 89.58333333333333,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.7525549570846791,
+     "percentile": 72.91666666666667,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 62.6923343388845,
+     "percentile": 77.08333333333333,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.013713541300931517,
+     "percentile": 47.22222222222222,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 1.25,
+     "percentile": 97.22222222222223,
+     "unite": "ratio"
+    }
+   },
+   "cours": 155.15978443748028,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 7990728898.530234,
+   "valeur_entreprise_eur": 8417683344.663305,
+   "capitaux_echanges_3m_eur": 33417991.195232447,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 2,
+   "decile": 1,
+   "isin": "FR0000000023",
+   "ticker": "S23.PA",
+   "nom": "XANTHE GROUP",
+   "secteur": "Consumer Cyclical",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 74.54861111111111,
+   "blocs": {
+    "croissance_qualite": 73.6111111111111,
+    "momentum": 81.25,
+    "valorisation": 86.80555555555556,
+    "bilan": 72.22222222222223,
+    "consensus": 38.888888888888886
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.2133402825793853,
+     "percentile": 77.08333333333333,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.2371318290513127,
+     "percentile": 77.08333333333333,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.22355962257825018,
+     "percentile": 68.75,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.012654318259146258,
+     "percentile": 68.75,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.17884769806260015,
+     "percentile": 68.75,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 1.0631813808341413,
+     "percentile": 81.25,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.3722403597140167,
+     "percentile": 68.75,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.27703154378588124,
+     "percentile": 93.75,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.16546701121213636,
+     "percentile": 81.25,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 22.366158805781648,
+     "percentile": 85.41666666666667,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.03214896640342977,
+     "percentile": 89.58333333333333,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 33.070468502549346,
+     "percentile": 85.41666666666667,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.3652755271244189,
+     "percentile": 97.91666666666667,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 55.889905644562546,
+     "percentile": 68.75,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.04160332442852811,
+     "percentile": 75.0,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": -0.07692307692307693,
+     "percentile": 2.7777777777777777,
+     "unite": "ratio"
+    }
+   },
+   "cours": 135.49210182782687,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 6977843244.133084,
+   "valeur_entreprise_eur": 7146281026.900664,
+   "capitaux_echanges_3m_eur": 30570296.786465213,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 3,
+   "decile": 2,
+   "isin": "FR0000000045",
+   "ticker": "S45.PA",
+   "nom": "VERVEINE SA",
+   "secteur": "Energy",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 70.1388888888889,
+   "blocs": {
+    "croissance_qualite": 77.08333333333334,
+    "momentum": 29.86111111111111,
+    "valorisation": 97.91666666666667,
+    "bilan": 80.55555555555556,
+    "consensus": 80.55555555555556
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.20845695876180148,
+     "percentile": 72.91666666666667,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.232152751530327,
+     "percentile": 72.91666666666667,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.3153073619525793,
+     "percentile": 97.91666666666667,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.017847586525617742,
+     "percentile": 97.91666666666667,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.25224588956206345,
+     "percentile": 97.91666666666667,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.7633882219912353,
+     "percentile": 22.916666666666668,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.15612629753138108,
+     "percentile": 47.916666666666664,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": -0.022124169481458233,
+     "percentile": 22.916666666666668,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": -0.014999066980304399,
+     "percentile": 18.75,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 11.320709469113984,
+     "percentile": 97.91666666666667,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.04671335731282543,
+     "percentile": 97.91666666666667,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 16.34196867673312,
+     "percentile": 97.91666666666667,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.37639712337597936,
+     "percentile": 93.75,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 78.82684048814482,
+     "percentile": 97.91666666666667,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.04465678880776197,
+     "percentile": 80.55555555555556,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.6,
+     "percentile": 80.55555555555556,
+     "unite": "ratio"
+    }
+   },
+   "cours": 93.29605116792095,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 4804746635.147929,
+   "valeur_entreprise_eur": 5040197885.01057,
+   "capitaux_echanges_3m_eur": 17968045.53429637,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 4,
+   "decile": 2,
+   "isin": "FR0000000017",
+   "ticker": "S17.PA",
+   "nom": "RIVAGE GROUP",
+   "secteur": "Communication Services",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 62.88194444444445,
+   "blocs": {
+    "croissance_qualite": 62.5,
+    "momentum": 61.805555555555564,
+    "valorisation": 68.75,
+    "bilan": 65.27777777777779,
+    "consensus": 52.77777777777778
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.05606959315272797,
+     "percentile": 39.583333333333336,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.0767773279603694,
+     "percentile": 39.583333333333336,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.3007016500383119,
+     "percentile": 93.75,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.017020848115376186,
+     "percentile": 93.75,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.24056132003064953,
+     "percentile": 93.75,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.6826148403069134,
+     "percentile": 14.583333333333334,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.24958025880488544,
+     "percentile": 52.083333333333336,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.06561499003883742,
+     "percentile": 47.916666666666664,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.17561938655649167,
+     "percentile": 85.41666666666667,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 28.375897169717522,
+     "percentile": 72.91666666666667,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.016675067804750573,
+     "percentile": 60.416666666666664,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 40.93625575018308,
+     "percentile": 72.91666666666667,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.9913007767100148,
+     "percentile": 52.083333333333336,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 75.17541250957798,
+     "percentile": 93.75,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.02875671216764377,
+     "percentile": 58.333333333333336,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.21052631578947367,
+     "percentile": 47.22222222222222,
+     "unite": "ratio"
+    }
+   },
+   "cours": 148.73483396594054,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 7659843949.245937,
+   "valeur_entreprise_eur": 8040244056.525735,
+   "capitaux_echanges_3m_eur": 28697745.928210214,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 5,
+   "decile": 3,
+   "isin": "FR0000000055",
+   "ticker": "S55.PA",
+   "nom": "HESPERIA GROUP",
+   "secteur": "Energy",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 59.23611111111111,
+   "blocs": {
+    "croissance_qualite": 65.97222222222223,
+    "momentum": 34.02777777777778,
+    "valorisation": 77.08333333333333,
+    "bilan": 50.0,
+    "consensus": 72.22222222222223
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.24578402444688185,
+     "percentile": 85.41666666666667,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.2702117377084938,
+     "percentile": 85.41666666666667,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.20726733815054063,
+     "percentile": 60.416666666666664,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.011732113480219297,
+     "percentile": 60.416666666666664,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.16581387052043248,
+     "percentile": 60.416666666666664,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.9006281363312827,
+     "percentile": 43.75,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.05338612887909,
+     "percentile": 31.25,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": -0.021037268300591716,
+     "percentile": 27.083333333333332,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.047987213175076926,
+     "percentile": 43.75,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 26.193657268678415,
+     "percentile": 77.08333333333333,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.024073854227471898,
+     "percentile": 77.08333333333333,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 37.411048842504414,
+     "percentile": 77.08333333333333,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 1.0902863103410174,
+     "percentile": 39.583333333333336,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 51.81683453763516,
+     "percentile": 60.416666666666664,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.046784087907097996,
+     "percentile": 86.11111111111111,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.26666666666666666,
+     "percentile": 58.333333333333336,
+     "unite": "ratio"
+    }
+   },
+   "cours": 153.81521104953242,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 7921483369.05092,
+   "valeur_entreprise_eur": 8398671533.034865,
+   "capitaux_echanges_3m_eur": 34686130.455626026,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 6,
+   "decile": 3,
+   "isin": "FR0000000010",
+   "ticker": "S10.PA",
+   "nom": "KERLAN GROUP",
+   "secteur": "Technology",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 58.54166666666668,
+   "blocs": {
+    "croissance_qualite": 74.30555555555556,
+    "momentum": 25.694444444444446,
+    "valorisation": 82.6388888888889,
+    "bilan": 75.0,
+    "consensus": 20.833333333333332
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.09151521751041547,
+     "percentile": 60.416666666666664,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.11291798093553562,
+     "percentile": 60.416666666666664,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.2721239881455873,
+     "percentile": 85.41666666666667,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.015403244612014422,
+     "percentile": 85.41666666666667,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.21769919051646983,
+     "percentile": 85.41666666666667,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 1.004204384731193,
+     "percentile": 68.75,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.03981170054945471,
+     "percentile": 27.083333333333332,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.009435223946772764,
+     "percentile": 39.583333333333336,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": -0.05953396086468521,
+     "percentile": 10.416666666666666,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 23.832205605074996,
+     "percentile": 81.25,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.02860373159141572,
+     "percentile": 85.41666666666667,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 35.10746077034806,
+     "percentile": 81.25,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.4628304072225863,
+     "percentile": 89.58333333333333,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 68.03099703639681,
+     "percentile": 85.41666666666667,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.0025327093313317426,
+     "percentile": 19.444444444444443,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.0,
+     "percentile": 22.22222222222222,
+     "unite": "ratio"
+    }
+   },
+   "cours": 127.45491676459712,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 6563928213.376752,
+   "valeur_entreprise_eur": 6747400138.446096,
+   "capitaux_echanges_3m_eur": 26089843.265728164,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 7,
+   "decile": 3,
+   "isin": "FR0000000022",
+   "ticker": "S22.PA",
+   "nom": "WEXFORD GROUP",
+   "secteur": "Health Care",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 52.88194444444445,
+   "blocs": {
+    "croissance_qualite": 51.388888888888886,
+    "momentum": 34.02777777777778,
+    "valorisation": 61.80555555555555,
+    "bilan": 65.27777777777777,
+    "consensus": 75.0
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": -0.027821713883400823,
+     "percentile": 6.25,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": -0.008758945420813014,
+     "percentile": 6.25,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.27046650758562474,
+     "percentile": 81.25,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.015309424957676843,
+     "percentile": 81.25,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.21637320606849983,
+     "percentile": 81.25,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.9306034354822609,
+     "percentile": 52.083333333333336,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.0682783372251432,
+     "percentile": 35.416666666666664,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.008496093170990315,
+     "percentile": 35.416666666666664,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.003979435375108142,
+     "percentile": 31.25,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 37.94153253133699,
+     "percentile": 60.416666666666664,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.016699872365913363,
+     "percentile": 64.58333333333333,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 55.725182509882224,
+     "percentile": 60.416666666666664,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.83657513030005,
+     "percentile": 64.58333333333333,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 67.61662689640619,
+     "percentile": 81.25,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.03648491203967873,
+     "percentile": 63.888888888888886,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.6666666666666666,
+     "percentile": 86.11111111111111,
+     "unite": "ratio"
+    }
+   },
+   "cours": 142.05917501609977,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 7316047513.329138,
+   "valeur_entreprise_eur": 7543062599.064925,
+   "capitaux_echanges_3m_eur": 31701102.366676345,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 8,
+   "decile": 4,
+   "isin": "FR0000000050",
+   "ticker": "S50.PA",
+   "nom": "CORTALIS GROUP",
+   "secteur": "Technology",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 52.18749999999999,
+   "blocs": {
+    "croissance_qualite": 51.388888888888886,
+    "momentum": 31.25,
+    "valorisation": 64.58333333333333,
+    "bilan": 51.388888888888886,
+    "consensus": 83.33333333333334
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.15626819573338224,
+     "percentile": 64.58333333333333,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.17894065531275216,
+     "percentile": 64.58333333333333,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.20572048413945915,
+     "percentile": 56.25,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.01164455570600717,
+     "percentile": 56.25,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.16457638731156732,
+     "percentile": 56.25,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.6154833266049206,
+     "percentile": 10.416666666666666,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.006275571461746843,
+     "percentile": 22.916666666666668,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": -0.02506464408117326,
+     "percentile": 18.75,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.07947642481776285,
+     "percentile": 52.083333333333336,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 29.58204479587049,
+     "percentile": 68.75,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.01445052548385913,
+     "percentile": 56.25,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 42.59245293829624,
+     "percentile": 68.75,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 1.0648030011330718,
+     "percentile": 47.916666666666664,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 51.430121034864776,
+     "percentile": 56.25,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.062311803724364345,
+     "percentile": 97.22222222222223,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.5,
+     "percentile": 69.44444444444444,
+     "unite": "ratio"
+    }
+   },
+   "cours": 138.9645496216945,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 7156674305.517266,
+   "valeur_entreprise_eur": 7526873492.08786,
+   "capitaux_echanges_3m_eur": 24628189.33335498,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 9,
+   "decile": 4,
+   "isin": "FR0000000028",
+   "ticker": "S28.PA",
+   "nom": "ELVIRA GROUP",
+   "secteur": "Consumer Defensive",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 52.1388888888889,
+   "blocs": {
+    "croissance_qualite": 52.08333333333334,
+    "momentum": 65.97222222222221,
+    "valorisation": 50.69444444444445,
+    "bilan": 52.77777777777778,
+    "consensus": 20.0
+   },
+   "consensus_incomplet": true,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.046288823594033524,
+     "percentile": 31.25,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.06680477408788588,
+     "percentile": 31.25,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.23363487081098752,
+     "percentile": 72.91666666666667,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.013224615328923828,
+     "percentile": 72.91666666666667,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.18690789664878998,
+     "percentile": 72.91666666666667,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.8284641383510807,
+     "percentile": 31.25,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.5226448804783339,
+     "percentile": 89.58333333333333,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.08934158231452427,
+     "percentile": 68.75,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.03055259941985944,
+     "percentile": 39.583333333333336,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 43.77330720233046,
+     "percentile": 52.083333333333336,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.012951016286416697,
+     "percentile": 47.916666666666664,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 63.969044593048004,
+     "percentile": 52.083333333333336,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 1.12571748545634,
+     "percentile": 35.416666666666664,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 58.40871770274688,
+     "percentile": 72.91666666666667,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "ratio"
+    }
+   },
+   "cours": 175.6105769711292,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 9043944714.013155,
+   "valeur_entreprise_eur": 9371416064.804369,
+   "capitaux_echanges_3m_eur": 39221464.54605919,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [
+    "eps_rev_3m",
+    "net_revisions"
+   ],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 10,
+   "decile": 5,
+   "isin": "FR0000000012",
+   "ticker": "S12.PA",
+   "nom": "MISTRAL SA",
+   "secteur": "Health Care",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 51.54861111111111,
+   "blocs": {
+    "croissance_qualite": 52.77777777777777,
+    "momentum": 54.861111111111114,
+    "valorisation": 60.416666666666664,
+    "bilan": 52.77777777777778,
+    "consensus": 20.0
+   },
+   "consensus_incomplet": true,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.28455396306710634,
+     "percentile": 97.91666666666667,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.3097418891145627,
+     "percentile": 97.91666666666667,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.16015029610223414,
+     "percentile": 39.583333333333336,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.009065111100126477,
+     "percentile": 39.583333333333336,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.12812023688178728,
+     "percentile": 39.583333333333336,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.5884672842978084,
+     "percentile": 2.0833333333333335,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.3843864904250329,
+     "percentile": 72.91666666666667,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.0772242924793618,
+     "percentile": 56.25,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.013233012085074991,
+     "percentile": 35.416666666666664,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 30.74780911221284,
+     "percentile": 64.58333333333333,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.013093184614878546,
+     "percentile": 52.083333333333336,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 44.94454951999216,
+     "percentile": 64.58333333333333,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.7609322632343871,
+     "percentile": 68.75,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 40.037574025558534,
+     "percentile": 39.583333333333336,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "ratio"
+    }
+   },
+   "cours": 156.53490985082294,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 8061547857.317382,
+   "valeur_entreprise_eur": 8351479245.039624,
+   "capitaux_echanges_3m_eur": 34246174.39686716,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [
+    "eps_rev_3m",
+    "net_revisions"
+   ],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 11,
+   "decile": 5,
+   "isin": "FR0000000035",
+   "ticker": "S35.PA",
+   "nom": "LUMEN GROUP",
+   "secteur": "Energy",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 50.97222222222222,
+   "blocs": {
+    "croissance_qualite": 53.47222222222223,
+    "momentum": 64.58333333333333,
+    "valorisation": 38.194444444444436,
+    "bilan": 40.27777777777778,
+    "consensus": 44.44444444444444
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.08193618808316105,
+     "percentile": 52.083333333333336,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.10315112297654383,
+     "percentile": 52.083333333333336,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.19675105773655457,
+     "percentile": 52.083333333333336,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.01113685232471065,
+     "percentile": 52.083333333333336,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.15740084618924363,
+     "percentile": 52.083333333333336,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.984273858326711,
+     "percentile": 60.416666666666664,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.32803013538631687,
+     "percentile": 64.58333333333333,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.15507781791529984,
+     "percentile": 81.25,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.06359818993682564,
+     "percentile": 47.916666666666664,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 55.362078450184036,
+     "percentile": 35.416666666666664,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.012201820366614503,
+     "percentile": 43.75,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 80.6661488821611,
+     "percentile": 35.416666666666664,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 1.545445537731895,
+     "percentile": 18.75,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 49.18776443413864,
+     "percentile": 52.083333333333336,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.02529385526112632,
+     "percentile": 52.77777777777778,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.13333333333333333,
+     "percentile": 36.111111111111114,
+     "unite": "ratio"
+    }
+   },
+   "cours": 206.21093108961458,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 10619862951.11515,
+   "valeur_entreprise_eur": 11036917602.734543,
+   "capitaux_echanges_3m_eur": 39646868.57769917,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 12,
+   "decile": 5,
+   "isin": "FR0000000015",
+   "ticker": "S15.PA",
+   "nom": "PERCEVAL SA",
+   "secteur": "Energy",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 50.59027777777778,
+   "blocs": {
+    "croissance_qualite": 65.27777777777779,
+    "momentum": 13.194444444444445,
+    "valorisation": 61.805555555555564,
+    "bilan": 73.6111111111111,
+    "consensus": 47.22222222222222
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.005240025359915634,
+     "percentile": 18.75,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.02495107849329492,
+     "percentile": 18.75,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.2741157693782869,
+     "percentile": 89.58333333333333,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.015515986945940752,
+     "percentile": 89.58333333333333,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.21929261550262952,
+     "percentile": 89.58333333333333,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 1.1569268304005933,
+     "percentile": 85.41666666666667,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": -0.0841152726212705,
+     "percentile": 2.0833333333333335,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": -0.0689318148699346,
+     "percentile": 14.583333333333334,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": -0.006694360169545055,
+     "percentile": 22.916666666666668,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 39.781129092933014,
+     "percentile": 56.25,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.019544777918807835,
+     "percentile": 72.91666666666667,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 59.19365444860281,
+     "percentile": 56.25,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.49554923693252245,
+     "percentile": 81.25,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 68.52894234457173,
+     "percentile": 89.58333333333333,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": -0.01428965723065077,
+     "percentile": 2.7777777777777777,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 1.0,
+     "percentile": 91.66666666666667,
+     "unite": "ratio"
+    }
+   },
+   "cours": 169.0810658835978,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 8707674893.005287,
+   "valeur_entreprise_eur": 8861596755.8249,
+   "capitaux_echanges_3m_eur": 37867799.541328974,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 13,
+   "decile": 6,
+   "isin": "FR0000000056",
+   "ticker": "S56.PA",
+   "nom": "ISAMBRE GROUP",
+   "secteur": "Utilities",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 48.909722222222214,
+   "blocs": {
+    "croissance_qualite": 48.61111111111111,
+    "momentum": 89.58333333333333,
+    "valorisation": 15.972222222222221,
+    "bilan": 43.05555555555555,
+    "consensus": 20.0
+   },
+   "consensus_incomplet": true,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.02187949748100637,
+     "percentile": 27.083333333333332,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.04191682246072714,
+     "percentile": 27.083333333333332,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.173177697323116,
+     "percentile": 47.916666666666664,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.009802511169233002,
+     "percentile": 47.916666666666664,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.13854215785849275,
+     "percentile": 47.916666666666664,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 1.2585245552712583,
+     "percentile": 93.75,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.6434645488015305,
+     "percentile": 97.91666666666667,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.15430695159052643,
+     "percentile": 77.08333333333333,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.18105355093080377,
+     "percentile": 93.75,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 92.90802327937999,
+     "percentile": 10.416666666666666,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.009110758948769544,
+     "percentile": 27.083333333333332,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 138.1360831021908,
+     "percentile": 10.416666666666666,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 1.2328840707609205,
+     "percentile": 31.25,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 43.294424330778995,
+     "percentile": 47.916666666666664,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "ratio"
+    }
+   },
+   "cours": 261.8662455588913,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 13486111646.282902,
+   "valeur_entreprise_eur": 13735379359.67823,
+   "capitaux_echanges_3m_eur": 55393138.84733716,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [
+    "eps_rev_3m",
+    "net_revisions"
+   ],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 14,
+   "decile": 6,
+   "isin": "FR0000000040",
+   "ticker": "S40.PA",
+   "nom": "QUILLON GROUP",
+   "secteur": "Technology",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 47.52083333333333,
+   "blocs": {
+    "croissance_qualite": 44.444444444444436,
+    "momentum": 65.97222222222221,
+    "valorisation": 40.97222222222222,
+    "bilan": 52.77777777777777,
+    "consensus": 20.0
+   },
+   "consensus_incomplet": true,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.010583452003016136,
+     "percentile": 22.916666666666668,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.03039928067638553,
+     "percentile": 22.916666666666668,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.2186361157448107,
+     "percentile": 64.58333333333333,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.012375629193102505,
+     "percentile": 64.58333333333333,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.17490889259584855,
+     "percentile": 64.58333333333333,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.7903815643605144,
+     "percentile": 27.083333333333332,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.26328521566018415,
+     "percentile": 60.416666666666664,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.07948920969152629,
+     "percentile": 60.416666666666664,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.15395060775091052,
+     "percentile": 77.08333333333333,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 48.18985137405637,
+     "percentile": 39.583333333333336,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.011171148906669249,
+     "percentile": 39.583333333333336,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 70.75203911109371,
+     "percentile": 43.75,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 1.0759519252015235,
+     "percentile": 43.75,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 54.65902893620268,
+     "percentile": 64.58333333333333,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "ratio"
+    }
+   },
+   "cours": 163.7779662523486,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 8434565261.995953,
+   "valeur_entreprise_eur": 8699357009.47835,
+   "capitaux_echanges_3m_eur": 38924673.12471858,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [
+    "eps_rev_3m",
+    "net_revisions"
+   ],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 15,
+   "decile": 7,
+   "isin": "FR0000000014",
+   "ticker": "S14.PA",
+   "nom": "OMBRELLE GROUP",
+   "secteur": "Basic Materials",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 44.861111111111114,
+   "blocs": {
+    "croissance_qualite": 29.86111111111111,
+    "momentum": 85.41666666666667,
+    "valorisation": 18.75,
+    "bilan": 34.72222222222222,
+    "consensus": 58.33333333333333
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": -0.012134170139759815,
+     "percentile": 10.416666666666666,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.007236204467094387,
+     "percentile": 10.416666666666666,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.11394996729689594,
+     "percentile": 27.083333333333332,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.006449998148880906,
+     "percentile": 27.083333333333332,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.09115997383751674,
+     "percentile": 27.083333333333332,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 1.0378801700647728,
+     "percentile": 77.08333333333333,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.5294941049246411,
+     "percentile": 93.75,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.2148832222513668,
+     "percentile": 89.58333333333333,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.1352060137531803,
+     "percentile": 72.91666666666667,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 89.12285455621003,
+     "percentile": 18.75,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.00785844546428783,
+     "percentile": 18.75,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 132.07194409903948,
+     "percentile": 18.75,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 1.3763154841027194,
+     "percentile": 27.083333333333332,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 28.487491824223984,
+     "percentile": 27.083333333333332,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.011270519114483235,
+     "percentile": 41.666666666666664,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.5555555555555556,
+     "percentile": 75.0,
+     "unite": "ratio"
+    }
+   },
+   "cours": 148.82982453963203,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 7664735963.791049,
+   "valeur_entreprise_eur": 7832195900.748464,
+   "capitaux_echanges_3m_eur": 33968384.12796785,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 16,
+   "decile": 7,
+   "isin": "FR0000000048",
+   "ticker": "S48.PA",
+   "nom": "AURELIA SA",
+   "secteur": "Consumer Defensive",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 43.944444444444436,
+   "blocs": {
+    "croissance_qualite": 50.69444444444445,
+    "momentum": 64.58333333333333,
+    "valorisation": 25.694444444444443,
+    "bilan": 29.166666666666668,
+    "consensus": 20.0
+   },
+   "consensus_incomplet": true,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.2828677932768535,
+     "percentile": 93.75,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.3080226563925832,
+     "percentile": 93.75,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.08673196430916441,
+     "percentile": 14.583333333333334,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.00490935647033007,
+     "percentile": 14.583333333333334,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.06938557144733153,
+     "percentile": 14.583333333333334,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 1.0047737902591636,
+     "percentile": 72.91666666666667,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.5054920050313685,
+     "percentile": 85.41666666666667,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.06436038474119354,
+     "percentile": 43.75,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.10816033066184372,
+     "percentile": 64.58333333333333,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 75.87366155283391,
+     "percentile": 27.083333333333332,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.00897527096310559,
+     "percentile": 22.916666666666668,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 111.9491316072195,
+     "percentile": 27.083333333333332,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 1.3853382214859222,
+     "percentile": 22.916666666666668,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 21.682991077291103,
+     "percentile": 14.583333333333334,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "ratio"
+    }
+   },
+   "cours": 210.32679173871213,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 10831829774.543674,
+   "valeur_entreprise_eur": 11116804429.493145,
+   "capitaux_echanges_3m_eur": 42385718.28611895,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [
+    "eps_rev_3m",
+    "net_revisions"
+   ],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 17,
+   "decile": 8,
+   "isin": "FR0000000051",
+   "ticker": "S51.PA",
+   "nom": "DANUBE SA",
+   "secteur": "Industrials",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 42.46527777777778,
+   "blocs": {
+    "croissance_qualite": 31.944444444444443,
+    "momentum": 92.36111111111113,
+    "valorisation": 2.0833333333333335,
+    "bilan": 48.61111111111111,
+    "consensus": 29.166666666666668
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.0018327326767575425,
+     "percentile": 14.583333333333334,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.02147697457558162,
+     "percentile": 14.583333333333334,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.14293787346237977,
+     "percentile": 35.416666666666664,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.008090823026172422,
+     "percentile": 35.416666666666664,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.11435029876990381,
+     "percentile": 35.416666666666664,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.9781651352872048,
+     "percentile": 56.25,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.47978742502634564,
+     "percentile": 81.25,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.2970993426697959,
+     "percentile": 97.91666666666667,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.24898346691053264,
+     "percentile": 97.91666666666667,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 137.58980990361573,
+     "percentile": 2.0833333333333335,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.004740309226804333,
+     "percentile": 2.0833333333333335,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 206.35049075619744,
+     "percentile": 2.0833333333333335,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.9469263402058256,
+     "percentile": 60.416666666666664,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 35.73446836559495,
+     "percentile": 35.416666666666664,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.010711279575166505,
+     "percentile": 36.111111111111114,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.0,
+     "percentile": 22.22222222222222,
+     "unite": "ratio"
+    }
+   },
+   "cours": 304.23834598847486,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 15668274818.406456,
+   "valeur_entreprise_eur": 15820119881.849628,
+   "capitaux_echanges_3m_eur": 52195470.89272315,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 18,
+   "decile": 8,
+   "isin": "FR0000000057",
+   "ticker": "S57.PA",
+   "nom": "JONQUILLE SA",
+   "secteur": "Communication Services",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 40.06944444444444,
+   "blocs": {
+    "croissance_qualite": 39.583333333333336,
+    "momentum": 4.861111111111112,
+    "valorisation": 89.58333333333333,
+    "bilan": 31.944444444444446,
+    "consensus": 38.888888888888886
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.16496857643970197,
+     "percentile": 68.75,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.18781163573859794,
+     "percentile": 68.75,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.12223625062136975,
+     "percentile": 31.25,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.0069190330540397915,
+     "percentile": 31.25,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.0977890004970958,
+     "percentile": 31.25,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.608436562474943,
+     "percentile": 6.25,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": -0.0599661682612449,
+     "percentile": 10.416666666666666,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": -0.14391839371197512,
+     "percentile": 2.0833333333333335,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": -0.17763457074529765,
+     "percentile": 2.0833333333333335,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 18.30678317169505,
+     "percentile": 93.75,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.02495195694836622,
+     "percentile": 81.25,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 24.384322389382035,
+     "percentile": 93.75,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 1.6067479785186995,
+     "percentile": 14.583333333333334,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 30.559062655342437,
+     "percentile": 31.25,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.0025837080718151273,
+     "percentile": 25.0,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.25,
+     "percentile": 52.77777777777778,
+     "unite": "ratio"
+    }
+   },
+   "cours": 48.34746047532028,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 2489894214.4789944,
+   "valeur_entreprise_eur": 2830675379.021377,
+   "capitaux_echanges_3m_eur": 13518987.100191567,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 19,
+   "decile": 8,
+   "isin": "FR0000000006",
+   "ticker": "S6.PA",
+   "nom": "GARANCE SA",
+   "secteur": "Utilities",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 38.993055555555564,
+   "blocs": {
+    "croissance_qualite": 38.888888888888886,
+    "momentum": 35.416666666666664,
+    "valorisation": 50.69444444444445,
+    "bilan": 45.833333333333336,
+    "consensus": 18.055555555555557
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.08256572318979005,
+     "percentile": 56.25,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.10379300219962584,
+     "percentile": 56.25,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.07507760207665684,
+     "percentile": 10.416666666666666,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.004249675589244731,
+     "percentile": 10.416666666666666,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.06006208166132547,
+     "percentile": 10.416666666666666,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 1.253192629051469,
+     "percentile": 89.58333333333333,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": -0.053112467404598074,
+     "percentile": 14.583333333333334,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": -0.016609300221631207,
+     "percentile": 31.25,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.10607741085198863,
+     "percentile": 60.416666666666664,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 47.779505226163494,
+     "percentile": 43.75,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.01764854304831648,
+     "percentile": 68.75,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 71.00827675239815,
+     "percentile": 39.583333333333336,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.570924689549647,
+     "percentile": 77.08333333333333,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 18.76940051916421,
+     "percentile": 10.416666666666666,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": -0.0015537332157211474,
+     "percentile": 13.88888888888889,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.0,
+     "percentile": 22.22222222222222,
+     "unite": "ratio"
+    }
+   },
+   "cours": 69.3874133461945,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 3573451787.329017,
+   "valeur_entreprise_eur": 3641064960.0366197,
+   "capitaux_echanges_3m_eur": 13317257.233575515,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 20,
+   "decile": 9,
+   "isin": "FR0000000053",
+   "ticker": "S53.PA",
+   "nom": "FONTAINE GROUP",
+   "secteur": "Consumer Cyclical",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 36.04166666666667,
+   "blocs": {
+    "croissance_qualite": 39.583333333333336,
+    "momentum": 10.416666666666666,
+    "valorisation": 43.75,
+    "bilan": 41.666666666666664,
+    "consensus": 66.66666666666667
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.22017208616277584,
+     "percentile": 81.25,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.24409759272386777,
+     "percentile": 81.25,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.09750291519553436,
+     "percentile": 18.75,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.005519032935596274,
+     "percentile": 18.75,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.07800233215642749,
+     "percentile": 18.75,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.7320292104197468,
+     "percentile": 18.75,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": -0.07577415787373798,
+     "percentile": 6.25,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": -0.08605169208668706,
+     "percentile": 10.416666666666666,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": -0.04098724493044481,
+     "percentile": 14.583333333333334,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 46.03929493530231,
+     "percentile": 47.916666666666664,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.010825173657684718,
+     "percentile": 35.416666666666664,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 67.62286071042234,
+     "percentile": 47.916666666666664,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.9692395970825735,
+     "percentile": 56.25,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 24.375728798883593,
+     "percentile": 18.75,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.05226086879465547,
+     "percentile": 91.66666666666667,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.16666666666666666,
+     "percentile": 41.666666666666664,
+     "unite": "ratio"
+    }
+   },
+   "cours": 122.88771836541505,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 6328717495.818875,
+   "valeur_entreprise_eur": 6524671635.527121,
+   "capitaux_echanges_3m_eur": 27541669.794516828,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 21,
+   "decile": 9,
+   "isin": "FR0000000013",
+   "ticker": "S13.PA",
+   "nom": "NERVAL GROUP",
+   "secteur": "Consumer Cyclical",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 35.83333333333334,
+   "blocs": {
+    "croissance_qualite": 32.63888888888889,
+    "momentum": 65.97222222222223,
+    "valorisation": 13.194444444444445,
+    "bilan": 26.38888888888889,
+    "consensus": 26.38888888888889
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.06961520558578527,
+     "percentile": 43.75,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.09058854689501472,
+     "percentile": 43.75,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.09762100730437398,
+     "percentile": 22.916666666666668,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.0055257173945872096,
+     "percentile": 22.916666666666668,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.07809680584349918,
+     "percentile": 22.916666666666668,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.8968055912635567,
+     "percentile": 39.583333333333336,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.1127980928270722,
+     "percentile": 43.75,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.2073939640575191,
+     "percentile": 85.41666666666667,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.12608058539975397,
+     "percentile": 68.75,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 91.7761115160857,
+     "percentile": 14.583333333333334,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.0067595769944950495,
+     "percentile": 10.416666666666666,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 132.6718509152139,
+     "percentile": 14.583333333333334,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 3.074142414525686,
+     "percentile": 6.25,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 24.405251826093494,
+     "percentile": 22.916666666666668,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.006946643697691065,
+     "percentile": 30.555555555555557,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.0,
+     "percentile": 22.22222222222222,
+     "unite": "ratio"
+    }
+   },
+   "cours": 162.59220289025774,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 8373498448.848273,
+   "valeur_entreprise_eur": 8771333712.757061,
+   "capitaux_echanges_3m_eur": 28589961.07470054,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 22,
+   "decile": 10,
+   "isin": "FR0000000042",
+   "ticker": "S42.PA",
+   "nom": "SYLVAIN SA",
+   "secteur": "Health Care",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 33.09027777777778,
+   "blocs": {
+    "croissance_qualite": 25.0,
+    "momentum": 70.13888888888889,
+    "valorisation": 6.25,
+    "bilan": 47.22222222222223,
+    "consensus": 8.333333333333334
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.07572157388920986,
+     "percentile": 47.916666666666664,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.09681465073129147,
+     "percentile": 47.916666666666664,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.06969081773908191,
+     "percentile": 6.25,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.003944763268249926,
+     "percentile": 6.25,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.05575265419126552,
+     "percentile": 6.25,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.8864289939045594,
+     "percentile": 35.416666666666664,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.26240014941176293,
+     "percentile": 56.25,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.0837802549116522,
+     "percentile": 64.58333333333333,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": 0.17713411920081157,
+     "percentile": 89.58333333333333,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 109.87512555624357,
+     "percentile": 6.25,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.005365599473572081,
+     "percentile": 6.25,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 165.2059566262091,
+     "percentile": 6.25,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 0.4795450494799535,
+     "percentile": 85.41666666666667,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 17.422704434770477,
+     "percentile": 6.25,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": -0.001578100118415842,
+     "percentile": 8.333333333333334,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": -0.06666666666666667,
+     "percentile": 8.333333333333334,
+     "unite": "ratio"
+    }
+   },
+   "cours": 147.02714647754846,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 7571898043.593745,
+   "valeur_entreprise_eur": 7625814996.909727,
+   "capitaux_echanges_3m_eur": 23008070.427959453,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 23,
+   "decile": 10,
+   "isin": "FR0000000043",
+   "ticker": "S43.PA",
+   "nom": "TURQUOISE GROUP",
+   "secteur": "Consumer Cyclical",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 27.951388888888886,
+   "blocs": {
+    "croissance_qualite": 20.83333333333333,
+    "momentum": 32.63888888888889,
+    "valorisation": 20.13888888888889,
+    "bilan": 18.055555555555554,
+    "consensus": 66.66666666666666
+   },
+   "consensus_incomplet": false,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": 0.0494810242414192,
+     "percentile": 35.416666666666664,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": 0.07005956837956129,
+     "percentile": 35.416666666666664,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.025654500940057615,
+     "percentile": 2.0833333333333335,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.0014521415626447785,
+     "percentile": 2.0833333333333335,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.020523600752046088,
+     "percentile": 2.0833333333333335,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.9058536203708769,
+     "percentile": 47.916666666666664,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": -0.005298034284052067,
+     "percentile": 18.75,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": 0.06566614579616004,
+     "percentile": 52.083333333333336,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": -0.00011990336083711473,
+     "percentile": 27.083333333333332,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 85.24776074384685,
+     "percentile": 22.916666666666668,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.007503101856535033,
+     "percentile": 14.583333333333334,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 120.73055086969114,
+     "percentile": 22.916666666666668,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 3.884327087452547,
+     "percentile": 2.0833333333333335,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 6.413625235014403,
+     "percentile": 2.0833333333333335,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": 0.03946374025237685,
+     "percentile": 69.44444444444444,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": 0.4,
+     "percentile": 63.888888888888886,
+     "unite": "ratio"
+    }
+   },
+   "cours": 36.727706851296105,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 1891476902.8417494,
+   "valeur_entreprise_eur": 2022435432.370419,
+   "capitaux_echanges_3m_eur": 6993138.672981279,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [],
+   "drapeaux": [],
+   "dossier": null
+  },
+  {
+   "rang": 24,
+   "decile": 10,
+   "isin": "FR0000000020",
+   "ticker": "S20.PA",
+   "nom": "ULYSSE GROUP",
+   "secteur": "Technology",
+   "industrie": "Divers",
+   "pays": "France",
+   "place": "XPAR",
+   "score": 27.729166666666668,
+   "blocs": {
+    "croissance_qualite": 33.333333333333336,
+    "momentum": 17.36111111111111,
+    "valorisation": 31.25,
+    "bilan": 34.72222222222222,
+    "consensus": 20.0
+   },
+   "consensus_incomplet": true,
+   "metriques": {
+    "croissance_ca_3a": {
+     "valeur": -0.030279105900916314,
+     "percentile": 2.0833333333333335,
+     "unite": "pourcent"
+    },
+    "croissance_resultat_3a": {
+     "valeur": -0.011264522730800697,
+     "percentile": 2.0833333333333335,
+     "unite": "pourcent"
+    },
+    "marge_operationnelle": {
+     "valeur": 0.16229535075984325,
+     "percentile": 43.75,
+     "unite": "pourcent"
+    },
+    "tendance_marge_3a": {
+     "valeur": 0.009186529288293027,
+     "percentile": 43.75,
+     "unite": "points"
+    },
+    "rentabilite_capitaux": {
+     "valeur": 0.1298362806078746,
+     "percentile": 43.75,
+     "unite": "pourcent"
+    },
+    "conversion_tresorerie": {
+     "valeur": 0.9905309385253885,
+     "percentile": 64.58333333333333,
+     "unite": "ratio"
+    },
+    "momentum_12_1": {
+     "valeur": 0.1120735084469835,
+     "percentile": 39.583333333333336,
+     "unite": "pourcent"
+    },
+    "momentum_6_1": {
+     "valeur": -0.12963648459509347,
+     "percentile": 6.25,
+     "unite": "pourcent"
+    },
+    "ecart_moyenne_200j": {
+     "valeur": -0.1598263488113868,
+     "percentile": 6.25,
+     "unite": "pourcent"
+    },
+    "ve_sur_resultat_op": {
+     "valeur": 68.37597898832794,
+     "percentile": 31.25,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "rendement_flux_libre": {
+     "valeur": 0.00989481599272849,
+     "percentile": 31.25,
+     "unite": "pourcent",
+     "classe_dans_le_secteur": true
+    },
+    "cours_sur_benefice": {
+     "valeur": 100.1060493952905,
+     "percentile": 31.25,
+     "unite": "ratio",
+     "classe_dans_le_secteur": true
+    },
+    "dette_nette_sur_ebitda": {
+     "valeur": 1.6707072341302738,
+     "percentile": 10.416666666666666,
+     "unite": "ratio"
+    },
+    "couverture_interets": {
+     "valeur": 40.57383768996081,
+     "percentile": 43.75,
+     "unite": "ratio"
+    },
+    "dilution_3a": {
+     "valeur": 0.030000000000000027,
+     "percentile": 50.0,
+     "unite": "pourcent"
+    },
+    "revision_consensus_3m": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "pourcent"
+    },
+    "revisions_nettes": {
+     "valeur": null,
+     "percentile": 20.0,
+     "unite": "ratio"
+    }
+   },
+   "cours": 151.9751057014279,
+   "date_cours": "2026-09-09",
+   "capitalisation_eur": 7826717943.623537,
+   "valeur_entreprise_eur": 8095258909.171319,
+   "capitaux_echanges_3m_eur": 45012386.18328445,
+   "exercice_reference": "2025-12-31",
+   "anciennete_comptes_jours": 252,
+   "devise_comptes": "EUR",
+   "couverture": 1.0,
+   "champs_manquants": [],
+   "metriques_penalisees": [
+    "eps_rev_3m",
+    "net_revisions"
+   ],
+   "drapeaux": [],
+   "dossier": null
+  }
+ ],
+ "ecartees": [
+  {
+   "isin": "FR0000000000",
+   "nom": "AURELIA SA",
+   "secteur": "Technology",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000002",
+   "nom": "CORTALIS GROUP",
+   "secteur": "Health Care",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000003",
+   "nom": "DANUBE SA",
+   "secteur": "Consumer Cyclical",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000004",
+   "nom": "ELVIRA GROUP",
+   "secteur": "Basic Materials",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000005",
+   "nom": "FONTAINE GROUP",
+   "secteur": "Energy",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000007",
+   "nom": "HESPERIA GROUP",
+   "secteur": "Communication Services",
+   "raisons": [
+    "endettement_excessif"
+   ]
+  },
+  {
+   "isin": "FR0000000008",
+   "nom": "ISAMBRE GROUP",
+   "secteur": "Consumer Defensive",
+   "raisons": [
+    "endettement_excessif"
+   ]
+  },
+  {
+   "isin": "FR0000000009",
+   "nom": "JONQUILLE SA",
+   "secteur": "Financial Services",
+   "raisons": [
+    "secteur_exclu"
+   ]
+  },
+  {
+   "isin": "FR0000000011",
+   "nom": "LUMEN GROUP",
+   "secteur": "Industrials",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000016",
+   "nom": "QUILLON GROUP",
+   "secteur": "Utilities",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000018",
+   "nom": "SYLVAIN SA",
+   "secteur": "Consumer Defensive",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000019",
+   "nom": "TURQUOISE GROUP",
+   "secteur": "Financial Services",
+   "raisons": [
+    "secteur_exclu"
+   ]
+  },
+  {
+   "isin": "FR0000000021",
+   "nom": "VERVEINE SA",
+   "secteur": "Industrials",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000024",
+   "nom": "AURELIA SA",
+   "secteur": "Basic Materials",
+   "raisons": [
+    "endettement_excessif"
+   ]
+  },
+  {
+   "isin": "FR0000000025",
+   "nom": "BELVEDER GROUP",
+   "secteur": "Energy",
+   "raisons": [
+    "endettement_excessif"
+   ]
+  },
+  {
+   "isin": "FR0000000026",
+   "nom": "CORTALIS GROUP",
+   "secteur": "Utilities",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000027",
+   "nom": "DANUBE SA",
+   "secteur": "Communication Services",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000029",
+   "nom": "FONTAINE GROUP",
+   "secteur": "Financial Services",
+   "raisons": [
+    "secteur_exclu"
+   ]
+  },
+  {
+   "isin": "FR0000000030",
+   "nom": "GARANCE SA",
+   "secteur": "Technology",
+   "raisons": [
+    "endettement_excessif"
+   ]
+  },
+  {
+   "isin": "FR0000000031",
+   "nom": "HESPERIA GROUP",
+   "secteur": "Industrials",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000032",
+   "nom": "ISAMBRE GROUP",
+   "secteur": "Health Care",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000033",
+   "nom": "JONQUILLE SA",
+   "secteur": "Consumer Cyclical",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000034",
+   "nom": "KERLAN GROUP",
+   "secteur": "Basic Materials",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000036",
+   "nom": "MISTRAL SA",
+   "secteur": "Utilities",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000037",
+   "nom": "NERVAL GROUP",
+   "secteur": "Communication Services",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000038",
+   "nom": "OMBRELLE GROUP",
+   "secteur": "Consumer Defensive",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000039",
+   "nom": "PERCEVAL SA",
+   "secteur": "Financial Services",
+   "raisons": [
+    "secteur_exclu"
+   ]
+  },
+  {
+   "isin": "FR0000000041",
+   "nom": "RIVAGE GROUP",
+   "secteur": "Industrials",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000044",
+   "nom": "ULYSSE GROUP",
+   "secteur": "Basic Materials",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000046",
+   "nom": "WEXFORD GROUP",
+   "secteur": "Utilities",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000047",
+   "nom": "XANTHE GROUP",
+   "secteur": "Communication Services",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000049",
+   "nom": "BELVEDER GROUP",
+   "secteur": "Financial Services",
+   "raisons": [
+    "secteur_exclu"
+   ]
+  },
+  {
+   "isin": "FR0000000052",
+   "nom": "ELVIRA GROUP",
+   "secteur": "Health Care",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000054",
+   "nom": "GARANCE SA",
+   "secteur": "Basic Materials",
+   "raisons": [
+    "endettement_excessif"
+   ]
+  },
+  {
+   "isin": "FR0000000058",
+   "nom": "KERLAN GROUP",
+   "secteur": "Consumer Defensive",
+   "raisons": [
+    "classe_d_actions_doublon"
+   ]
+  },
+  {
+   "isin": "FR0000000059",
+   "nom": "LUMEN GROUP",
+   "secteur": "Financial Services",
+   "raisons": [
+    "secteur_exclu"
+   ]
+  }
+ ],
+ "couverture_par_champ": [
+  {
+   "champ": "balance.FY-3.OrdinarySharesNumber",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "income.FY0.TotalRevenue",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "income.FY0.OperatingIncome",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "income.FY0.NetIncomeCommonStockholders",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "income.FY0.NetIncome",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "income.FY0.InterestExpense",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "income.FY0.EBITDA",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "income.FY-3.TotalRevenue",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "prices.current",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "income.FY-3.OperatingIncome",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "cashflow.FY-2.FreeCashFlow",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "cashflow.FY-1.FreeCashFlow",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "balance.FY0.TotalDebt",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "balance.FY0.TotalAssets",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "balance.FY0.OrdinarySharesNumber",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "balance.FY0.CurrentLiabilities",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "balance.FY0.CashAndCashEquivalents",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "cashflow.FY0.FreeCashFlow",
+   "present": 60,
+   "absent": 0
+  },
+  {
+   "champ": "prices.history_12m",
+   "present": 60,
+   "absent": 0
+  }
+ ],
+ "raisons_exclusion": [
+  {
+   "raison": "classe_d_actions_doublon",
+   "valeurs": 24
+  },
+  {
+   "raison": "endettement_excessif",
+   "valeurs": 6
+  },
+  {
+   "raison": "secteur_exclu",
+   "valeurs": 6
+  }
+ ]
+}

@@ -82,10 +82,16 @@ def write_reports(con, run_id: str, cfg) -> list[Path]:
     chemin_html.write_text(html, encoding="utf-8")
     chemins.append(chemin_html)
 
+    # Le fichier que consomme l'interface web (contrat décrit dans docs/ui/brief.md).
+    from pea.screen.export import write_export
+
+    chemins.append(write_export(con, run_id, cfg))
+
     dernier = Path(cfg.reports_dir) / "latest"
     dernier.mkdir(parents=True, exist_ok=True)
     for chemin in chemins:
-        shutil.copy2(chemin, dernier / chemin.name)
+        if chemin.parent != dernier:
+            shutil.copy2(chemin, dernier / chemin.name)
     _write_index(Path(cfg.reports_dir))
     return chemins
 
