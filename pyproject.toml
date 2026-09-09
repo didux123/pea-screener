@@ -20,7 +20,9 @@ dependencies = [
 pea = "pea.cli:main"
 
 [dependency-groups]
-dev = ["pytest>=8", "ruff>=0.6"]
+# pyyaml sert à lire la route Traefik dans les tests de déploiement. Il arrive par
+# transitivité avec litellm, mais on le déclare pour ne pas dépendre de ce hasard.
+dev = ["pytest>=8", "ruff>=0.6", "pyyaml>=6"]
 
 [build-system]
 requires = ["hatchling"]
