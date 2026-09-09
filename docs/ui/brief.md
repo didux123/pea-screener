@@ -285,11 +285,16 @@ Quand les dossiers d'investissement existeront, le champ `dossier` d'une valeur 
 Le tableau `portefeuilles` viendra plus tard avec la même logique : deux entrées, `regles` et
 `agent`, chacune avec ses positions, son journal et sa performance.
 
-**Un fichier d'exemple réel accompagne ce document** : `exemple-donnees.json`. Il contient un
-classement complet produit par le système, avec de vraies sociétés, leurs vraies notes et leurs
-vrais trous de données. Construis l'interface sur ce fichier, pas sur des données inventées, et
-vérifie que tout s'affiche correctement, y compris les valeurs dont plusieurs métriques sont
-absentes.
+**Un fichier d'exemple réel accompagne ce document** : `exemple-donnees.json`, environ 340 Ko.
+C'est un extrait du classement du 9 septembre 2026, avec de vraies sociétés européennes, leurs
+vraies notes et leurs vrais trous de données : les soixante premières, un échantillon du milieu et
+du bas du classement, et des valeurs à couverture incomplète pour que tu puisses vérifier leur
+affichage. Le schéma est exactement celui du fichier complet, qui contient 335 valeurs classées et
+1 066 écartées.
+
+Construis l'interface sur ce fichier, pas sur des données inventées. Vérifie en particulier
+l'affichage des valeurs dont plusieurs métriques sont absentes, et celles dont la composante
+consensus est incomplète.
 
 ---
 
