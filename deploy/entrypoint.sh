@@ -4,4 +4,5 @@ set -eu
 
 pea serve --port "${PEA_PORT:-8080}" &
 
-exec supercronic -passthrough-logs /app/deploy/crontab
+# Chemin absolu voulu : supercronic se relance lui-même sans consulter le PATH.
+exec /usr/local/bin/supercronic -passthrough-logs /app/deploy/crontab
