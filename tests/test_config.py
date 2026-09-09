@@ -43,7 +43,8 @@ def test_fichier_absent():
         ("ftt_rate = 0.004", "ftt_rate = 1.5"),
         ("brokerage_fee_eur = 1.90", 'brokerage_fee_eur = "gratuit"'),
         ("requests_per_pause = 100", "requests_per_pause = 0"),
-        ('euronext_mics = ["XPAR", "ALXP", "XAMS", "ALXA", "XBRU", "ALXB", "XLIS", "ALXL"]', "euronext_mics = []"),
+        ('euronext_mics = ["XPAR", "ALXP", "XAMS", "ALXA", "XBRU", "ALXB", "XLIS", "ALXL"]',
+         "euronext_mics = []"),
     ],
 )
 def test_valeurs_hors_bornes_rejetees(tmp_path, remplacement):

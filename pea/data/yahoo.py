@@ -20,13 +20,11 @@ from yfinance.exceptions import YFRateLimitError
 
 from pea.data.provider import (
     CONSENSUS_KEYS,
-    DESCRIPTOR_KEYS,
     EARNINGS_COLUMNS,
     FX_COLUMNS,
     PRICE_COLUMNS,
     STATEMENT_COLUMNS,
     NotFound,
-    ProviderError,
     RateLimited,
     Resolution,
 )
@@ -423,7 +421,7 @@ class YahooProvider:
             table = yf.Lookup(isin).get_stock(count=10)
         except YFRateLimitError:
             raise
-        except Exception as exc:  # noqa: BLE001 - Yahoo lève des exceptions non typées
+        except Exception as exc:
             log.debug("Lookup %s : %s", isin, exc)
             return {"symbols": []}
         if table is None or getattr(table, "empty", True):
@@ -438,7 +436,7 @@ class YahooProvider:
                 frame = getattr(handle, name)
             except YFRateLimitError:
                 raise
-            except Exception as exc:  # noqa: BLE001
+            except Exception as exc:
                 log.debug("%s %s : %s", ticker, name, exc)
                 frame = None
             payload[name] = _frame_to_json(frame)
@@ -481,7 +479,7 @@ def _frame_from_json(payload: dict | None):
 
 def _column_label(value) -> str:
     """Les colonnes d'un état financier sont des dates de clôture : on les écrit en ISO."""
-    if isinstance(value, pd.Timestamp) or isinstance(value, dt.date):
+    if isinstance(value, pd.Timestamp | dt.date):
         return pd.Timestamp(value).strftime("%Y-%m-%dT%H:%M:%S")
     return str(value)
 

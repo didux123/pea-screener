@@ -14,7 +14,7 @@ import pandas as pd
 
 from pea.screen import asof as A
 from pea.screen.metrics import METRIC_NAMES, REQUIRED_FIELDS, StockInputs, compute_stock_metrics
-from pea.universe import EU_EEA_ISO2, load_overrides, pea_eligibility
+from pea.universe import load_overrides, pea_eligibility
 
 # --- pondération du score (somme = 100) -------------------------------------------------
 WEIGHTS: dict[str, int] = {

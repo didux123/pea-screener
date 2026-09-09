@@ -52,7 +52,8 @@ def base(con):
             if jour.weekday() < 5:
                 lignes.append({
                     "ticker": ticker, "date": jour, "open": 100.0 + i, "high": 100.0 + i,
-                    "low": 100.0 + i, "close": 100.0 + i + (jour - dt.date(2025, 1, 1)).days * 0.01 * (i + 1),
+                    "low": 100.0 + i,
+                    "close": 100.0 + i + (jour - dt.date(2025, 1, 1)).days * 0.01 * (i + 1),
                     "adj_close": 100.0 + i, "volume": volume, "dividend": 0.0,
                     "split_ratio": 0.0, "fetched_at_utc": dt.datetime(2026, 3, 14),
                 })
@@ -82,7 +83,8 @@ def base(con):
             "up_30d_0y": i % 5, "down_30d_0y": 1,
         }]))
         con.execute(
-            "INSERT INTO fetch_log (ticker, endpoint, fetched_at_utc, status) VALUES (?, 'statements', ?, 'ok')",
+            "INSERT INTO fetch_log (ticker, endpoint, fetched_at_utc, status)"
+            " VALUES (?, 'statements', ?, 'ok')",
             [ticker, dt.datetime(2026, 1, 10)],
         )
     return con
@@ -95,7 +97,9 @@ def test_classement_calcule_et_enregistre(base, cfg):
     assert resultat.n_universe == 12
     assert resultat.n_scored >= 9
     # La valeur britannique et l'illiquide sont écartées, avec la raison qui l'explique.
-    raisons = dict(zip(resultat.scores["isin"], resultat.scores["elimination_reasons"], strict=True))
+    raisons = dict(
+        zip(resultat.scores["isin"], resultat.scores["elimination_reasons"], strict=True)
+    )
     assert "non_eligible_pea" in raisons["GB0000000011"]
     assert "illiquide" in raisons["FR0000000010"]
 
@@ -127,7 +131,7 @@ def test_deux_executions_donnent_le_meme_classement(base, cfg):
     b = run_screen(A.load_pit(base, AS_OF), overrides_path=cfg.overrides_path)
     pd.testing.assert_frame_equal(a.scores, b.scores)
 
-    premier = R.persist_run(base, a, cfg)
+    R.persist_run(base, a, cfg)
     second = R.persist_run(base, b, cfg)
     diff = R.compare_with_previous(base, second, AS_OF)
     assert diff is not None and diff.identical
@@ -136,8 +140,8 @@ def test_deux_executions_donnent_le_meme_classement(base, cfg):
 
 def test_comparaison_detecte_un_changement(base, cfg):
     pit = A.load_pit(base, AS_OF)
-    premier = R.persist_run(base, run_screen(pit, overrides_path=cfg.overrides_path), cfg)
-    base.execute("UPDATE scores SET total_score = 1.0 WHERE run_id = ? AND rank = 1", [premier])
+    ancien = R.persist_run(base, run_screen(pit, overrides_path=cfg.overrides_path), cfg)
+    base.execute("UPDATE scores SET total_score = 1.0 WHERE run_id = ? AND rank = 1", [ancien])
     second = R.persist_run(base, run_screen(A.load_pit(base, AS_OF), overrides_path=cfg.overrides_path), cfg)
     diff = R.compare_with_previous(base, second, AS_OF)
     assert not diff.identical and diff.n_score_changed >= 1

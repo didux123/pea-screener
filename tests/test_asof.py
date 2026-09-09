@@ -21,7 +21,9 @@ def _fetch_log(con, quand: dt.datetime, ticker="AI.PA", endpoint="statements"):
     )
 
 
-def _statement(con, ticker, period_end, field, value, fetched, *, statement="income", period_type="annual"):
+def _statement(
+    con, ticker, period_end, field, value, fetched, *, statement="income", period_type="annual"
+):
     db_module.insert_df(
         con,
         "statements",
@@ -68,7 +70,8 @@ def test_delai_reglementaire_quand_la_publication_est_inconnue():
 
 
 def test_date_de_publication_reelle_prime_sur_le_delai():
-    assert A.available_from(dt.date(2025, 12, 31), "annual", None, dt.date(2026, 2, 20)) == dt.date(2026, 2, 20)
+    publiee = dt.date(2026, 2, 20)
+    assert A.available_from(dt.date(2025, 12, 31), "annual", None, publiee) == publiee
 
 
 def test_premiere_recuperation_prime_quand_elle_est_anterieure():

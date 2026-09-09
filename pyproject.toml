@@ -32,5 +32,12 @@ markers = ["network: tests qui appellent Yahoo (ignorés par défaut)"]
 addopts = "-m 'not network'"
 
 [tool.ruff]
-line-length = 100
+line-length = 110
 target-version = "py312"
+
+[tool.ruff.lint]
+# Erreurs de syntaxe, imports et variables inutilisés, tri des imports, pièges courants.
+# Les horodatages naïfs sont voulus : DuckDB stocke des TIMESTAMP sans fuseau et tout
+# passe par pea.db.now_utc(), qui produit de l'UTC.
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["B008", "RUF001", "RUF002", "RUF003", "SIM108"]

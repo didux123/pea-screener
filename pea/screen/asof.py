@@ -191,7 +191,10 @@ def statements_at(con, as_of: dt.date, cutoff: dt.datetime, *, period_type: str 
         [cutoff, cutoff, period_type, cutoff],
     ).df()
     if frame.empty:
-        return frame.assign(available_from=pd.Series(dtype="object"), published_at_estimated=pd.Series(dtype="bool"))
+        return frame.assign(
+            available_from=pd.Series(dtype="object"),
+            published_at_estimated=pd.Series(dtype="bool"),
+        )
 
     publications = _publication_dates(con, cutoff)
     frame["period_end"] = frame["period_end"].map(lambda d: pd.Timestamp(d).date())
@@ -241,7 +244,10 @@ def prices_until(con, as_of: dt.date, *, lookback_days: int = PRICE_LOOKBACK_DAY
 def splits_until(con, as_of: dt.date) -> pd.DataFrame:
     """Tous les splits connus jusqu'à la date : ils alignent les nombres d'actions."""
     frame = con.execute(
-        "SELECT ticker, date, split_ratio FROM prices WHERE date <= ? AND split_ratio > 0 ORDER BY ticker, date",
+        """
+        SELECT ticker, date, split_ratio FROM prices
+        WHERE date <= ? AND split_ratio > 0 ORDER BY ticker, date
+        """,
         [as_of],
     ).df()
     return _as_dates(frame, "date")

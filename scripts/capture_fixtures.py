@@ -13,8 +13,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from pea.config import load_config  # noqa: E402
-from pea.data.yahoo import Pacer, YahooProvider  # noqa: E402
+from pea.config import load_config
+from pea.data.yahoo import Pacer, YahooProvider
 
 CAPTURE_DATE = dt.date(2026, 9, 9)
 FIXTURE_DIR = Path(__file__).resolve().parent.parent / "tests" / "fixtures"
@@ -50,7 +50,7 @@ def main() -> int:
                 result = call()
                 size = len(result) if hasattr(result, "__len__") else "?"
                 print(f"    {label:15s} {size}")
-            except Exception as exc:  # noqa: BLE001 - script d'outillage
+            except Exception as exc:
                 print(f"    {label:15s} ÉCHEC {type(exc).__name__}: {exc}")
     for isin, why in ISINS.items():
         print(f"— {isin} ({why}) : {provider.resolve(isin, 'MNEMO_FAUX', 'XPAR')}")

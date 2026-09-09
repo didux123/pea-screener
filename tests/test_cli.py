@@ -117,7 +117,8 @@ def test_screen_bout_en_bout(projet, capsys, monkeypatch):
                         "currency": "EUR", "fetched_at_utc": dt.datetime(2026, 1, 10),
                     }]))
         con.execute(
-            "INSERT INTO fetch_log (ticker, endpoint, fetched_at_utc, status) VALUES (?, 'statements', ?, 'ok')",
+            "INSERT INTO fetch_log (ticker, endpoint, fetched_at_utc, status)"
+            " VALUES (?, 'statements', ?, 'ok')",
             [ticker, dt.datetime(2026, 1, 10)],
         )
     con.close()

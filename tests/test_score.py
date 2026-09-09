@@ -6,7 +6,6 @@ import datetime as dt
 import math
 
 import pandas as pd
-import pytest
 
 from pea.screen import score as S
 from pea.screen.metrics import METRIC_NAMES, REQUIRED_FIELDS, StockMetrics

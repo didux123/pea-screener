@@ -6,7 +6,6 @@ import argparse
 import datetime as dt
 import logging
 import sys
-from pathlib import Path
 
 from pea.config import ConfigError, load_config, load_env
 
@@ -211,7 +210,8 @@ def _status(con) -> int:
 
     lignes = [
         ("valeurs actives", "SELECT count(*) FROM universe WHERE delisted_at IS NULL"),
-        ("dont avec symbole", "SELECT count(*) FROM universe WHERE delisted_at IS NULL AND yf_ticker IS NOT NULL"),
+        ("dont avec symbole",
+         "SELECT count(*) FROM universe WHERE delisted_at IS NULL AND yf_ticker IS NOT NULL"),
         ("valeurs radiées", "SELECT count(*) FROM universe WHERE delisted_at IS NOT NULL"),
         ("valeurs avec cours", "SELECT count(DISTINCT ticker) FROM prices"),
         ("valeurs avec états", "SELECT count(DISTINCT ticker) FROM statements"),

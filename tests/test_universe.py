@@ -7,7 +7,6 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from pea import db as db_module
 from pea import universe as U
 from pea.config import load_config
 from pea.data.provider import Resolution
@@ -37,7 +36,9 @@ class FakeProvider:
 @pytest.fixture
 def cfg(tmp_path):
     source = (ROOT / "config.toml").read_text()
-    (tmp_path / "config.toml").write_text(source.replace('data_dir = "data"', f'data_dir = "{tmp_path / "data"}"'))
+    (tmp_path / "config.toml").write_text(
+        source.replace('data_dir = "data"', f'data_dir = "{tmp_path / "data"}"')
+    )
     return load_config(tmp_path / "config.toml")
 
 
@@ -304,7 +305,9 @@ def test_resolution_appelle_seulement_les_non_resolus(con, cfg):
 
 def test_rapport_des_non_resolus(con, cfg):
     _copie_fixtures(cfg)
-    U.refresh_universe(con, cfg, FakeProvider({"FR0000120073": "AI.PA"}), today=dt.date(2026, 9, 9), download=False)
+    U.refresh_universe(
+        con, cfg, FakeProvider({"FR0000120073": "AI.PA"}), today=dt.date(2026, 9, 9), download=False
+    )
     rapport = U.unresolved_report(con)
     assert "FR0000120073" not in set(rapport["isin"])
     assert len(rapport) > 0

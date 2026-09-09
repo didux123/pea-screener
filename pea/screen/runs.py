@@ -122,7 +122,8 @@ def persist_run(con, result, cfg, *, started_at: dt.datetime | None = None) -> s
         ],
     )
     db_module.insert_df(con, "scores", scores)
-    db_module.insert_df(con, "coverage", couverture[["run_id", "population", "field", "n_present", "n_missing"]])
+    colonnes = ["run_id", "population", "field", "n_present", "n_missing"]
+    db_module.insert_df(con, "coverage", couverture[colonnes])
     return run_id
 
 

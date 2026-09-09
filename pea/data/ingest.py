@@ -166,7 +166,7 @@ def _last_price_date(con, ticker: str) -> dt.date | None:
 
 
 def ingest_prices(
-    con, provider, tickers: list[str], today: dt.date, guard: "RateLimitGuard | None" = None
+    con, provider, tickers: list[str], today: dt.date, guard: RateLimitGuard | None = None
 ) -> IngestStats:
     """Cours quotidiens. Un split rend l'historique stocké caduc : il est rechargé en entier."""
     stats = IngestStats()
@@ -272,7 +272,9 @@ def due_tickers(con, today: dt.date, *, max_age_days: int = FUNDAMENTALS_MAX_AGE
         ),
         derniers AS (
             SELECT ticker, endpoint, max(fetched_at_utc) AS quand
-            FROM fetch_log WHERE status IN ('ok', 'empty') AND endpoint IN ('info', 'statements', 'consensus', 'earnings_dates')
+            FROM fetch_log
+            WHERE status IN ('ok', 'empty')
+              AND endpoint IN ('info', 'statements', 'consensus', 'earnings_dates')
             GROUP BY ticker, endpoint
         ),
         complet AS (
@@ -309,7 +311,7 @@ def _reset_not_found(con, ticker: str) -> None:
 
 
 def ingest_fundamentals(
-    con, provider, tickers: list[str], today: dt.date, guard: "RateLimitGuard | None" = None
+    con, provider, tickers: list[str], today: dt.date, guard: RateLimitGuard | None = None
 ) -> IngestStats:
     """Métadonnées, états financiers, consensus et dates de publication, valeur par valeur."""
     stats = IngestStats()

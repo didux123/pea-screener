@@ -169,7 +169,8 @@ def test_split_declenche_un_rechargement_complet(con, provider):
 
     lignes = con.execute("SELECT date, close FROM prices ORDER BY date").fetchall()
     assert [row[1] for row in lignes] == [50.0, 51.0, 52.0]  # plus aucun cours d'avant-split
-    statuts = {row[0] for row in con.execute("SELECT status FROM fetch_log WHERE endpoint='prices'").fetchall()}
+    journal = con.execute("SELECT status FROM fetch_log WHERE endpoint = 'prices'").fetchall()
+    statuts = {row[0] for row in journal}
     assert "price_reload_split" in statuts
 
 
