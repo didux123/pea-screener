@@ -100,23 +100,20 @@ Prises pour avancer sans te bloquer. Chacune est réversible ; elles sont testé
     conservé mais jamais utilisé pour un calcul, car son ajustement rétroactif rend une série
     construite jour après jour incohérente. Le momentum passe par un indice de rendement total
     reconstruit à la demande.
-12. 12. **Devises** : les ratios sans dimension restent dans la devise des états. Seuls les
-    multiples qui
-    mêlent capitalisation en euros et compte de résultat sont convertis, au taux du jour de calcul.
-    Taux ou devise de publication inconnus : ces trois multiples sont manquants, jamais supposés.
+12. **Devises** : les ratios sans dimension restent dans la devise des états. Seuls les multiples
+    qui mêlent capitalisation en euros et compte de résultat sont convertis, au taux du jour de
+    calcul. Devise ou taux inconnus : ces trois multiples sont manquants, jamais supposés.
 13. **Débit Yahoo** : pause de 30 secondes toutes les 100 requêtes, temporisation croissante en cas
     de blocage, puis abandon de la valeur et passage à la suivante. Les réponses brutes sont mises
-    en
-    cache sur disque, ce qui rend toute reprise gratuite.
+    en cache sur disque, ce qui rend toute reprise gratuite.
 14. **Cadence** : ingestion et classement chaque soir de semaine à 22 h, rafraîchissement de
     l'univers le dimanche. Une valeur voit ses fondamentaux rafraîchis une fois par semaine.
 
 ### Score
 
-15. **Une donnée manquante n'est jamais imputée.** Elle vaut 20 sur 100 dans le classement, elle est
-    listée valeur par valeur et comptée dans le rapport de couverture. Un dénominateur négatif ou
-    nul
-    n'est pas une donnée manquante mais une information : il donne le pire score.
+15. **Une donnée manquante n'est jamais imputée.** Elle vaut 20 sur 100 dans le classement, elle
+    est listée valeur par valeur et comptée dans le rapport de couverture. Un dénominateur négatif
+    ou nul n'est pas une donnée manquante mais une information : il donne le pire score.
 16. **On n'écarte une valeur que sur preuve positive**, sauf pour l'éligibilité PEA et la liquidité
     qui doivent être établies. Un endettement inconnu n'élimine pas ; il pénalise déjà le bloc
     bilan.
