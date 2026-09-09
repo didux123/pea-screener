@@ -199,6 +199,14 @@ def test_dates_de_publication_passees_seulement(provider):
     assert frame["event_date"].is_unique
 
 
+def test_chaine_vide_traitee_comme_absence():
+    """Yahoo renvoie parfois un secteur vide : il ne doit pas former un groupe de comparaison."""
+    info = Y.normalize_info({"sector": "", "country": "   ", "longName": "X", "quoteType": "EQUITY"})
+    assert info["sector"] is None
+    assert info["country"] is None
+    assert info["long_name"] == "X"
+
+
 def test_normalisation_tableaux_vides():
     assert Y.normalize_history(pd.DataFrame()).empty
     assert Y.normalize_statement(pd.DataFrame(), "income", "annual", "EUR").empty

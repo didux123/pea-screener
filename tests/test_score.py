@@ -130,6 +130,18 @@ def test_secteur_trop_petit_bascule_sur_l_univers():
     assert utilities["s_ev_ebit"] > 90
 
 
+def test_secteur_vide_compte_comme_inconnu():
+    """Un secteur vide ne doit pas devenir un groupe de comparaison à part entière."""
+    lignes = (
+        [{"sector": "Technology", "ev_ebit": v} for v in range(5, 25)]
+        + [{"sector": "", "ev_ebit": 1.0}, {"sector": None, "ev_ebit": 2.0}]
+    )
+    frame = S.percentile_scores(_frame(lignes))
+    sans_secteur = frame[frame["sector"].isna() | (frame["sector"] == "")]
+    # Trop peu nombreuses pour un classement sectoriel : elles passent sur l'univers entier.
+    assert (sans_secteur["s_ev_ebit"] > 80).all()
+
+
 def test_percentiles_calcules_hors_valeurs_eliminees():
     sans = S.percentile_scores(_frame([{"roce": 0.1}, {"roce": 0.2}, {"roce": 0.3}]))
     avec = S.percentile_scores(

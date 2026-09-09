@@ -178,18 +178,27 @@ def normalize_statement(raw: pd.DataFrame, statement: str, period_type: str, cur
     return pd.DataFrame(records, columns=list(STATEMENT_COLUMNS))
 
 
+def _texte(value) -> str | None:
+    """Une chaîne vide n'est pas une valeur : Yahoo renvoie parfois un secteur vide,
+    qui formerait un faux groupe de comparaison au moment du classement."""
+    if not isinstance(value, str):
+        return None
+    nettoye = value.strip()
+    return nettoye or None
+
+
 def normalize_info(raw: dict | None) -> dict:
-    """Métadonnées. Une clé absente vaut None, jamais une valeur inventée."""
+    """Métadonnées. Une clé absente ou vide vaut None, jamais une valeur inventée."""
     raw = raw or {}
     return {
-        "long_name": raw.get("longName") or raw.get("shortName"),
-        "sector": raw.get("sector"),
-        "industry": raw.get("industry"),
-        "country": raw.get("country"),
-        "quote_type": raw.get("quoteType"),
-        "exchange": raw.get("exchange"),
-        "quote_currency": raw.get("currency"),
-        "financial_currency": raw.get("financialCurrency"),
+        "long_name": _texte(raw.get("longName")) or _texte(raw.get("shortName")),
+        "sector": _texte(raw.get("sector")),
+        "industry": _texte(raw.get("industry")),
+        "country": _texte(raw.get("country")),
+        "quote_type": _texte(raw.get("quoteType")),
+        "exchange": _texte(raw.get("exchange")),
+        "quote_currency": _texte(raw.get("currency")),
+        "financial_currency": _texte(raw.get("financialCurrency")),
         "shares_outstanding": _as_float(raw.get("sharesOutstanding")),
         "market_cap": _as_float(raw.get("marketCap")),
         "avg_volume_3m": _as_float(raw.get("averageDailyVolume3Month")),

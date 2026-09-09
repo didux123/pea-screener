@@ -170,7 +170,10 @@ def _rank_within_groups(scored: pd.DataFrame, metric: str) -> pd.Series:
     """
     resultats = []
     petits_index = []
-    for _, groupe in scored.groupby(scored["sector"].fillna("(inconnu)"), dropna=False):
+    secteurs = scored["sector"].map(
+        lambda v: v.strip() if isinstance(v, str) and v.strip() else "(inconnu)"
+    )
+    for _, groupe in scored.groupby(secteurs, dropna=False):
         pourvues = groupe[f"m_{metric}"].notna() | groupe[f"w_{metric}"].fillna(False).astype(bool)
         if pourvues.sum() >= MIN_SECTOR_GROUP:
             resultats.append(_rank_series(groupe[f"m_{metric}"], metric))
