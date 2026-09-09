@@ -222,6 +222,43 @@ def test_export_pour_l_interface(base, cfg):
     assert presents == sorted(presents)
 
 
+def test_seuls_les_dossiers_valides_sont_exposes(base, cfg):
+    """Un dossier rejeté reste en base avec ses motifs, mais ne s'affiche jamais."""
+    import json
+
+    from pea.screen.report import write_reports
+
+    run_id = R.persist_run(base, run_screen(A.load_pit(base, AS_OF), overrides_path=cfg.overrides_path), cfg)
+    isins = [row[0] for row in base.execute(
+        "SELECT isin FROM scores WHERE run_id = ? AND eliminated = FALSE ORDER BY rank LIMIT 2",
+        [run_id]).fetchall()]
+
+    for isin, statut, conviction in ((isins[0], "valide", 71), (isins[1], "rejete", 40)):
+        base.execute(
+            """INSERT INTO dossiers (dossier_id, as_of, isin, statut, conviction, horizon_mois,
+                                     contenu, versions_prompts, modele_synthese, cout_eur,
+                                     motif, genere_le_utc)
+               VALUES (?, ?, ?, ?, ?, 18, ?, ?, 'gemini/x', 0.12, 'top60', ?)""",
+            [f"d-{isin}", AS_OF, isin, statut, conviction,
+             json.dumps({"activite": "Une activité industrielle.", "conviction": conviction,
+                         "_verification": {"valide": statut == "valide"}}),
+             json.dumps({"synthese": "synthese-v1"}), dt.datetime(2026, 3, 15, 20, 0)],
+        )
+
+    write_reports(base, run_id, cfg)
+    payload = json.loads((cfg.reports_dir / "latest" / "data.json").read_text(encoding="utf-8"))
+    par_isin = {v["isin"]: v for v in payload["valeurs"]}
+
+    expose = par_isin[isins[0]]["dossier"]
+    assert expose["conviction"] == 71
+    assert expose["horizon_mois"] == 18
+    assert expose["versions_prompts"]["synthese"] == "synthese-v1"
+    assert expose["cout_eur"] == 0.12
+    assert "_verification" not in expose      # détail interne, pas destiné au lecteur
+
+    assert par_isin[isins[1]]["dossier"] is None   # le dossier rejeté n'apparaît pas
+
+
 def test_rapport_reconstitue_porte_l_avertissement(base, cfg):
     from pea.screen.report import write_reports
 

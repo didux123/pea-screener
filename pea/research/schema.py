@@ -89,7 +89,7 @@ class Fourchette(Base):
     basse: float | None = None
     haute: float | None = None
     devise: str | None = None
-    methode: str = Field(min_length=10, max_length=300)
+    methode: str = Field(min_length=10, max_length=900, description="comment la fourchette est établie")
     refs: list[RefFait] = Field(default_factory=list)
 
 

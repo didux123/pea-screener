@@ -81,7 +81,46 @@ def _horodatage(x) -> str | None:
     return pd.Timestamp(x).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def build_payload(run: dict, scores: pd.DataFrame, couverture: pd.DataFrame) -> dict:
+def _dossiers_par_isin(con, as_of) -> dict[str, dict]:
+    """Dernier dossier valide de chaque valeur, tel que l'interface l'attend.
+
+    Seuls les dossiers ayant passé la vérification sont exposés : un dossier rejeté reste en
+    base avec ses motifs, mais n'a rien à faire sous les yeux du lecteur.
+    """
+    lignes = con.execute(
+        """
+        SELECT isin, contenu, conviction, horizon_mois, cout_eur, versions_prompts,
+               modele_synthese, genere_le_utc
+        FROM (
+            SELECT *, row_number() OVER (PARTITION BY isin ORDER BY genere_le_utc DESC) AS rang
+            FROM dossiers WHERE statut = 'valide' AND as_of <= ?
+        ) WHERE rang = 1
+        """,
+        [as_of],
+    ).fetchall()
+
+    dossiers: dict[str, dict] = {}
+    for isin, contenu, conviction, horizon, cout, versions, modele, genere in lignes:
+        if not contenu:
+            continue
+        brut = json.loads(contenu)
+        brut.pop("_verification", None)
+        brut.pop("isin", None)
+        dossiers[isin] = {
+            **brut,
+            "conviction": conviction,
+            "horizon_mois": horizon,
+            "cout_eur": _valeur(cout),
+            "versions_prompts": json.loads(versions) if versions else None,
+            "modele": modele,
+            "genere_le": _horodatage(genere),
+        }
+    return dossiers
+
+
+def build_payload(
+    run: dict, scores: pd.DataFrame, couverture: pd.DataFrame, dossiers: dict | None = None
+) -> dict:
     """Construit le document que lit l'interface."""
     retenues = scores[~scores["eliminated"].astype(bool)]
     ecartees = scores[scores["eliminated"].astype(bool)]
@@ -110,7 +149,10 @@ def build_payload(run: dict, scores: pd.DataFrame, couverture: pd.DataFrame) -> 
             "ecartees": int(run["n_eliminated"] or 0),
         },
         "couverture_moyenne": round(couverture_moyenne, 4),
-        "valeurs": [_valeur_json(ligne) for ligne in retenues.to_dict("records")],
+        "valeurs": [
+            _valeur_json(ligne, (dossiers or {}).get(ligne["isin"]))
+            for ligne in retenues.to_dict("records")
+        ],
         "ecartees": [
             {
                 "isin": ligne["isin"],
@@ -132,7 +174,7 @@ def build_payload(run: dict, scores: pd.DataFrame, couverture: pd.DataFrame) -> 
     }
 
 
-def _valeur_json(ligne: dict) -> dict:
+def _valeur_json(ligne: dict, dossier: dict | None = None) -> dict:
     metriques = {}
     for interne, expose, unite, dans_secteur in METRIC_EXPORT:
         metriques[expose] = {
@@ -171,14 +213,14 @@ def _valeur_json(ligne: dict) -> dict:
         "champs_manquants": _liste(ligne.get("missing_fields")),
         "metriques_penalisees": _liste(ligne.get("missing_metrics")),
         "drapeaux": _liste(ligne.get("flags")),
-        "dossier": None,   # rempli au lot 2
+        "dossier": dossier,
     }
 
 
 def write_export(con, run_id: str, cfg) -> Path:
     """Écrit data.json à côté des rapports du classement, et dans « latest »."""
     run, scores, couverture = load_run(con, run_id)
-    payload = build_payload(run, scores, couverture)
+    payload = build_payload(run, scores, couverture, _dossiers_par_isin(con, run["as_of"]))
     dossier = Path(cfg.reports_dir) / f"{run['as_of']:%Y-%m-%d}"
     dossier.mkdir(parents=True, exist_ok=True)
     chemin = dossier / "data.json"

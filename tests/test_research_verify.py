@@ -122,7 +122,7 @@ def _dossier(**remplacements) -> Dossier:
     ],
 )
 def test_lecture_des_nombres_en_francais(texte, attendu):
-    assert nombres_du_texte(texte)[0][1] == pytest.approx(attendu)
+    assert nombres_du_texte(texte)[0].valeur == pytest.approx(attendu)
 
 
 # ------------------------------------------------------------------------- le garde-fou
@@ -290,3 +290,87 @@ def test_un_arrondi_trop_grossier_reste_refuse(travail):
         "Le consensus de bénéfice a été révisé à la baisse de 2,4 % sur trois mois [F7]."
     ])
     assert not verifier(dossier, travail).valide
+
+
+def test_duree_n_est_pas_une_affirmation(travail):
+    """« moyenne mobile à 200 jours » nomme une fenêtre de calcul, pas un chiffre de la société."""
+    dossier = _dossier(signes_alerte=[
+        "Le cours évolue près de sa moyenne mobile à 200 jours, après 12 mois de hausse continue."
+    ])
+    assert verifier(dossier, travail).valide
+
+
+def test_ratio_calcule_a_partir_de_faits_cites_est_accepte(travail):
+    """Un analyste calcule. On l'accepte s'il cite les opérandes, ce qui reste vérifiable."""
+    travail.faits += [
+        Fait("F8", "charges d'intérêt (EUR)", 12_000_000.0, "eur", "2025-12-31", "donnees_internes"),
+        Fait("F9", "charges d'intérêt (EUR)", 4_800_000.0, "eur", "2024-12-31", "donnees_internes"),
+    ]
+    dossier = _dossier(signes_alerte=[
+        "Les charges d'intérêt ont été multipliées par 2,5 en un an [F8, F9]."
+    ])
+    assert verifier(dossier, travail).valide
+
+
+def test_ratio_sans_citation_des_operandes_reste_refuse(travail):
+    """Sans les références, le calcul n'est pas vérifiable : il est refusé."""
+    travail.faits += [
+        Fait("F8", "charges d'intérêt (EUR)", 12_000_000.0, "eur", "2025-12-31", "donnees_internes"),
+        Fait("F9", "charges d'intérêt (EUR)", 4_800_000.0, "eur", "2024-12-31", "donnees_internes"),
+    ]
+    dossier = _dossier(signes_alerte=[
+        "Les charges d'intérêt ont été multipliées par 2,5 en un an, une dégradation nette."
+    ])
+    assert not verifier(dossier, travail).valide
+
+
+@pytest.mark.parametrize(
+    "texte,echelle,decimales",
+    [
+        ("10 milliards d'euros", 1e9, 0),
+        ("-0,7 %", 1.0, 1),
+        ("42,68 euros", 1.0, 2),
+        ("2 750 millions", 1e6, 0),
+    ],
+)
+def test_echelle_et_precision_lues_dans_l_ecriture(texte, echelle, decimales):
+    """« 10 milliards » n'affirme rien au-delà du milliard près : la comparaison doit en tenir compte."""
+    nombre = nombres_du_texte(texte)[0]
+    assert nombre.echelle == echelle
+    assert nombre.decimales == decimales
+
+
+def test_ordre_de_grandeur_en_milliards_accepte(travail):
+    """Un chiffre d'affaires de 10,2 milliards écrit « plus de 10 milliards » est exact."""
+    travail.faits.append(
+        Fait("F8", "chiffre d'affaires (EUR)", 10_209_400_000.0, "eur", "2025-12-31",
+             "donnees_internes")
+    )
+    dossier = _dossier(avantage_concurrentiel=(
+        "Sa taille lui donne un avantage durable : le groupe a généré plus de 10 milliards "
+        "d'euros de chiffre d'affaires sur le dernier exercice [F8]."
+    ))
+    assert verifier(dossier, travail).valide
+
+
+def test_pourcentage_a_une_decimale_accepte(travail):
+    """Un fait à -0,672 % écrit « -0,7 % » est un arrondi, pas une invention."""
+    travail.faits.append(
+        Fait("F8", "variation du nombre d'actions sur 3 ans", -0.006718, "pourcent", None,
+             "donnees_internes")
+    )
+    dossier = _dossier(signes_alerte=[
+        "La légère réduction du nombre d'actions, -0,7 % sur trois ans [F8], profite aux actionnaires."
+    ])
+    assert verifier(dossier, travail).valide
+
+
+def test_methode_de_valorisation_peut_porter_des_multiples_choisis(travail):
+    """Les multiples et décotes d'une méthode sont des choix d'analyste, pas des faits."""
+    dossier = _dossier(fourchette_valorisation={
+        "basse": 38.0, "haute": 52.0, "devise": "EUR",
+        "methode": ("Multiple de 20 fois le résultat opérationnel pour la borne haute, décote "
+                    "de 30 % appliquée à la borne basse pour tenir compte du risque cyclique."),
+        "refs": ["F1"],
+    })
+    assert verifier(dossier, travail).valide

@@ -14,6 +14,9 @@ from pea.research.schema import NON_DISPONIBLE, Dossier
 
 # Tolérance relative sur un chiffre cité : le modèle arrondit, c'est légitime.
 TOLERANCE = 0.02
+# Un chiffre calculé à partir de faits cités tolère un écart plus large : « multiplié par
+# 2,5 » pour un rapport de 2,57 reste une lecture honnête.
+TOLERANCE_CALCUL = 0.08
 # Les petits entiers servent à compter (trois risques, deux critères) : ils ne prétendent rien.
 PETITS_ENTIERS = set(range(0, 13))
 # Une année n'est pas une affirmation chiffrée : les sociétés citent souvent leur fondation.
@@ -42,6 +45,15 @@ NOMBRE = re.compile(
     r"\s*(%|milliards?|millions?|milliers?|mds?|m€)?",
     re.IGNORECASE,
 )
+
+# « moyenne mobile à 200 jours », « performance sur 12 mois » : ces nombres nomment une
+# fenêtre d'observation, ils n'affirment rien sur la société.
+DUREE = re.compile(
+    r"^\s*(?:jours?|mois|ans?|années?|semestres?|trimestres?|semaines?)\b", re.IGNORECASE
+)
+
+# Références citées dans une phrase : « [F41, F28] ».
+REFS_CITEES = re.compile(r"\[([FSN]\d{1,3}(?:\s*,\s*[FSN]\d{1,3})*)\]")
 
 
 @dataclass
@@ -82,17 +94,42 @@ def _valeurs_autorisees(travail: DossierDeTravail) -> set[float]:
     # Les chiffres présents dans les articles cités sont eux aussi sourcés.
     for fait in travail.faits:
         if fait.origine == "presse":
-            for _, valeur in nombres_du_texte(f"{fait.libelle} {fait.texte or ''}"):
-                valeurs.add(valeur)
+            for nombre in nombres_du_texte(f"{fait.libelle} {fait.texte or ''}"):
+                valeurs.add(nombre.valeur)
     return valeurs
 
 
-def nombres_du_texte(texte: str) -> list[tuple[str, float]]:
-    """Extrait les nombres d'un texte français, avec leur multiplicateur éventuel."""
-    trouves: list[tuple[str, float]] = []
-    for correspondance in NOMBRE.finditer(texte or ""):
+@dataclass(frozen=True)
+class NombreEcrit:
+    """Un chiffre tel qu'il figure dans le texte, avec la précision qu'il annonce.
+
+    « 10 milliards » vaut dix milliards mais n'affirme qu'un ordre de grandeur au milliard
+    près ; « 0,7 % » affirme le dixième de point. La comparaison doit se faire à cette
+    échelle, sans quoi tout arrondi honnête passerait pour une invention.
+    """
+
+    brut: str
+    valeur: float
+    echelle: float      # unité dans laquelle le chiffre a été écrit
+    decimales: int      # décimales effectivement écrites
+
+    def arrondi(self, valeur: float) -> float:
+        return round(valeur / self.echelle, self.decimales)
+
+
+def nombres_du_texte(texte: str) -> list[NombreEcrit]:
+    """Extrait les nombres d'un texte français, avec leur échelle et leur précision.
+
+    Les durées sont ignorées : « moyenne mobile à 200 jours » nomme une fenêtre de calcul,
+    ce n'est pas une affirmation chiffrée sur la société.
+    """
+    texte = texte or ""
+    trouves: list[NombreEcrit] = []
+    for correspondance in NOMBRE.finditer(texte):
+        if DUREE.match(texte[correspondance.end():]):
+            continue
         brut, suffixe = correspondance.group(1), (correspondance.group(2) or "").lower()
-        nettoye = brut.replace(" ", "").replace(" ", "").replace(" ", "")
+        nettoye = brut.replace(" ", "").replace("\u00a0", "").replace("\u202f", "")
         if nettoye.count(",") == 1 and "." not in nettoye:
             nettoye = nettoye.replace(",", ".")
         else:
@@ -101,48 +138,82 @@ def nombres_du_texte(texte: str) -> list[tuple[str, float]]:
             valeur = float(nettoye)
         except ValueError:
             continue
-        if suffixe in MULTIPLICATEURS:
-            valeur *= MULTIPLICATEURS[suffixe]
-        trouves.append((correspondance.group(0).strip(), valeur))
+        # La précision se lit sur les chiffres seuls, jamais sur l'unité qui les suit.
+        fraction = nettoye.split(".")
+        decimales = len(fraction[1]) if len(fraction) > 1 else 0
+        echelle = MULTIPLICATEURS.get(suffixe, 1.0)
+        trouves.append(
+            NombreEcrit(correspondance.group(0).strip(), valeur * echelle, echelle, decimales)
+        )
     return trouves
 
 
-def _decimales(brut: str) -> int:
-    """Précision à laquelle le chiffre a été écrit : « 0,5 » en annonce une, « 42,68 » deux."""
-    partie = re.split(r"[.,]", brut.split()[0].replace(" ", "").replace(" ", ""))
-    return len(partie[-1]) if len(partie) > 1 else 0
+def _valeurs_derivees(texte: str, par_ref: dict) -> set[float]:
+    """Ce qu'on peut calculer à partir des faits cités dans la phrase elle-même.
+
+    Un analyste écrit « les charges d'intérêt ont été multipliées par 2,5 [F41, F28] ». Le
+    2,5 n'est dans aucun fait, mais il se déduit des deux faits cités. Exiger que tout
+    chiffre figure tel quel dans les données interdirait tout raisonnement. On n'accepte le
+    calcul que si le modèle a cité les opérandes : la vérification reste possible.
+    """
+    valeurs: list[float] = []
+    for groupe in REFS_CITEES.findall(texte):
+        for ref in (r.strip() for r in groupe.split(",")):
+            fait = par_ref.get(ref)
+            if fait is not None and fait.valeur is not None:
+                valeurs.append(float(fait.valeur))
+
+    derivees: set[float] = set()
+    for a in valeurs:
+        for b in valeurs:
+            if a is b:
+                continue
+            derivees.update({a - b, a + b})
+            if b != 0:
+                rapport_ab = a / b
+                derivees.add(rapport_ab)
+                derivees.add(rapport_ab * 100)          # écrit en pourcentage
+                derivees.add((a - b) / abs(b))          # variation relative
+                derivees.add((a - b) / abs(b) * 100)
+    return derivees
 
 
-def _est_source(valeur: float, autorisees: set[float], brut: str = "") -> bool:
+def _est_source(nombre: NombreEcrit, autorisees: set[float], tolerance: float = TOLERANCE) -> bool:
     """Le chiffre écrit doit être un arrondi plausible d'un fait fourni.
 
-    Deux assouplissements, tirés des premiers dossiers réels. Le signe n'est pas
-    discriminant : en français le sens est porté par les mots, « une baisse de 3,1 % » et
-    « -3,1 % » désignent le même fait. Et la comparaison se fait à la précision d'écriture :
-    un fait à -0,53 % écrit « 0,5 % » est correctement rapporté, pas inventé.
+    Trois assouplissements, tous constatés sur de vrais dossiers. Le signe n'est pas
+    discriminant, car en français le sens est porté par les mots : « une baisse de 3,1 % »
+    et « -3,1 % » désignent le même fait. La comparaison se fait à l'échelle d'écriture, si
+    bien qu'un chiffre d'affaires de 10,2 milliards écrit « 10 milliards » est correctement
+    rapporté. Et un écart inférieur à la tolérance relative passe aussi, pour les nombres
+    dont l'arrondi ne se lit pas dans l'écriture.
     """
-    cible = abs(valeur)
+    cible = abs(nombre.valeur)
     if cible in PETITS_ENTIERS and float(cible).is_integer():
         return True
     if float(cible).is_integer() and int(cible) in ANNEES:
         return True
 
-    precision = _decimales(brut) if brut else None
     for reference in autorisees:
         attendu = abs(reference)
         if attendu == 0:
             if cible < 1e-9:
                 return True
             continue
-        if abs(cible - attendu) <= attendu * TOLERANCE:
+        if abs(cible - attendu) <= attendu * tolerance:
             return True
-        if precision is not None and round(attendu, precision) == round(cible, precision):
+        if nombre.arrondi(attendu) == nombre.arrondi(cible):
             return True
     return False
 
 
 def _textes_narratifs(dossier: Dossier) -> list[tuple[str, str]]:
-    """Les champs rédigés, où un chiffre inventé pourrait se glisser."""
+    """Les champs rédigés, où un chiffre inventé pourrait se glisser.
+
+    La méthode de valorisation en est absente, au même titre que le seuil d'invalidation :
+    elle expose les multiples et les décotes que l'analyste retient, qui sont des choix et
+    non des faits. Les bornes de la fourchette, elles, restent contrôlées.
+    """
     textes = [
         ("activite", dossier.activite),
         ("origine_du_chiffre_affaires", dossier.origine_du_chiffre_affaires),
@@ -151,7 +222,6 @@ def _textes_narratifs(dossier: Dossier) -> list[tuple[str, str]]:
         ("hausse_justifiee", dossier.hausse_justifiee.explication),
         ("debat.haussier", dossier.debat.haussier),
         ("debat.baissier", dossier.debat.baissier),
-        ("fourchette.methode", dossier.fourchette_valorisation.methode),
     ]
     textes += [(f"moteur[{i}]", t) for i, t in enumerate(dossier.moteurs_de_croissance)]
     textes += [(f"signe[{i}]", t) for i, t in enumerate(dossier.signes_alerte)]
@@ -174,12 +244,17 @@ def verifier(dossier: Dossier, travail: DossierDeTravail, *, suspects: list[str]
             rapport.refs_inconnues.append(ref)
 
     autorisees = _valeurs_autorisees(travail)
+    par_ref = travail.par_ref()
     for champ, texte in _textes_narratifs(dossier):
         if not texte or NON_DISPONIBLE in texte.lower():
             continue
-        for brut, valeur in nombres_du_texte(texte):
-            if not _est_source(valeur, autorisees, brut):
-                rapport.nombres_non_sources.append(f"{champ} : « {brut} »")
+        derivees = _valeurs_derivees(texte, par_ref)
+        for nombre in nombres_du_texte(texte):
+            # Un ratio calculé est approximatif par nature : « multiplié par 2,5 » pour 2,57
+            # reste une lecture honnête, dès lors que les opérandes sont cités.
+            if _est_source(nombre, autorisees) or _est_source(nombre, derivees, TOLERANCE_CALCUL):
+                continue
+            rapport.nombres_non_sources.append(f"{champ} : « {nombre.brut} »")
 
     # La fourchette de valorisation est un jugement, mais ses bornes doivent rester
     # dans un ordre de grandeur cohérent avec le cours fourni.
