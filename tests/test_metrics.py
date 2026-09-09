@@ -274,6 +274,27 @@ def test_absence_de_charge_d_interet_avec_tresorerie_nette():
     assert "income.FY0.InterestExpense" not in m.missing_fields
 
 
+def test_charge_d_interet_nulle_declaree_donne_la_meilleure_couverture():
+    """Une charge nulle publiée est une information : la couverture est infinie."""
+    etats = _valeur_complete(income={"InterestExpense": 0.0})
+    m = M.compute_stock_metrics(_inputs(statements=etats, prices=_prices([AS_OF], [1.0])))
+    assert m.values["interest_cov"] == math.inf
+    assert "income.FY0.InterestExpense" not in m.missing_fields
+
+
+def test_charge_d_interet_absente_avec_dette_reste_manquante():
+    champs = {
+        "income": {"TotalRevenue": 1000.0, "OperatingIncome": 100.0, "EBITDA": 150.0,
+                   "NetIncome": 60.0, "NetIncomeCommonStockholders": 60.0},
+        "balance": {"TotalAssets": 900.0, "CurrentLiabilities": 200.0, "TotalDebt": 500.0,
+                    "CashAndCashEquivalents": 50.0, "OrdinarySharesNumber": 1_000_000.0},
+        "cashflow": {"FreeCashFlow": 80.0},
+    }
+    m = M.compute_stock_metrics(_inputs(statements=_statements({dt.date(2025, 12, 31): champs})))
+    assert m.values["interest_cov"] is None      # endettée sans charge publiée : on ne sait pas
+    assert "income.FY0.InterestExpense" in m.missing_fields
+
+
 def test_endettement_sans_ebitda_positif_est_signale():
     etats = _valeur_complete(income={"EBITDA": -10.0})
     m = M.compute_stock_metrics(_inputs(statements=etats, prices=_prices([AS_OF], [1.0])))

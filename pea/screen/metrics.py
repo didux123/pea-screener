@@ -443,14 +443,18 @@ def compute_stock_metrics(inp: StockInputs) -> StockMetrics:
             m.flags.append("ebitda_non_positif")
 
     charge_interets = _get(fy0.income, "InterestExpense")
-    if charge_interets is None and m.net_debt is not None and m.net_debt <= 0:
-        # Trésorerie nette et aucune charge d'intérêt : la couverture est sans objet,
-        # on la classe au mieux plutôt que de la déclarer manquante.
+    if charge_interets == 0:
+        # Charge d'intérêt nulle déclarée : la couverture est infinie, c'est le meilleur cas.
+        m.values["interest_cov"] = BEST
+        m.flags.append("sans_charge_d_interet")
+    elif charge_interets is None and m.net_debt is not None and m.net_debt <= 0:
+        # Trésorerie nette et pas de charge publiée : la couverture est sans objet, on la
+        # classe au mieux plutôt que de la déclarer manquante.
         m.values["interest_cov"] = BEST
         m.flags.append("sans_charge_d_interet")
     else:
         _track(missing, "income.FY0.InterestExpense", charge_interets)
-        if operating0 is not None and charge_interets:
+        if operating0 is not None and charge_interets is not None:
             m.values["interest_cov"] = operating0 / abs(charge_interets)
 
     actions0, derive_actions = derive_shares(fy0)
