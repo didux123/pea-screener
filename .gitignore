@@ -3,6 +3,8 @@
 data/*
 !data/overrides/
 !data/overrides/*.csv
+# Les fixtures de test sont versionnées, y compris le cache Yahoo figé.
+!tests/fixtures/**
 __pycache__/
 *.pyc
 .pytest_cache/
