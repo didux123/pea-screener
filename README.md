@@ -10,9 +10,9 @@ que tu valides toi-même, et tient un portefeuille fictif pour mesurer honnêtem
 
 | Lot | Contenu | État |
 | --- | --- | --- |
-| 1 | Univers, données, score composite | en cours |
-| 2 | Dossiers d'investissement (LLM) | à venir |
-| 3 | Portefeuille fictif, journal, rapport, Telegram | à venir |
+| 1 | Univers, données, score composite | livré |
+| 2 | Dossiers d'investissement, débat haussier contre baissier | à venir |
+| 3 | Deux portefeuilles fictifs, règles et agent, journal, Telegram | à venir |
 | 4 | Évaluation (références, bras témoin, Sharpe déflaté) | à venir |
 
 ## Commandes
@@ -123,6 +123,24 @@ Prises pour avancer sans te bloquer. Chacune est réversible ; elles sont testé
 18. **Les poids et seuils du score sont des constantes du code**, pas de la configuration : ils
     viennent du cahier des charges et sont versionnés par le SHA git enregistré avec chaque run.
     `config.toml` ne porte que les chemins, le débit Yahoo, les places et les coûts.
+
+## Résultat du premier classement, 9 septembre 2026
+
+| | |
+| --- | --- |
+| valeurs examinées | 1 401 |
+| classées | 335 |
+| écartées | 1 066 |
+| couverture des champs requis | 87 % |
+| durée du calcul | 9 secondes |
+
+Les exclusions, par ordre d'importance : 816 pour liquidité insuffisante, 244 pour secteur exclu,
+205 pour flux de trésorerie négatifs trois ans de suite, 180 pour endettement excessif, 167 pour
+données insuffisantes, 144 pour dette sans résultat pour la rembourser, 63 pour liquidité inconnue,
+6 pour conflit d'éligibilité et 3 classes d'actions en double.
+
+Le filtre de liquidité domine parce que la valeur européenne médiane de cet univers ne traite que
+35 000 € par jour, loin sous le seuil de 150 000 € que tu as fixé.
 
 ## Limites connues
 
