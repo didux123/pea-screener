@@ -151,9 +151,19 @@ docker compose up -d --build
 ```
 
 Les données vivent dans `./data`, monté dans le conteneur : la base DuckDB, le cache des
-réponses brutes et les rapports. La première ingestion prend environ deux heures ; les
-suivantes une quarantaine de minutes. Une reprise après interruption ne coûte aucune
-requête, le cache disque faisant foi pour la journée.
+réponses brutes et les rapports. La première collecte se lance à la main, une seule fois, et se
+détache pour survivre à la fermeture du terminal :
+
+```bash
+docker exec -d pea sh -c "pea universe && pea ingest && pea screen"
+```
+
+Elle prend deux à trois heures ; les collectes suivantes une quarantaine de minutes, puisque les
+fondamentaux d'une valeur ne sont rafraîchis qu'une fois par semaine. Une reprise après
+interruption ne coûte aucune requête, le cache disque faisant foi pour la journée.
+
+Ne fais pas tourner deux collectes en même temps sur deux machines derrière la même adresse
+publique : Yahoo compte les requêtes par adresse et les bloquerait.
 
 ## Structure
 
