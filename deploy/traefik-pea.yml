@@ -1,0 +1,27 @@
+# Route du screener PEA. Fichier dédié du dossier /config (provider file, watch: true,
+# rechargement à chaud), sur le modèle de freellmapi.yml plutôt que dans gui.yml, pour
+# qu'une édition depuis Traefik Manager ne l'écrase pas.
+#
+# Cible : CT "ai" (192.168.10.53:8080), hôte Termix n. 4. Le conteneur y sert des pages
+# HTML statiques et le data.json du dernier classement.
+#
+# Pas de middleware d'authentification, comme les autres services du même hôte : le
+# service reste sur le réseau local, résolu par le wildcard *.home -> 192.168.10.52.
+http:
+  routers:
+    pea:
+      rule: Host(`pea.ai.home`)
+      entryPoints:
+        - web
+      service: pea
+    pea-tls:
+      rule: Host(`pea.ai.home`)
+      entryPoints:
+        - websecure
+      service: pea
+      tls: {}
+  services:
+    pea:
+      loadBalancer:
+        servers:
+          - url: http://192.168.10.53:8080

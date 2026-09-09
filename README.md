@@ -176,6 +176,12 @@ répertoire `data` monté depuis l'hôte doit donc lui appartenir, sans quoi le 
 sudo chown -R 10001:10001 data
 ```
 
+Le tableau de bord est publié derrière Traefik sur **http://pea.ai.home**. La route vit dans
+`deploy/traefik-pea.yml`, à copier dans le dossier `/config` de Traefik (volume
+`traefik_config`, rechargement à chaud) ; le nom se résout par le wildcard `*.home` du réseau
+local, il n'y a aucune entrée DNS à créer. L'accès direct par
+`http://192.168.10.53:8080` reste valable.
+
 Les données vivent dans `./data`, monté dans le conteneur : la base DuckDB, le cache des
 réponses brutes et les rapports. La première collecte se lance à la main, une seule fois, et se
 détache pour survivre à la fermeture du terminal :

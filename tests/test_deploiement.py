@@ -78,6 +78,22 @@ def test_le_readme_explique_les_droits_du_volume():
     assert "USER pea" in DOCKERFILE.read_text(encoding="utf-8")
 
 
+def test_route_traefik_coherente_avec_le_conteneur():
+    """La route publiée doit viser le port que le conteneur expose réellement."""
+    import yaml
+
+    route = yaml.safe_load((ROOT / "deploy" / "traefik-pea.yml").read_text(encoding="utf-8"))
+    services = route["http"]["services"]
+    cible = services["pea"]["loadBalancer"]["servers"][0]["url"]
+    assert cible.endswith(":8080")
+    assert "8080:8080" in COMPOSE.read_text(encoding="utf-8")
+
+    routeurs = route["http"]["routers"]
+    assert {"pea", "pea-tls"} == set(routeurs)
+    assert all("pea.ai.home" in r["rule"] for r in routeurs.values())
+    assert routeurs["pea-tls"]["entryPoints"] == ["websecure"]
+
+
 @pytest.mark.parametrize(
     "cible", ["install", "universe", "ingest", "screen", "research", "report", "test"]
 )
