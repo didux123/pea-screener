@@ -61,6 +61,11 @@ YAHOO_COUNTRY_TO_ISO2: dict[str, str] = {
     "Luxembourg": "LU", "Malta": "MT", "Netherlands": "NL", "Norway": "NO", "Poland": "PL",
     "Portugal": "PT", "Romania": "RO", "Slovakia": "SK", "Slovenia": "SI", "Spain": "ES",
     "Sweden": "SE",
+    # Régions ultrapériphériques et territoires : ils font partie de l'État membre, donc de
+    # l'Union, et leurs sociétés sont éligibles au PEA.
+    "Martinique": "FR", "Guadeloupe": "FR", "Réunion": "FR", "Reunion": "FR",
+    "French Guiana": "FR", "Mayotte": "FR", "Saint Martin": "FR",
+    "Azores": "PT", "Madeira": "PT", "Canary Islands": "ES", "Åland Islands": "FI",
     # Pays hors UE/EEE fréquents dans nos listes : mappés pour être écartés explicitement.
     "Switzerland": "CH", "United Kingdom": "GB", "United States": "US", "Canada": "CA",
     "Australia": "AU", "Bermuda": "BM", "Guernsey": "GG", "Jersey": "JE", "Isle of Man": "IM",
@@ -353,6 +358,10 @@ def pea_eligibility(
     if isin and isin in overrides:
         flag, reason = overrides[isin]
         return flag, f"override: {reason}" if reason else "override"
+
+    # Les métadonnées viennent d'un tableau : une valeur absente arrive en NaN, pas en None.
+    isin_country = isin_country if isinstance(isin_country, str) and isin_country.strip() else None
+    yahoo_country = yahoo_country if isinstance(yahoo_country, str) and yahoo_country.strip() else None
 
     if not isin_country:
         return None, "pea_unknown: pays de l'ISIN absent"

@@ -236,12 +236,15 @@ def _fx_lookup(pit: A.PITData) -> dict[str, float]:
     return dict(zip(pit.fx["quote_ccy"], pit.fx["rate"].astype("float64"), strict=True))
 
 
-def _rate_for(currency: str | None, taux: dict[str, float]) -> float | None:
-    if not currency:
+def _rate_for(currency, taux: dict[str, float]) -> float | None:
+    """Taux 1 EUR = x devise. Une devise inconnue ou absente ne donne aucun taux.
+
+    Les métadonnées venant d'un tableau, une valeur manquante arrive en NaN et non en None.
+    """
+    if not isinstance(currency, str) or not currency.strip():
         return None
-    if currency.upper() == "EUR":
-        return 1.0
-    return taux.get(currency.upper())
+    code = currency.strip().upper()
+    return 1.0 if code == "EUR" else taux.get(code)
 
 
 def run_screen(pit: A.PITData, *, overrides_path=None) -> ScreenResult:
@@ -349,8 +352,8 @@ def _group(grouped, ticker):
 def _statement_currency(etats: pd.DataFrame) -> str | None:
     if etats.empty or "currency" not in etats.columns:
         return None
-    valeurs = etats["currency"].dropna().unique()
-    return valeurs[0] if len(valeurs) else None
+    valeurs = [v for v in etats["currency"].dropna().unique() if isinstance(v, str) and v.strip()]
+    return valeurs[0] if valeurs else None
 
 
 def _row(pit, contexte, metrics, raisons) -> dict:

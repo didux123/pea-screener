@@ -211,6 +211,12 @@ def test_eligibilite_conflit_puis_override():
     assert ok is True and raison.startswith("override")
 
 
+def test_territoires_francais_sont_dans_l_union():
+    """La Martinique est un département français : ses sociétés sont éligibles au PEA."""
+    assert U.pea_eligibility("FR", "Martinique")[0] is True
+    assert U.pea_eligibility("PT", "Madeira")[0] is True
+
+
 def test_eligibilite_pays_yahoo_inconnu():
     ok, raison = U.pea_eligibility("FR", "Wakanda")
     assert ok is None and "pea_unknown" in raison
