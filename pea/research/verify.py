@@ -40,7 +40,10 @@ TOURNURES_INTERDITES = (
 )
 
 NOMBRE = re.compile(
-    r"(?<![\w.])"
+    # Une lettre peut coller au chiffre : la presse écrit « EUR750 million ». Seuls un autre
+    # chiffre ou un séparateur décimal interdisent la reconnaissance, pour ne pas couper un
+    # nombre en deux. Les références du type [F19] sont retirées du texte au préalable.
+    r"(?<![\d.,])"
     r"([+-]?(?:\d{1,3}(?:[   ]\d{3})+|\d+(?:[.,]\d+)?))"
     r"\s*(%|milliards?|millions?|milliers?|mds?|m€)?",
     re.IGNORECASE,
@@ -123,7 +126,8 @@ def nombres_du_texte(texte: str) -> list[NombreEcrit]:
     Les durées sont ignorées : « moyenne mobile à 200 jours » nomme une fenêtre de calcul,
     ce n'est pas une affirmation chiffrée sur la société.
     """
-    texte = texte or ""
+    # Les références sont retirées d'abord : « [F19] » ne doit pas se lire comme le nombre 19.
+    texte = REFS_CITEES.sub(" ", texte or "")
     trouves: list[NombreEcrit] = []
     for correspondance in NOMBRE.finditer(texte):
         if DUREE.match(texte[correspondance.end():]):

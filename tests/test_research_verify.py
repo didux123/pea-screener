@@ -374,3 +374,29 @@ def test_methode_de_valorisation_peut_porter_des_multiples_choisis(travail):
         "refs": ["F1"],
     })
     assert verifier(dossier, travail).valide
+
+
+def test_montant_colle_a_sa_devise_est_lu(travail):
+    """La presse anglophone écrit « EUR750 million », sans espace."""
+    lus = {n.valeur for n in nombres_du_texte("robust cash position of EUR750 million")}
+    assert 750_000_000.0 in lus
+
+
+def test_une_reference_n_est_pas_un_nombre(travail):
+    """« [F19] » ne doit pas se lire comme le nombre dix-neuf."""
+    assert nombres_du_texte("une dette nette négative [F19] et une marge tenue") == []
+
+
+def test_chiffre_tire_d_un_article_anglophone_est_source(travail):
+    """Le modèle cite un montant lu dans un article : le vérificateur doit le retrouver."""
+    travail.faits.append(
+        Fait("N1b", "BAM Groep H1 2026 Earnings Call Highlights", None, "texte", None, "presse",
+             texte="Adjusted EBITDA margin improves to 6.9% with robust cash position of "
+                   "EUR750 million, despite increased tax rate.",
+             url="https://exemple/2", date=dt.date(2026, 7, 20))
+    )
+    dossier = _dossier(avantage_concurrentiel=(
+        "Sa solidité financière repose sur une position de trésorerie de 750 millions d'euros "
+        "au premier semestre 2026 [N1b]."
+    ))
+    assert verifier(dossier, travail).valide
