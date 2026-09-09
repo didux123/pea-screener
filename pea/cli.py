@@ -172,10 +172,23 @@ def _screen(con, cfg, args) -> int:
           f"dernière récupération : {resultat.audit.max_fetched_at_used}")
 
     retenues = resultat.scores[~resultat.scores["eliminated"]]
-    if not retenues.empty:
+    if not retenues.empty:  # aperçu du classement, le détail va dans les fichiers
         apercu = retenues.head(15)[["rank", "name", "sector", "total_score", "coverage_ratio"]]
         print()
         print(apercu.to_string(index=False, float_format=lambda v: f"{v:.1f}"))
+
+    couverture = resultat.coverage[resultat.coverage["population"] == "universe"]
+    if not couverture.empty:
+        total = (couverture["n_present"] + couverture["n_missing"]).sum()
+        taux = couverture["n_present"].sum() / total if total else 0.0
+        pires = couverture.nsmallest(5, "n_present")
+        print(f"\n  Couverture des données : {taux:.0%} des champs requis renseignés")
+        for ligne in pires.itertuples():
+            present = ligne.n_present + ligne.n_missing
+            part = ligne.n_present / present if present else 0.0
+            print(f"    {ligne.field:38s} {part:5.0%} ({ligne.n_present}/{present})")
+        incomplets = int(retenues["consensus_incomplete"].fillna(True).astype(bool).sum())
+        print(f"    consensus incomplet sur {incomplets} des {len(retenues)} valeurs classées")
 
     diff = compare_with_previous(con, run_id, as_of)
     if diff is not None:
