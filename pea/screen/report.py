@@ -118,16 +118,18 @@ def _write_index(reports_dir: Path) -> None:
     lignes = "\n".join(
         f'<li><a href="{p.name}/index.html">{p.name}</a></li>' for p in dossiers
     )
+    # La racine mène directement au dernier tableau de bord : une seule adresse à retenir.
     (reports_dir / "index.html").write_text(
         "<!doctype html><html lang=fr><head><meta charset=utf-8>"
-        "<meta name=viewport content='width=device-width, initial-scale=1'>"
-        "<title>Classements PEA</title>"
+        "<meta http-equiv=refresh content='0; url=latest/index.html'>"
+        "<title>Screener PEA</title>"
         "<style>body{font:15px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;"
-        "max-width:40rem;margin:3rem auto;padding:0 1.5rem;background:#fbfbf9;color:#1c1c1a}"
+        "max-width:40rem;margin:3rem auto;padding:0 1.5rem;background:#f5f2ec;color:#1c1c1a}"
         "@media(prefers-color-scheme:dark){body{background:#16161a;color:#e8e8e4}}"
         "a{color:inherit}h1{font-size:1.3rem}</style></head><body>"
-        "<h1>Classements PEA</h1>"
-        f"<p><a href='latest/index.html'>Le plus récent</a></p><ul>{lignes}</ul>"
+        "<h1>Screener PEA</h1>"
+        "<p><a href='latest/index.html'>Ouvrir le tableau de bord</a></p>"
+        f"<p>Classements archivés :</p><ul>{lignes}</ul>"
         "</body></html>",
         encoding="utf-8",
     )
