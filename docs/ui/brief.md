@@ -31,9 +31,20 @@ dimanche soir avec un café, et qui ne cherche pas à faire agir.
 - **JavaScript autorisé mais sans dépendance externe** : pas de React, pas de Vue, pas de CDN. Le
   site doit fonctionner sans accès à Internet, sur un réseau local. Tri, filtre et recherche se
   font en JavaScript natif sur les données déjà chargées.
-- **Les données viennent d'un unique fichier `data.json`** placé à côté des pages, chargé par
-  `fetch('data.json')`. Le schéma est donné en section 5 et ne doit pas être modifié : le système
-  le produit tel quel. Prévois l'état de chargement et l'état d'erreur si le fichier manque.
+- **Les données viennent d'un unique fichier `data.json`** placé à côté des pages. Le schéma est
+  donné en section 5 et ne doit pas être modifié : le système le produit tel quel.
+  Le chargement se fait ainsi, pour que la page fonctionne aussi bien dans un aperçu que servie
+  par le conteneur :
+
+  ```js
+  // Copie du fichier d'exemple, remplacée à la génération. Sert de repli hors ligne.
+  const DONNEES_INTEGREES = { /* ... */ };
+  const donnees = await fetch('data.json')
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .catch(() => DONNEES_INTEGREES);
+  ```
+
+  Prévois l'état de chargement et un message clair si aucune des deux sources n'aboutit.
 - **Police système** (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`). Aucune
   police téléchargée.
 - **Thème clair et sombre**, suivant le réglage du navigateur via `prefers-color-scheme`, avec un
