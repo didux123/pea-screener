@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Qualité des données — screener PEA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="theme.css">
+<script src="commun.js"></script>
+<script src="donnees.js"></script>
+</helmet>
+<div style="min-height:100vh;background:var(--fond)">
+
+  <nav style="display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;padding:14px 26px;border-bottom:1px solid var(--trait);background:var(--fond2);position:sticky;top:0;z-index:30">
+    <span style="font-size:13px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap">Screener PEA</span>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:14px">
+      <a href="index.html" style="border:0;color:var(--encre2)">Classement</a>
+      <a href="Portefeuilles.html" style="border:0;color:var(--encre2)">Portefeuilles</a>
+      <a href="Digests.html" style="border:0;color:var(--encre2)">Digests</a>
+      <span style="color:var(--encre);border-bottom:2px solid var(--accent);padding-bottom:2px">Qualité des données</span>
+      <a href="Ecartees.html" style="border:0;color:var(--encre2)">Valeurs écartées</a>
+    </div>
+    <button onClick="{{ basculerTheme }}" style="margin-left:auto;font-size:13px;padding:4px 10px;background:var(--carte);border:1px solid var(--trait);border-radius:3px;cursor:pointer;white-space:nowrap">{{ libTheme }}</button>
+  </nav>
+
+  <header style="padding:26px 26px 8px;max-width:820px">
+    <h1 style="font-size:26px;line-height:1.2">Qualité des données</h1>
+    <p style="margin-top:10px;font-size:14.5px;color:var(--encre2)">Ce que le système a réellement pu lire. Les champs les moins renseignés sont en tête : ce sont eux qui pèsent le plus sur les scores, puisqu’une donnée absente vaut 20 sur 100 et n’est jamais estimée.</p>
+  </header>
+
+  <sc-if value="{{ chargement }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:34px 26px;color:var(--encre3);font-size:14px">Chargement de <code>data.json</code>…</div>
+  </sc-if>
+  <sc-if value="{{ erreur }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:26px;padding:18px;border:1px solid var(--baisse);background:var(--carte);max-width:640px"><strong style="color:var(--baisse)">Aucune donnée n’a pu être chargée.</strong><p style="margin-top:8px;font-size:14px;color:var(--encre2)">Ni <code>data.json</code>, ni la copie intégrée dans <code>donnees.js</code>.</p></div>
+  </sc-if>
+
+  <section style="padding:20px 26px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;max-width:1000px">
+    <sc-for list="{{ compteurs }}" as="c" hint-placeholder-count="5">
+      <div style="border:1px solid var(--trait);background:var(--carte);padding:13px 15px">
+        <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);line-height:1.35">{{ c.lib }}</div>
+        <div style="font-size:24px;font-variant-numeric:tabular-nums;margin-top:4px;color:{{ c.couleur }}">{{ c.val }}</div>
+        <div style="font-size:12px;color:var(--encre2);margin-top:3px">{{ c.note }}</div>
+      </div>
+    </sc-for>
+  </section>
+
+  <section style="padding:28px 26px 0;max-width:1000px">
+    <h2 style="font-size:17px">Couverture champ par champ</h2>
+    <p style="margin-top:6px;font-size:13px;color:var(--encre3)">Les identifiants de champ sont ceux de la source, laissés tels quels.</p>
+    <div style="margin-top:14px;border:1px solid var(--trait);background:var(--carte);overflow-x:auto">
+      <div style="min-width:660px">
+        <div style="display:grid;grid-template-columns:1fr 92px 92px 150px 76px;gap:12px;padding:9px 16px;background:var(--fond2);border-bottom:1px solid var(--trait);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3)">
+          <span>Champ</span><span style="text-align:right">Présent</span><span style="text-align:right">Absent</span><span>Couverture</span><span style="text-align:right">Part</span>
+        </div>
+        <sc-for list="{{ champs }}" as="c" hint-placeholder-count="12">
+          <div style="display:grid;grid-template-columns:1fr 92px 92px 150px 76px;gap:12px;padding:8px 16px;border-bottom:1px solid var(--trait2);align-items:center;font-size:13px">
+            <span style="font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><code>{{ c.champ }}</code></span>
+            <span style="text-align:right;font-variant-numeric:tabular-nums">{{ c.present }}</span>
+            <span style="text-align:right;font-variant-numeric:tabular-nums;color:{{ c.couleur }}">{{ c.absent }}</span>
+            <span style="height:8px;background:var(--trait2);display:block"><span style="height:8px;display:block;background:{{ c.couleurBarre }};width:{{ c.largeur }}"></span></span>
+            <span style="text-align:right;font-variant-numeric:tabular-nums;color:{{ c.couleur }}">{{ c.part }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:28px 26px 0;max-width:820px">
+    <h2 style="font-size:17px">Métriques les plus souvent pénalisées</h2>
+    <p style="margin-top:6px;font-size:13px;color:var(--encre3)">Comptées sur les {{ nbClassees }} valeurs classées. Chaque occurrence a valu 20 sur 100 dans le bloc concerné.</p>
+    <div style="margin-top:14px;display:flex;flex-direction:column;gap:7px">
+      <sc-for list="{{ penalisees }}" as="p" hint-placeholder-count="8">
+        <div style="display:grid;grid-template-columns:1fr 150px 108px;gap:12px;align-items:center;font-size:13.5px">
+          <span>{{ p.lib }}</span>
+          <span style="height:8px;background:var(--trait2);display:block"><span style="height:8px;display:block;background:var(--manque);width:{{ p.largeur }}"></span></span>
+          <span style="text-align:right;font-variant-numeric:tabular-nums;color:var(--encre2)">{{ p.val }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="padding:28px 26px 0;max-width:820px">
+    <h2 style="font-size:17px">Distribution de la couverture</h2>
+    <div style="margin-top:14px;display:flex;flex-direction:column;gap:7px">
+      <sc-for list="{{ tranches }}" as="t" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:118px 1fr 108px;gap:12px;align-items:center;font-size:13.5px">
+          <span style="font-variant-numeric:tabular-nums;color:{{ t.couleur }}">{{ t.lib }}</span>
+          <span style="height:12px;background:var(--trait2);display:block"><span style="height:12px;display:block;background:{{ t.couleurBarre }};width:{{ t.largeur }}"></span></span>
+          <span style="text-align:right;font-variant-numeric:tabular-nums;color:var(--encre2)">{{ t.val }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer style="margin:34px 26px 60px;padding:16px 18px;border:1px solid var(--trait);background:var(--carte);max-width:820px;font-size:13px">
+    <h2 style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--encre3)">Preuve d’absence de fuite</h2>
+    <div style="margin-top:10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px 18px">
+      <sc-for list="{{ fuite }}" as="f" hint-placeholder-count="3">
+        <div><div style="font-size:11px;color:var(--encre3)">{{ f.lib }}</div><div style="font-variant-numeric:tabular-nums">{{ f.val }}</div></div>
+      </sc-for>
+    </div>
+    <p style="margin-top:12px;color:var(--encre2)">Aucune donnée postérieure à la date du classement n’est entrée dans le calcul.</p>
+    <p style="margin-top:12px;color:var(--encre3);font-size:12px">Ce document ne constitue pas un conseil en investissement.</p>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;seuilAlerte&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.9,&quot;min&quot;:0.5,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = { d: null, chargement: true, erreur: false, theme: 'auto' };
+
+  componentDidMount() {
+    this.setState({ theme: SCR.themeActuel() });
+    SCR.charger().then(d => this.setState({ d, chargement: false }))
+      .catch(() => this.setState({ erreur: true, chargement: false }));
+  }
+
+  renderVals() {
+    const d = this.state.d;
+    const T = SCR.TIRET;
+    const seuil = this.props.seuilAlerte ?? 0.90;
+    const champs = d ? d.couverture_par_champ.slice().map(c => {
+      const tot = c.present + c.absent;
+      const part = tot ? c.present / tot : 0;
+      const bas = part < seuil;
+      return { champ: c.champ, present: SCR.nb(c.present, 0), absent: SCR.nb(c.absent, 0),
+        part: SCR.nb(part * 100, 1) + ' %', tri: part,
+        largeur: Math.max(2, part * 100) + '%',
+        couleur: bas ? 'var(--manque)' : 'var(--encre2)',
+        couleurBarre: bas ? 'var(--manque)' : 'var(--barre)' };
+    }).sort((a, b) => a.tri - b.tri) : [];
+
+    let penalisees = [], tranches = [];
+    if (d) {
+      const cpt = {};
+      d.valeurs.forEach(v => v.metriques_penalisees.forEach(k => { cpt[k] = (cpt[k] || 0) + 1; }));
+      const plafond = Math.max(1, ...Object.values(cpt));
+      penalisees = Object.entries(cpt).sort((a, b) => b[1] - a[1]).map(([k, n]) => ({
+        lib: SCR.metriqueLib(k),
+        val: SCR.nb(n, 0) + ' valeurs · ' + SCR.nb(100 * n / d.valeurs.length, 0) + ' %',
+        largeur: Math.max(2, 100 * n / plafond) + '%' }));
+
+      const bornes = [[0, 0.6, 'moins de 60 %', true], [0.6, 0.75, 'de 60 à 75 %', true],
+                      [0.75, 0.9, 'de 75 à 90 %', false], [0.9, 1.0, 'de 90 à 100 %', false],
+                      [1.0, 1.01, '100 %', false]];
+      const plafondT = Math.max(1, ...bornes.map(([a, b]) => d.valeurs.filter(v => v.couverture >= a && v.couverture < b).length));
+      tranches = bornes.map(([a, b, lib, alerte]) => {
+        const n = d.valeurs.filter(v => v.couverture >= a && v.couverture < b).length;
+        return { lib, val: SCR.nb(n, 0) + ' valeurs',
+          largeur: Math.max(1, 100 * n / plafondT) + '%',
+          couleur: alerte ? 'var(--manque)' : 'var(--encre2)',
+          couleurBarre: alerte ? 'var(--manque)' : 'var(--barre)' };
+      });
+    }
+
+    /* Certains compteurs ne sont pas exportés par le moteur : ils sont alors dérivés
+       des raisons d’exclusion, ou laissés en tiret. Aucun n’est estimé. */
+    const q = d ? (d.qualite || {}) : {};
+    const parRaison = {};
+    if (d) d.raisons_exclusion.forEach(r => { parRaison[r.raison] = r.valeurs; });
+    const conflits = q.conflits_eligibilite_pea != null ? q.conflits_eligibilite_pea
+      : (d ? Object.keys(parRaison).filter(r => r.indexOf('pea_conflict') === 0)
+              .reduce((a, r) => a + parRaison[r], 0) : null);
+    const sansSymbole = q.sans_symbole_resolu != null ? q.sans_symbole_resolu
+      : (parRaison.symbole_non_resolu ?? parRaison.liquidite_inconnue ?? null);
+    const trop = q.comptes_trop_anciens != null ? q.comptes_trop_anciens
+      : (parRaison.comptes_trop_anciens ?? parRaison.donnees_insuffisantes ?? null);
+    const cpt = (v, note) => v == null
+      ? { val: SCR.TIRET, note: 'non exporté dans ce fichier', couleur: 'var(--encre3)' }
+      : { val: SCR.nb(v, 0), note, couleur: 'var(--manque)' };
+    const c1 = cpt(sansSymbole, sansSymbole === parRaison.liquidite_inconnue ? 'liquidité inconnue, cotation non rattachable' : 'exclues faute de cotation rattachable');
+    const c2 = cpt(conflits, 'sources en désaccord, à arbitrer à la main');
+    const c3 = cpt(trop, 'exercice hors délai ou comptes incomplets');
+    const c4 = cpt(q.dates_publication_estimees, 'estimées plutôt que réelles');
+    return {
+      chargement: this.state.chargement, erreur: this.state.erreur,
+      libTheme: { auto: 'Thème : auto', clair: 'Thème : clair', sombre: 'Thème : sombre' }[this.state.theme],
+      nbClassees: d ? SCR.nb(d.valeurs.length, 0) : T,
+      compteurs: d ? [
+        { lib: 'Couverture moyenne', val: SCR.nb(d.couverture_moyenne * 100, 0) + ' %', note: 'sur les valeurs classées', couleur: 'var(--encre)' },
+        { lib: 'Valeurs sans symbole résolu', val: c1.val, note: c1.note, couleur: c1.couleur },
+        { lib: 'Conflits d’éligibilité PEA', val: c2.val, note: c2.note, couleur: c2.couleur },
+        { lib: 'Comptes trop anciens ou incomplets', val: c3.val, note: c3.note, couleur: c3.couleur },
+        { lib: 'Dates de publication estimées', val: c4.val, note: c4.note, couleur: c4.couleur }
+      ] : [],
+      champs, penalisees, tranches,
+      fuite: d ? [
+        { lib: 'Date du classement', val: SCR.dateFr(d.as_of) },
+        { lib: 'Dernière information utilisée', val: SCR.dateFr(d.derniere_information_utilisee) },
+        { lib: 'Dernière récupération utilisée', val: SCR.heureFr(d.derniere_recuperation_utilisee) },
+        { lib: 'Univers sans biais du survivant', val: d.survivorship_complete ? 'oui' : 'non, univers reconstruit' },
+        { lib: 'Empreinte de version du code', val: d.version_code },
+        { lib: 'Fichier généré le', val: SCR.heureFr(d.genere_le) }
+      ] : [],
+      basculerTheme: () => this.setState({ theme: SCR.themeSuivant() })
+    };
+  }
+}
+</script>
+</body>
+</html>

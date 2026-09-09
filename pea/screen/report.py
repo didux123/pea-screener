@@ -11,6 +11,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pea.screen.runs import load_run
 
 TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates"
+WEB_DIR = Path(__file__).resolve().parent.parent / "web"
 TOP_N = 100
 
 
@@ -92,8 +93,20 @@ def write_reports(con, run_id: str, cfg) -> list[Path]:
     for chemin in chemins:
         if chemin.parent != dernier:
             shutil.copy2(chemin, dernier / chemin.name)
+
+    _copy_web(dossier)
+    _copy_web(dernier)
     _write_index(Path(cfg.reports_dir))
     return chemins
+
+
+def _copy_web(destination: Path) -> None:
+    """Dépose les pages de l'interface à côté des données qu'elles lisent."""
+    if not WEB_DIR.is_dir():
+        return
+    for fichier in WEB_DIR.iterdir():
+        if fichier.is_file():
+            shutil.copy2(fichier, destination / fichier.name)
 
 
 def _write_index(reports_dir: Path) -> None:
@@ -103,7 +116,7 @@ def _write_index(reports_dir: Path) -> None:
         reverse=True,
     )
     lignes = "\n".join(
-        f'<li><a href="{p.name}/ranking.html">{p.name}</a></li>' for p in dossiers
+        f'<li><a href="{p.name}/index.html">{p.name}</a></li>' for p in dossiers
     )
     (reports_dir / "index.html").write_text(
         "<!doctype html><html lang=fr><head><meta charset=utf-8>"
@@ -114,7 +127,7 @@ def _write_index(reports_dir: Path) -> None:
         "@media(prefers-color-scheme:dark){body{background:#16161a;color:#e8e8e4}}"
         "a{color:inherit}h1{font-size:1.3rem}</style></head><body>"
         "<h1>Classements PEA</h1>"
-        f"<p><a href='latest/ranking.html'>Le plus récent</a></p><ul>{lignes}</ul>"
+        f"<p><a href='latest/index.html'>Le plus récent</a></p><ul>{lignes}</ul>"
         "</body></html>",
         encoding="utf-8",
     )

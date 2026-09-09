@@ -1,0 +1,93 @@
+/* Screener PEA — jetons de couleur et remises à zéro. Aucune classe utilitaire :
+   les media queries et les variables ne peuvent pas vivre en style en ligne. */
+:root {
+  --fond: #f4f1ea;
+  --fond2: #faf8f3;
+  --carte: #ffffff;
+  --encre: #1a1a17;
+  --encre2: #56534c;
+  --encre3: #8b867c;
+  --trait: #dcd6ca;
+  --trait2: #eae5db;
+  --accent: #1d5673;
+  --accent-encre: #1d5673;
+  --accent-fond: #e5edf2;
+  --barre: #7ba3b8;
+  --hausse: #14653c;
+  --baisse: #a02f28;
+  --alerte: #7d5200;
+  --alerte-fond: #f6eeda;
+  --manque: #b06a12;
+  --ombre: 0 1px 2px rgba(26, 26, 23, .06), 0 8px 24px rgba(26, 26, 23, .05);
+}
+:root[data-theme="sombre"] {
+  --fond: #14161a;
+  --fond2: #191c21;
+  --carte: #1d2127;
+  --encre: #e9e7e1;
+  --encre2: #a9a59d;
+  --encre3: #767169;
+  --trait: #2d323a;
+  --trait2: #23272d;
+  --accent: #74afcd;
+  --accent-encre: #9cc8de;
+  --accent-fond: #1b2b35;
+  --barre: #46728a;
+  --hausse: #55b183;
+  --baisse: #e58074;
+  --alerte: #d7a44a;
+  --alerte-fond: #2a2417;
+  --manque: #d79a4a;
+  --ombre: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .28);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="clair"]) {
+    --fond: #14161a;
+    --fond2: #191c21;
+    --carte: #1d2127;
+    --encre: #e9e7e1;
+    --encre2: #a9a59d;
+    --encre3: #767169;
+    --trait: #2d323a;
+    --trait2: #23272d;
+    --accent: #74afcd;
+    --accent-encre: #9cc8de;
+    --accent-fond: #1b2b35;
+    --barre: #46728a;
+    --hausse: #55b183;
+    --baisse: #e58074;
+    --alerte: #d7a44a;
+    --alerte-fond: #2a2417;
+    --manque: #d79a4a;
+    --ombre: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .28);
+  }
+}
+html { background: var(--fond); }
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+* { box-sizing: border-box; }
+a { color: var(--accent-encre); text-decoration: none; border-bottom: 1px solid var(--trait); }
+a:hover { border-bottom-color: var(--accent-encre); }
+button { font: inherit; color: inherit; }
+h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -.01em; }
+p { margin: 0; }
+ul, ol { margin: 0; }
+::selection { background: var(--accent-fond); }
+
+/* Le moteur de rendu de Claude Design fixe la hauteur de la page à celle de la fenêtre,
+   ce qui convient à une maquette d'écran mais empêche un long tableau de s'afficher
+   au-delà du premier écran. La page doit pouvoir grandir. */
+html,
+body,
+#dc-root,
+#dc-root > .sc-host {
+  height: auto !important;
+  min-height: 100%;
+}

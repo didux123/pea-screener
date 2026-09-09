@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Digests hebdomadaires — screener PEA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="theme.css">
+<script src="commun.js"></script>
+<script src="donnees.js"></script>
+</helmet>
+<div style="min-height:100vh;background:var(--fond)">
+
+  <nav style="display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;padding:14px 26px;border-bottom:1px solid var(--trait);background:var(--fond2);position:sticky;top:0;z-index:30">
+    <span style="font-size:13px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap">Screener PEA</span>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:14px">
+      <a href="index.html" style="border:0;color:var(--encre2)">Classement</a>
+      <a href="Portefeuilles.html" style="border:0;color:var(--encre2)">Portefeuilles</a>
+      <span style="color:var(--encre);border-bottom:2px solid var(--accent);padding-bottom:2px">Digests</span>
+      <a href="Qualite.html" style="border:0;color:var(--encre2)">Qualité des données</a>
+      <a href="Ecartees.html" style="border:0;color:var(--encre2)">Valeurs écartées</a>
+    </div>
+    <button onClick="{{ basculerTheme }}" style="margin-left:auto;font-size:13px;padding:4px 10px;background:var(--carte);border:1px solid var(--trait);border-radius:3px;cursor:pointer;white-space:nowrap">{{ libTheme }}</button>
+  </nav>
+
+  <div style="max-width:660px;margin:0 auto;padding:26px 22px 60px">
+    <header>
+      <h1 style="font-size:25px;line-height:1.2">Digest hebdomadaire</h1>
+      <p style="margin-top:9px;font-size:14.5px;color:var(--encre2)">Une page par semaine, archivée, à lire sur téléphone le dimanche soir. Colonne unique, pas de tableau large.</p>
+    </header>
+
+    <sc-if value="{{ vide }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:18px;padding:14px 16px;border:1px dashed var(--trait);background:var(--carte);font-size:14px;color:var(--encre2)">
+        <strong style="color:var(--encre)">Aucun digest archivé.</strong> Le premier sera écrit à la fin de la première semaine complète d’exécution. La maquette ci-dessous fixe l’ordre de lecture ; les emplacements restent vides plutôt que remplis de valeurs simulées.
+      </div>
+    </sc-if>
+
+    <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:baseline">
+        <span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--encre3)">Semaine</span>
+        <sc-for list="{{ semaines }}" as="s" hint-placeholder-count="4">
+          <span style="font-size:12.5px;padding:3px 9px;border:1px solid var(--trait);background:{{ s.fond }};color:{{ s.couleur }};font-variant-numeric:tabular-nums">{{ s.lib }}</span>
+        </sc-for>
+      </div>
+    </div>
+
+    <article style="margin-top:22px;border:1px solid var(--trait);background:var(--carte)">
+      <div style="padding:16px 18px;border-bottom:1px solid var(--trait)">
+        <div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--encre3)">Semaine du</div>
+        <h2 style="font-size:19px;margin-top:2px;font-variant-numeric:tabular-nums">{{ semaineCourante }}</h2>
+      </div>
+      <div style="padding:4px 18px 18px">
+        <sc-for list="{{ sections }}" as="s" hint-placeholder-count="4">
+          <div style="padding:15px 0;border-bottom:1px solid var(--trait2)">
+            <h3 style="font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:{{ s.couleur }}">{{ s.titre }}</h3>
+            <p style="margin-top:6px;font-size:13.5px;color:var(--encre2);line-height:1.6">{{ s.attendu }}</p>
+            <div style="margin-top:10px;font-size:14px;color:var(--encre3);font-variant-numeric:tabular-nums">{{ s.vide }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </article>
+
+    <footer style="margin-top:26px;padding-top:16px;border-top:1px solid var(--trait);font-size:12px;color:var(--encre3)">
+      <div>Classement de référence du {{ pied.asOf }} &middot; empreinte de version {{ pied.version }}</div>
+      <div style="margin-top:9px">Ce document ne constitue pas un conseil en investissement.</div>
+    </footer>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { d: null, theme: 'auto' };
+
+  componentDidMount() {
+    this.setState({ theme: SCR.themeActuel() });
+    SCR.charger().then(d => this.setState({ d })).catch(() => {});
+  }
+
+  renderVals() {
+    const d = this.state.d;
+    const T = SCR.TIRET;
+    const archives = d && d.digests ? d.digests : [];
+    const lundi = () => {
+      if (!d) return T;
+      const dt = new Date(d.as_of + 'T12:00:00Z');
+      dt.setUTCDate(dt.getUTCDate() - ((dt.getUTCDay() + 6) % 7));
+      return SCR.dateFr(dt.toISOString().slice(0, 10));
+    };
+    return {
+      vide: archives.length === 0,
+      libTheme: { auto: 'Thème : auto', clair: 'Thème : clair', sombre: 'Thème : sombre' }[this.state.theme],
+      semaines: archives.length
+        ? archives.map((a, i) => ({ lib: a.semaine, fond: i === 0 ? 'var(--accent-fond)' : 'var(--carte)', couleur: i === 0 ? 'var(--accent-encre)' : 'var(--encre2)' }))
+        : [{ lib: 'aucune archive', fond: 'var(--carte)', couleur: 'var(--encre3)' }],
+      semaineCourante: lundi(),
+      sections: [
+        { titre: 'Nouveaux candidats', couleur: 'var(--encre3)',
+          attendu: 'Les valeurs entrées dans le premier décile cette semaine, avec leur thèse en trois lignes et leur couverture de données.',
+          vide: 'Aucun nouveau candidat consigné.' },
+        { titre: 'Changements de conviction', couleur: 'var(--encre3)',
+          attendu: 'Hausses et baisses de conviction sur les dossiers existants, avec la raison observable du changement.',
+          vide: 'Aucun changement consigné.' },
+        { titre: 'Critères d’invalidation déclenchés', couleur: 'var(--baisse)',
+          attendu: 'La section la plus importante : les thèses que les faits ont rendues fausses depuis la dernière publication.',
+          vide: 'Aucun critère déclenché.' },
+        { titre: 'Performance des portefeuilles', couleur: 'var(--encre3)',
+          attendu: 'Les deux portefeuilles, leurs trois références et le bras témoin aléatoire sur la semaine, coûts déduits.',
+          vide: 'Aucun relevé disponible.' }
+      ],
+      pied: { asOf: d ? SCR.dateFr(d.as_of) : T, version: d ? d.version_code : T },
+      basculerTheme: () => this.setState({ theme: SCR.themeSuivant() })
+    };
+  }
+}
+</script>
+</body>
+</html>

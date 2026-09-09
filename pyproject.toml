@@ -26,6 +26,10 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["pea"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"pea/web" = "pea/web"
+"pea/templates" = "pea/templates"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 markers = ["network: tests qui appellent Yahoo (ignorés par défaut)"]

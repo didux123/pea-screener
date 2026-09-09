@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Classement — screener PEA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="theme.css">
+<script src="commun.js"></script>
+<script src="donnees.js"></script>
+</helmet>
+<div style="min-height:100vh;background:var(--fond)">
+
+  <nav style="display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;padding:14px 26px;border-bottom:1px solid var(--trait);background:var(--fond2);position:sticky;top:0;z-index:30">
+    <span style="font-size:13px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--encre);white-space:nowrap">Screener PEA</span>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:14px">
+      <span style="color:var(--encre);border-bottom:2px solid var(--accent);padding-bottom:2px">Classement</span>
+      <a href="Portefeuilles.html" style="border:0;color:var(--encre2)">Portefeuilles</a>
+      <a href="Digests.html" style="border:0;color:var(--encre2)">Digests</a>
+      <a href="Qualite.html" style="border:0;color:var(--encre2)">Qualité des données</a>
+      <a href="Ecartees.html" style="border:0;color:var(--encre2)">Valeurs écartées</a>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;margin-left:auto">
+      <select onChange="{{ changerDate }}" style="font:inherit;font-size:13px;padding:4px 8px;background:var(--carte);color:var(--encre);border:1px solid var(--trait);border-radius:3px">
+        <sc-for list="{{ dates }}" as="d" hint-placeholder-count="1">
+          <option value="{{ d.v }}">{{ d.lib }}</option>
+        </sc-for>
+      </select>
+      <button onClick="{{ basculerTheme }}" title="Thème clair, sombre ou automatique" style="font-size:13px;padding:4px 10px;background:var(--carte);border:1px solid var(--trait);border-radius:3px;cursor:pointer;white-space:nowrap">{{ libTheme }}</button>
+    </div>
+  </nav>
+
+  <sc-if value="{{ note }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:8px 26px;background:var(--alerte-fond);color:var(--alerte);font-size:13px;border-bottom:1px solid var(--trait)">{{ note }}</div>
+  </sc-if>
+
+  <sc-if value="{{ reconstruit }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:18px 26px 0;padding:14px 16px;border:1px solid var(--alerte);border-left-width:4px;background:var(--alerte-fond);color:var(--alerte);font-size:14px;max-width:900px">
+      <strong>Régime reconstruit.</strong> Cette date précède le démarrage du système. Les comptes ont pu être retraités depuis, et l’univers ne contient que des sociétés encore cotées. Ce classement montre ce que le système <em>aurait pu</em> voir, pas ce qu’il aurait vu.
+    </div>
+  </sc-if>
+
+  <header style="padding:26px 26px 18px;max-width:1100px">
+    <h1 style="font-size:26px;line-height:1.2">Classement du {{ asOfLong }}</h1>
+    <div style="display:flex;flex-wrap:wrap;gap:26px 34px;margin-top:16px">
+      <sc-for list="{{ entete }}" as="s" hint-placeholder-count="6">
+        <div>
+          <div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--encre3)">{{ s.lib }}</div>
+          <div style="font-size:17px;font-variant-numeric:tabular-nums;margin-top:2px">{{ s.val }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </header>
+
+  <section style="padding:0 26px 14px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end">
+    <label style="display:block">
+      <span style="display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--encre3);margin-bottom:4px">Recherche</span>
+      <input value="{{ q }}" onInput="{{ chercher }}" placeholder="Nom ou code ISIN" style="font:inherit;font-size:14px;padding:7px 10px;width:210px;background:var(--carte);color:var(--encre);border:1px solid var(--trait);border-radius:3px">
+    </label>
+    <div>
+      <span style="display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--encre3);margin-bottom:4px">Secteur</span>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;max-width:560px">
+        <sc-for list="{{ filtresSecteur }}" as="f" hint-placeholder-count="8">
+          <button data-v="{{ f.v }}" onClick="{{ basculerSecteur }}" style="font-size:12.5px;padding:4px 9px;border-radius:3px;cursor:pointer;white-space:nowrap;border:1px solid {{ f.bord }};background:{{ f.fond }};color:{{ f.couleur }}">{{ f.lib }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <span style="display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--encre3);margin-bottom:4px">Pays</span>
+      <div style="display:flex;flex-wrap:wrap;gap:5px">
+        <sc-for list="{{ filtresPays }}" as="f" hint-placeholder-count="5">
+          <button data-v="{{ f.v }}" onClick="{{ basculerPays }}" style="font-size:12.5px;padding:4px 9px;border-radius:3px;cursor:pointer;white-space:nowrap;border:1px solid {{ f.bord }};background:{{ f.fond }};color:{{ f.couleur }}">{{ f.lib }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <span style="display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--encre3);margin-bottom:4px">Profondeur</span>
+      <div style="display:flex;gap:0">
+        <sc-for list="{{ vues }}" as="v" hint-placeholder-count="3">
+          <button data-v="{{ v.v }}" onClick="{{ changerVue }}" style="font-size:12.5px;padding:5px 11px;cursor:pointer;white-space:nowrap;border:1px solid var(--trait);margin-left:-1px;background:{{ v.fond }};color:{{ v.couleur }}">{{ v.lib }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="margin-left:auto;font-size:13px;color:var(--encre2);font-variant-numeric:tabular-nums">{{ compteAffiche }}</div>
+  </section>
+
+  <section style="padding:0 26px 10px;display:flex;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--encre2);align-items:center">
+    <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:34px;height:8px;background:var(--trait2);border:1px solid var(--trait);position:relative"><span style="position:absolute;inset:0 40% 0 0;background:var(--barre)"></span></span> percentile du bloc, de 0 à 100</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:4px;height:14px;background:var(--manque)"></span> couverture des données sous {{ seuilPct }}</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="color:var(--manque);font-weight:700">?</span> composante consensus incomplète</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="color:var(--manque)">—</span> donnée absente, comptée 20 sur 100, jamais estimée</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="color:var(--accent-encre);font-weight:700">§</span> dossier d’investissement rédigé</span>
+  </section>
+
+  <sc-if value="{{ chargement }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:40px 26px;color:var(--encre3);font-size:14px">Chargement de <code>data.json</code>…</div>
+  </sc-if>
+
+  <sc-if value="{{ erreur }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:26px;padding:18px;border:1px solid var(--baisse);background:var(--carte);max-width:640px">
+      <strong style="color:var(--baisse)">Aucune donnée n’a pu être chargée.</strong>
+      <p style="margin-top:8px;font-size:14px;color:var(--encre2)">Ni <code>data.json</code> à côté de cette page, ni la copie intégrée dans <code>donnees.js</code>. Vérifie que le fichier est bien servi par le conteneur, puis recharge.</p>
+    </div>
+  </sc-if>
+
+  <section style="padding:0 26px 60px">
+    <div style="overflow-x:auto;border:1px solid var(--trait);background:var(--carte);box-shadow:var(--ombre)">
+      <div style="min-width:1662px">
+        <div style="display:grid;grid-template-columns:52px 210px 132px 96px 78px repeat(5,58px) repeat(7,86px) 84px 118px;position:sticky;top:0;background:var(--fond2);z-index:10;border-bottom:1px solid var(--trait)">
+          <sc-for list="{{ colonnes }}" as="c" hint-placeholder-count="19">
+            <button data-cle="{{ c.cle }}" onClick="{{ trier }}" title="{{ c.titre }}" style="padding:10px 8px;cursor:pointer;background:none;border:0;font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;line-height:1.25;text-align:{{ c.al }};color:{{ c.couleur }}">{{ c.lib }}{{ c.fleche }}</button>
+          </sc-for>
+        </div>
+        <sc-for list="{{ lignes }}" as="l" hint-placeholder-count="14">
+          <div data-isin="{{ l.isin }}" onClick="{{ ouvrir }}" style="display:grid;grid-template-columns:52px 210px 132px 96px 78px repeat(5,58px) repeat(7,86px) 84px 118px;align-items:center;cursor:pointer;border-bottom:1px solid var(--trait2);border-left:4px solid {{ l.liseret }};background:{{ l.fond }}" style-hover="background:var(--accent-fond)">
+            <div style="padding:{{ pad }} 8px;text-align:right;font-variant-numeric:tabular-nums;color:var(--encre3);font-size:13px">{{ l.rang }}</div>
+            <div style="padding:{{ pad }} 8px;overflow:hidden">
+              <div style="font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ l.nom }}<span style="color:var(--accent-encre);font-weight:700"> {{ l.marqueDossier }}</span></div>
+              <div style="font-size:11px;color:var(--encre3);font-variant-numeric:tabular-nums">{{ l.isin }}</div>
+            </div>
+            <div style="padding:{{ pad }} 8px;font-size:12.5px;color:var(--encre2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ l.secteur }}</div>
+            <div style="padding:{{ pad }} 8px;font-size:12.5px;color:var(--encre2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ l.pays }}</div>
+            <div style="padding:{{ pad }} 8px;text-align:right;font-variant-numeric:tabular-nums;font-size:15px;font-weight:600">{{ l.score }}</div>
+            <sc-for list="{{ l.blocs }}" as="b" hint-placeholder-count="5">
+              <div style="padding:{{ pad }} 7px">
+                <div style="font-size:11.5px;text-align:center;font-variant-numeric:tabular-nums;color:var(--encre2)">{{ b.txt }}</div>
+                <div style="height:5px;background:var(--trait2);margin-top:3px"><div style="height:5px;background:{{ b.couleur }};width:{{ b.largeur }}"></div></div>
+              </div>
+            </sc-for>
+            <sc-for list="{{ l.mets }}" as="m" hint-placeholder-count="7">
+              <div style="padding:{{ pad }} 8px;text-align:right;font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap;color:{{ m.couleur }}">{{ m.txt }}</div>
+            </sc-for>
+            <div style="padding:{{ pad }} 8px;text-align:right;font-size:12.5px;font-variant-numeric:tabular-nums;color:{{ l.couvCouleur }}">{{ l.couv }}{{ l.marqueConsensus }}</div>
+            <div style="padding:{{ pad }} 8px;font-size:11.5px;line-height:1.3;color:var(--alerte)">{{ l.alertes }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <p style="margin-top:12px;font-size:12.5px;color:var(--encre3);max-width:760px">Une donnée absente vaut 20 sur 100 dans le score et n’est jamais estimée. Une note élevée obtenue avec une couverture faible n’a pas la même valeur qu’une note élevée sur données complètes : le liseré et la colonne de couverture sont là pour empêcher la confusion.</p>
+  </section>
+
+  <sc-if value="{{ sel }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ fermer }}" style="position:fixed;inset:0;background:rgba(20,20,18,.34);z-index:40"></div>
+  </sc-if>
+  <sc-if value="{{ sel }}" hint-placeholder-val="{{ false }}">
+    <aside style="position:fixed;top:0;right:0;bottom:0;width:min(620px,100vw);background:var(--fond2);border-left:1px solid var(--trait);z-index:50;overflow-y:auto;box-shadow:var(--ombre)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:18px 22px 14px;border-bottom:1px solid var(--trait);position:sticky;top:0;background:var(--fond2);z-index:5">
+        <div>
+          <h2 style="font-size:20px;line-height:1.2">{{ sel.nom }}</h2>
+          <div style="font-size:12.5px;color:var(--encre3);font-variant-numeric:tabular-nums;margin-top:3px">{{ sel.soustitre }}</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <a href="{{ sel.lien }}" title="Adresse partageable de cette fiche" style="font-size:12px;color:var(--encre2);border:0">lien direct</a>
+          <button onClick="{{ fermer }}" style="font-size:16px;line-height:1;padding:5px 10px;background:var(--carte);border:1px solid var(--trait);border-radius:3px;cursor:pointer">×</button>
+        </div>
+      </div>
+
+      <div style="padding:18px 22px 60px">
+        <sc-if value="{{ sel.invalidation }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1px solid var(--accent);border-left-width:4px;background:var(--accent-fond);padding:14px 16px;margin-bottom:22px">
+            <h3 style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent-encre)">Critères d’invalidation</h3>
+            <p style="font-size:12.5px;color:var(--encre2);margin-top:5px">Événements observables qui rendraient la thèse fausse. Vérifiés automatiquement à chaque publication de résultats.</p>
+            <ul style="list-style:none;padding:0;margin-top:11px;display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ sel.invalidation }}" as="c" hint-placeholder-count="2">
+                <li style="display:grid;grid-template-columns:22px 1fr;gap:9px;font-size:13.5px">
+                  <span style="font-weight:700;color:{{ c.couleur }};text-align:center">{{ c.signe }}</span>
+                  <span>{{ c.critere }}<span style="display:block;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:{{ c.couleur }}">{{ c.statut }}</span></span>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+        </sc-if>
+
+        <h3 style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--encre3)">Identité</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px 18px;margin:10px 0 26px">
+          <sc-for list="{{ sel.identite }}" as="i" hint-placeholder-count="8">
+            <div>
+              <div style="font-size:11px;color:var(--encre3)">{{ i.lib }}</div>
+              <div style="font-size:14px;font-variant-numeric:tabular-nums">{{ i.val }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <h3 style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--encre3)">D’où vient la note</h3>
+        <div style="display:flex;align-items:baseline;gap:10px;margin-top:8px">
+          <span style="font-size:34px;font-weight:600;font-variant-numeric:tabular-nums">{{ sel.score }}</span>
+          <span style="font-size:13px;color:var(--encre3)">sur 100 &middot; rang {{ sel.rang }} sur {{ sel.total }} &middot; décile {{ sel.decile }}</span>
+        </div>
+        <div style="margin:14px 0 24px;display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ sel.blocs }}" as="b" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:150px 1fr 52px 56px;gap:10px;align-items:center;font-size:13px">
+              <span>{{ b.lib }}</span>
+              <span style="height:9px;background:var(--trait2);display:block"><span style="height:9px;display:block;background:{{ b.couleur }};width:{{ b.largeur }}"></span></span>
+              <span style="text-align:right;font-variant-numeric:tabular-nums;font-weight:600">{{ b.val }}</span>
+              <span style="text-align:right;font-variant-numeric:tabular-nums;font-size:11.5px;color:var(--encre3)">{{ b.poids }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <h3 style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--encre3)">Métriques, valeur brute et percentile</h3>
+        <div style="margin:10px 0 26px;border-top:1px solid var(--trait)">
+          <sc-for list="{{ sel.metriques }}" as="m" hint-placeholder-count="17">
+            <div style="display:grid;grid-template-columns:1fr 92px 42px 60px;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--trait2);font-size:13px">
+              <span style="color:{{ m.couleur }}">{{ m.lib }}<span style="color:var(--encre3);font-size:11px"> {{ m.marqueSecteur }}</span></span>
+              <span style="text-align:right;font-variant-numeric:tabular-nums;color:{{ m.couleur }}">{{ m.val }}</span>
+              <span style="text-align:right;font-variant-numeric:tabular-nums;font-size:11.5px;color:var(--encre3)">{{ m.pct }}</span>
+              <span style="height:6px;background:var(--trait2);display:block"><span style="height:6px;display:block;background:{{ m.couleurBarre }};width:{{ m.largeur }}"></span></span>
+            </div>
+          </sc-for>
+          <p style="margin-top:8px;font-size:11.5px;color:var(--encre3)">Les métriques marquées <em>sect.</em> sont classées à l’intérieur de leur secteur, non sur l’univers entier.</p>
+        </div>
+
+        <h3 style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--manque)">Ce qui manque</h3>
+        <div style="margin:10px 0 26px;padding:13px 15px;border:1px solid var(--trait);background:var(--carte)">
+          <div style="font-size:13.5px">Couverture des données : <strong style="font-variant-numeric:tabular-nums">{{ sel.couv }}</strong>{{ sel.couvNote }}</div>
+          <div style="margin-top:11px;font-size:12.5px;color:var(--encre2)">Métriques pénalisées, comptées 20 sur 100</div>
+          <ul style="margin-top:5px;padding-left:18px;font-size:13px">
+            <sc-for list="{{ sel.penalisees }}" as="p" hint-placeholder-count="2">
+              <li style="color:var(--manque)">{{ p }}</li>
+            </sc-for>
+          </ul>
+          <div style="margin-top:11px;font-size:12.5px;color:var(--encre2)">Champs absents dans la source</div>
+          <ul style="margin-top:5px;padding-left:18px;font-size:12.5px;font-variant-numeric:tabular-nums">
+            <sc-for list="{{ sel.manquants }}" as="m" hint-placeholder-count="2">
+              <li style="color:var(--encre2)"><code>{{ m }}</code></li>
+            </sc-for>
+          </ul>
+          <div style="margin-top:11px;font-size:12.5px;color:var(--alerte)">{{ sel.drapeaux }}</div>
+        </div>
+
+        <sc-if value="{{ sel.historique }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-bottom:26px">
+            <h3 style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--encre3)">Douze dernières semaines</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:22px;margin-top:10px">
+              <div>
+                <div style="font-size:11.5px;color:var(--encre3)">Score</div>
+                <svg width="240" height="72" viewBox="0 0 240 72" role="img" aria-label="Évolution du score sur douze semaines">
+                  <polyline points="{{ sel.historique.ptsScore }}" fill="none" stroke="var(--accent)" stroke-width="1.6"></polyline>
+                  <line x1="0" y1="71" x2="240" y2="71" stroke="var(--trait)" stroke-width="1"></line>
+                </svg>
+                <div style="font-size:11.5px;color:var(--encre2);font-variant-numeric:tabular-nums">{{ sel.historique.scoreBornes }}</div>
+              </div>
+              <div>
+                <div style="font-size:11.5px;color:var(--encre3)">Rang, 1 en haut</div>
+                <svg width="240" height="72" viewBox="0 0 240 72" role="img" aria-label="Évolution du rang sur douze semaines">
+                  <polyline points="{{ sel.historique.ptsRang }}" fill="none" stroke="var(--encre2)" stroke-width="1.6"></polyline>
+                  <line x1="0" y1="71" x2="240" y2="71" stroke="var(--trait)" stroke-width="1"></line>
+                </svg>
+                <div style="font-size:11.5px;color:var(--encre2);font-variant-numeric:tabular-nums">{{ sel.historique.rangBornes }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ sel.dossier }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <h3 style="font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--encre3)">Dossier d’investissement</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:20px;margin:10px 0 16px;font-variant-numeric:tabular-nums">
+              <div><div style="font-size:11px;color:var(--encre3)">Conviction</div><div style="font-size:17px">{{ sel.dossier.conviction }}</div></div>
+              <div><div style="font-size:11px;color:var(--encre3)">Horizon</div><div style="font-size:17px">{{ sel.dossier.horizon }}</div></div>
+              <div><div style="font-size:11px;color:var(--encre3)">Fourchette de valorisation</div><div style="font-size:17px">{{ sel.dossier.fourchette }}</div></div>
+              <div><div style="font-size:11px;color:var(--encre3)">Cours au {{ sel.dossier.dateCours }}</div><div style="font-size:17px">{{ sel.dossier.cours }}</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:16px;font-size:13.5px;line-height:1.6">
+              <div><div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);margin-bottom:3px">Activité</div>{{ sel.dossier.activite }}</div>
+              <div><div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);margin-bottom:3px">Origine réelle du chiffre d’affaires</div>{{ sel.dossier.origine }}</div>
+              <div>
+                <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);margin-bottom:3px">Moteurs de croissance</div>
+                <ul style="padding-left:18px">
+                  <sc-for list="{{ sel.dossier.moteurs }}" as="m" hint-placeholder-count="3"><li>{{ m }}</li></sc-for>
+                </ul>
+              </div>
+              <div><div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);margin-bottom:3px">Avantage concurrentiel</div>{{ sel.dossier.avantage }}</div>
+              <div><div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);margin-bottom:3px">Ce qui le ferait disparaître</div>{{ sel.dossier.disparition }}</div>
+              <div>
+                <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);margin-bottom:5px">Risques, du plus grave au moins grave</div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <sc-for list="{{ sel.dossier.risques }}" as="r" hint-placeholder-count="3">
+                    <div style="display:grid;grid-template-columns:64px 1fr;gap:10px">
+                      <span style="font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:{{ r.couleur }}">{{ r.gravite }}</span>
+                      <span><strong style="font-weight:600">{{ r.titre }}</strong><span style="display:block;color:var(--encre2)">{{ r.explication }}</span></span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="border:1px solid var(--trait);background:var(--carte);padding:13px 15px">
+                <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);margin-bottom:3px">La hausse récente est-elle justifiée</div>
+                <strong style="font-weight:600;color:{{ sel.dossier.verdictCouleur }}">{{ sel.dossier.verdict }}</strong> — {{ sel.dossier.verdictExpl }}
+              </div>
+              <div>
+                <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--alerte);margin-bottom:3px">Signes d’alerte</div>
+                {{ sel.dossier.alertes }}
+              </div>
+              <div>
+                <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);margin-bottom:5px">Catalyseurs datés</div>
+                <div style="display:flex;flex-direction:column;gap:5px">
+                  <sc-for list="{{ sel.dossier.catalyseurs }}" as="c" hint-placeholder-count="2">
+                    <div style="display:grid;grid-template-columns:104px 1fr;gap:10px"><span style="font-variant-numeric:tabular-nums;color:var(--encre2)">{{ c.date }}</span><span>{{ c.evenement }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);margin-bottom:5px">Sources</div>
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <sc-for list="{{ sel.dossier.sources }}" as="s" hint-placeholder-count="2">
+                    <div style="font-size:13px"><a href="{{ s.url }}">{{ s.titre }}</a><span style="color:var(--encre3);font-variant-numeric:tabular-nums"> · {{ s.date }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="font-size:11.5px;color:var(--encre3);font-variant-numeric:tabular-nums">{{ sel.dossier.meta }}</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ sel.sansDossier }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:13px 15px;border:1px dashed var(--trait);color:var(--encre2);font-size:13.5px">Aucun dossier d’investissement rédigé pour cette valeur. Le système n’en produit que sur une sélection : l’absence de dossier n’est ni un avis favorable ni un avis défavorable.</div>
+        </sc-if>
+      </div>
+    </aside>
+  </sc-if>
+
+  <footer style="padding:20px 26px 40px;border-top:1px solid var(--trait);font-size:12px;color:var(--encre3);max-width:900px">
+    <div>Dernière information utilisée : {{ pied.info }} &middot; dernière récupération : {{ pied.recup }} &middot; empreinte de version {{ pied.version }}</div>
+    <div style="margin-top:5px">Aucune donnée postérieure à la date du classement n’est entrée dans le calcul.</div>
+    <div style="margin-top:9px">Ce document ne constitue pas un conseil en investissement.</div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;seuilCouverture&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.75,&quot;min&quot;:0.4,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Lecture&quot;},&quot;densite&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;aérée&quot;,&quot;compacte&quot;],&quot;default&quot;:&quot;aérée&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lecture&quot;}}">
+const CLES_METRIQUES = ['croissance_ca_3a','marge_operationnelle','rentabilite_capitaux','ve_sur_resultat_op','rendement_flux_libre','dette_nette_sur_ebitda','momentum_12_1'];
+const CLES_BLOCS = ['croissance_qualite','momentum','valorisation','bilan','consensus'];
+
+class Component extends DCLogic {
+  state = { d: null, erreur: false, chargement: true, tri: { cle: 'rang', sens: 1 }, q: '',
+            secteurs: [], pays: [], vue: 'tout', sel: null, theme: 'auto' };
+
+  componentDidMount() {
+    this.setState({ theme: SCR.themeActuel(), sel: (location.hash || '').slice(1) || null });
+    SCR.charger().then(d => this.setState({ d, chargement: false }))
+      .catch(() => this.setState({ erreur: true, chargement: false }));
+    this._h = () => this.setState({ sel: (location.hash || '').slice(1) || null });
+    addEventListener('hashchange', this._h);
+  }
+  componentWillUnmount() { removeEventListener('hashchange', this._h); }
+
+  seuil() { return this.props.seuilCouverture ?? 0.9; }
+
+  cle(v, cle) {
+    if (cle === 'nom' || cle === 'isin') return v.nom;
+    if (cle === 'secteur') return SCR.secteur(v.secteur);
+    if (cle === 'pays') return SCR.pays(v.pays);
+    if (cle === 'rang') return v.rang;
+    if (cle === 'score') return v.score;
+    if (cle === 'couverture') return v.couverture;
+    if (cle === 'drapeaux') return v.drapeaux.length;
+    if (cle.startsWith('b:')) return v.blocs[cle.slice(2)];
+    if (cle.startsWith('m:')) { const m = v.metriques[cle.slice(2)]; return m && m.valeur !== null ? m.valeur : null; }
+    return 0;
+  }
+
+  filtrees() {
+    const d = this.state.d; if (!d) return [];
+    const q = this.state.q.trim().toLowerCase();
+    let l = d.valeurs.filter(v =>
+      (!this.state.secteurs.length || this.state.secteurs.includes(v.secteur)) &&
+      (!this.state.pays.length || this.state.pays.includes(v.pays)) &&
+      (!q || v.nom.toLowerCase().includes(q) || v.isin.toLowerCase().includes(q) || (v.ticker || '').toLowerCase().includes(q)));
+    if (this.state.vue === 'decile') l = l.filter(v => v.decile === 1);
+    const { cle, sens } = this.state.tri;
+    l = l.slice().sort((a, b) => {
+      const x = this.cle(a, cle), y = this.cle(b, cle);
+      if (x === null && y === null) return a.rang - b.rang;
+      if (x === null) return 1;
+      if (y === null) return -1;
+      if (typeof x === 'string') return sens * x.localeCompare(y, 'fr');
+      return sens * (x - y);
+    });
+    if (this.state.vue === '50') l = l.slice(0, 50);
+    return l;
+  }
+
+  couleurBloc(v) { return v >= 70 ? 'var(--accent)' : v >= 40 ? 'var(--barre)' : 'var(--encre3)'; }
+
+  renderVals() {
+    const d = this.state.d;
+    const seuil = this.seuil();
+    const dense = (this.props.densite ?? 'aérée') === 'compacte';
+    const pad = dense ? '5px' : '11px';
+    const T = SCR.TIRET;
+    const tri = this.state.tri;
+    const fl = c => tri.cle === c ? (tri.sens > 0 ? ' ↑' : ' ↓') : '';
+    const col = (cle, lib, al, titre) => ({ cle, lib, al, titre: titre || lib, fleche: fl(cle),
+      couleur: tri.cle === cle ? 'var(--accent-encre)' : 'var(--encre2)' });
+
+    const colonnes = [
+      col('rang', 'Rang', 'right'), col('nom', 'Valeur', 'left', 'Nom et code ISIN'),
+      col('secteur', 'Secteur', 'left'), col('pays', 'Pays', 'left'),
+      col('score', 'Score', 'right', 'Score total sur 100'),
+      ...CLES_BLOCS.map(b => col('b:' + b, SCR.BLOCS_COURT[b], 'center', SCR.BLOCS[b])),
+      ...CLES_METRIQUES.map(m => col('m:' + m, SCR.METRIQUES[m][1], 'right', SCR.METRIQUES[m][0])),
+      col('couverture', 'Couv.', 'right', 'Couverture des données'),
+      col('drapeaux', 'Alertes', 'left', 'Signes d’alerte relevés')
+    ];
+
+    const l = this.filtrees();
+    const lignes = l.map(v => ({
+      isin: v.isin, rang: v.rang, nom: v.nom, secteur: SCR.secteur(v.secteur), pays: SCR.pays(v.pays),
+      score: SCR.nb(v.score, 1),
+      marqueDossier: v.dossier ? '§' : '',
+      marqueConsensus: v.consensus_incomplet ? ' ?' : '',
+      liseret: v.couverture < seuil ? 'var(--manque)' : 'transparent',
+      fond: this.state.sel === v.isin ? 'var(--accent-fond)' : 'transparent',
+      blocs: CLES_BLOCS.map(b => ({ txt: SCR.nb(v.blocs[b], 0), largeur: Math.max(2, v.blocs[b]) + '%', couleur: this.couleurBloc(v.blocs[b]) })),
+      mets: CLES_METRIQUES.map(k => {
+        const m = v.metriques[k];
+        const abs = !m || m.valeur === null;
+        return { txt: SCR.metrique(m), couleur: abs ? 'var(--manque)' : 'var(--encre)' };
+      }),
+      couv: SCR.nb(v.couverture * 100, 0) + ' %',
+      couvCouleur: v.couverture < seuil ? 'var(--manque)' : 'var(--encre2)',
+      alertes: v.drapeaux.map(x => SCR.DRAPEAUX[x] || x).join(', ')
+    }));
+    const partiel = d && d.univers && d.univers.classees > d.valeurs.length;
+
+    let sel = null;
+    if (d && this.state.sel) {
+      const v = d.valeurs.find(x => x.isin === this.state.sel);
+      if (v) sel = this.fiche(v, d, seuil);
+    }
+
+    const secteursUniq = d ? [...new Set(d.valeurs.map(v => v.secteur))].sort((a, b) => SCR.secteur(a).localeCompare(SCR.secteur(b), 'fr')) : [];
+    const paysUniq = d ? [...new Set(d.valeurs.map(v => v.pays))].sort((a, b) => SCR.pays(a).localeCompare(SCR.pays(b), 'fr')) : [];
+    const chip = (actif, lib, v) => ({ v, lib,
+      bord: actif ? 'var(--accent)' : 'var(--trait)',
+      fond: actif ? 'var(--accent-fond)' : 'var(--carte)',
+      couleur: actif ? 'var(--accent-encre)' : 'var(--encre2)' });
+
+    return {
+      chargement: this.state.chargement, erreur: this.state.erreur,
+      note: d ? (d._note || (d.donnees_de_demonstration ? 'Jeu de données de démonstration.' : null)) : null,
+      reconstruit: !!(d && d.regime === 'reconstructed'),
+      asOfLong: d ? SCR.dateFr(d.as_of) : '…',
+      pad, seuilPct: SCR.nb(seuil * 100, 0) + ' %',
+      entete: d ? [
+        { lib: 'Régime', val: d.regime === 'live' ? 'en direct' : 'reconstruit' },
+        { lib: 'Examinées', val: SCR.nb(d.univers.examinees, 0) },
+        { lib: 'Classées', val: SCR.nb(d.univers.classees, 0) },
+        { lib: 'Écartées', val: SCR.nb(d.univers.ecartees, 0) },
+        { lib: 'Couverture moyenne', val: SCR.nb(d.couverture_moyenne * 100, 0) + ' %' },
+        { lib: 'Version du code', val: d.version_code }
+      ] : [],
+      colonnes, lignes, sel,
+      q: this.state.q,
+      compteAffiche: d ? SCR.nb(lignes.length, 0) + ' valeurs affichées sur ' + SCR.nb(d.valeurs.length, 0) + ' présentes dans le fichier'
+        + (partiel ? ', ' + SCR.nb(d.univers.classees, 0) + ' classées au total' : '') : '',
+      filtresSecteur: secteursUniq.map(s => chip(this.state.secteurs.includes(s), SCR.secteur(s), s)),
+      filtresPays: paysUniq.map(p => chip(this.state.pays.includes(p), SCR.pays(p), p)),
+      vues: [['tout', 'Tout'], ['50', '50 premières'], ['decile', 'Premier décile']].map(([v, lib]) => {
+        const a = this.state.vue === v;
+        return { v, lib, fond: a ? 'var(--accent-fond)' : 'var(--carte)', couleur: a ? 'var(--accent-encre)' : 'var(--encre2)' };
+      }),
+      dates: d ? [{ v: d.as_of, lib: 'Classement du ' + d.as_of + ' (aucune archive)' }] : [{ v: '', lib: '…' }],
+      libTheme: { auto: 'Thème : auto', clair: 'Thème : clair', sombre: 'Thème : sombre' }[this.state.theme],
+      pied: { info: d ? SCR.dateFr(d.derniere_information_utilisee) : T,
+              recup: d ? SCR.heureFr(d.derniere_recuperation_utilisee) : T,
+              version: d ? d.version_code : T },
+      trier: e => { const c = e.currentTarget.dataset.cle;
+        this.setState(s => ({ tri: { cle: c, sens: s.tri.cle === c ? -s.tri.sens : (c === 'rang' || c === 'nom' || c === 'secteur' || c === 'pays' ? 1 : -1) } })); },
+      ouvrir: e => { location.hash = e.currentTarget.dataset.isin; },
+      fermer: () => { history.replaceState(null, '', location.pathname + location.search); this.setState({ sel: null }); },
+      chercher: e => this.setState({ q: e.target.value }),
+      changerVue: e => this.setState({ vue: e.currentTarget.dataset.v }),
+      basculerSecteur: e => { const v = e.currentTarget.dataset.v;
+        this.setState(s => ({ secteurs: s.secteurs.includes(v) ? s.secteurs.filter(x => x !== v) : [...s.secteurs, v] })); },
+      basculerPays: e => { const v = e.currentTarget.dataset.v;
+        this.setState(s => ({ pays: s.pays.includes(v) ? s.pays.filter(x => x !== v) : [...s.pays, v] })); },
+      basculerTheme: () => this.setState({ theme: SCR.themeSuivant() }),
+      changerDate: () => {}
+    };
+  }
+
+  fiche(v, d, seuil) {
+    const T = SCR.TIRET;
+    const dos = v.dossier;
+    const stat = { non_declenche: ['non déclenché', 'var(--encre2)', '○'],
+                   declenche: ['DÉCLENCHÉ', 'var(--baisse)', '▲'],
+                   non_verifiable: ['non vérifiable automatiquement', 'var(--alerte)', '◇'] };
+    const grav = { 1: ['gravité 1', 'var(--baisse)'], 2: ['gravité 2', 'var(--alerte)'], 3: ['gravité 3', 'var(--encre3)'] };
+    const h = v.historique;
+    const pts = (vals, inverse) => {
+      const mn = Math.min(...vals), mx = Math.max(...vals), et = mx - mn || 1;
+      return vals.map((x, i) => {
+        const y = inverse ? (x - mn) / et : 1 - (x - mn) / et;
+        return (i * 240 / (vals.length - 1)).toFixed(1) + ',' + (4 + y * 62).toFixed(1);
+      }).join(' ');
+    };
+    return {
+      nom: v.nom, isin: v.isin, lien: '#' + v.isin,
+      soustitre: [v.isin, v.ticker, v.place, SCR.secteur(v.secteur), SCR.pays(v.pays)].filter(Boolean).join('  ·  '),
+      score: SCR.nb(v.score, 1), rang: v.rang, decile: v.decile, total: (d.univers && d.univers.classees) || d.valeurs.length,
+      identite: [
+        { lib: 'Cours au ' + (v.date_cours || T), val: SCR.nb(v.cours, 2) + ' €' },
+        { lib: 'Capitalisation', val: SCR.eur(v.capitalisation_eur) },
+        { lib: 'Valeur d’entreprise', val: SCR.eur(v.valeur_entreprise_eur) },
+        { lib: 'Capitaux échangés, 3 mois', val: SCR.eur(v.capitaux_echanges_3m_eur) },
+        { lib: 'Industrie', val: v.industrie || T },
+        { lib: 'Pays', val: SCR.pays(v.pays) || T },
+        { lib: 'Exercice de référence', val: v.exercice_reference || T },
+        { lib: 'Ancienneté des comptes', val: v.anciennete_comptes_jours != null ? SCR.nb(v.anciennete_comptes_jours, 0) + ' jours' : T },
+        { lib: 'Devise des comptes', val: v.devise_comptes || T }
+      ],
+      blocs: CLES_BLOCS.map(b => ({ lib: SCR.BLOCS[b], val: SCR.nb(v.blocs[b], 1),
+        largeur: Math.max(2, v.blocs[b]) + '%', couleur: this.couleurBloc(v.blocs[b]),
+        poids: SCR.nb(SCR.POIDS[b] * 100, 0) + ' %' })),
+      metriques: Object.keys(SCR.METRIQUES).map(k => {
+        const m = v.metriques[k] || null;
+        const abs = !m || m.valeur === null;
+        return { lib: SCR.METRIQUES[k][0], val: SCR.metrique(m),
+          pct: m ? SCR.nb(m.percentile, 0) : T,
+          largeur: Math.max(2, m ? m.percentile : 20) + '%',
+          couleur: abs ? 'var(--manque)' : 'var(--encre)',
+          couleurBarre: abs ? 'var(--manque)' : this.couleurBloc(m.percentile),
+          marqueSecteur: m && m.classe_dans_le_secteur ? 'sect.' : '' };
+      }),
+      couv: SCR.nb(v.couverture * 100, 0) + ' %',
+      couvNote: v.couverture < seuil ? ' — sous le seuil, à lire avec précaution' : '',
+      penalisees: v.metriques_penalisees.length ? v.metriques_penalisees.map(k => SCR.metriqueLib(k)) : ['Aucune'],
+      manquants: v.champs_manquants.length ? v.champs_manquants : ['Aucun'],
+      drapeaux: v.drapeaux.length ? 'Signes d’alerte : ' + v.drapeaux.map(x => SCR.DRAPEAUX[x] || x).join(', ') : 'Aucun signe d’alerte relevé.',
+      historique: h && h.length > 1 ? {
+        ptsScore: pts(h.map(x => x.score), false),
+        ptsRang: pts(h.map(x => x.rang), false),
+        scoreBornes: 'de ' + SCR.nb(Math.min(...h.map(x => x.score)), 1) + ' à ' + SCR.nb(Math.max(...h.map(x => x.score)), 1),
+        rangBornes: 'de ' + Math.min(...h.map(x => x.rang)) + 'e à ' + Math.max(...h.map(x => x.rang)) + 'e'
+      } : null,
+      sansDossier: !dos,
+      invalidation: dos ? dos.criteres_invalidation.map(c => ({ critere: c.critere,
+        statut: (stat[c.statut] || [c.statut, 'var(--encre2)', '○'])[0],
+        couleur: (stat[c.statut] || [c.statut, 'var(--encre2)', '○'])[1],
+        signe: (stat[c.statut] || [c.statut, 'var(--encre2)', '○'])[2] })) : null,
+      dossier: dos ? {
+        conviction: SCR.nb(dos.conviction, 0) + ' / 100',
+        horizon: SCR.nb(dos.horizon_mois, 0) + ' mois',
+        fourchette: SCR.nb(dos.fourchette_valorisation.basse, 2) + ' à ' + SCR.nb(dos.fourchette_valorisation.haute, 2) + ' ' + dos.fourchette_valorisation.devise,
+        cours: SCR.nb(v.cours, 2) + ' €', dateCours: v.date_cours,
+        activite: dos.activite, origine: dos.origine_du_chiffre_affaires,
+        moteurs: dos.moteurs_de_croissance, avantage: dos.avantage_concurrentiel,
+        disparition: dos.ce_qui_le_ferait_disparaitre,
+        risques: dos.risques.slice().sort((a, b) => a.gravite - b.gravite).map(r => ({
+          titre: r.titre, explication: r.explication,
+          gravite: (grav[r.gravite] || ['gravité ' + r.gravite, 'var(--encre3)'])[0],
+          couleur: (grav[r.gravite] || ['', 'var(--encre3)'])[1] })),
+        verdict: { fondamentaux: 'Fondamentaux', recit: 'Récit', mixte: 'Mixte' }[dos.hausse_justifiee.verdict] || dos.hausse_justifiee.verdict,
+        verdictCouleur: dos.hausse_justifiee.verdict === 'recit' ? 'var(--alerte)' : 'var(--encre)',
+        verdictExpl: dos.hausse_justifiee.explication,
+        alertes: dos.signes_alerte.length ? dos.signes_alerte.join(' · ') : 'Aucun signe d’alerte consigné dans le dossier.',
+        catalyseurs: dos.catalyseurs.map(c => ({ date: c.date, evenement: c.evenement })),
+        sources: dos.sources.map(s => ({ titre: s.titre, url: s.url, date: s.date })),
+        meta: 'Rédigé par ' + dos.version_prompt + ' · coût ' + SCR.nb(dos.cout_eur, 3) + ' €'
+      } : null
+    };
+  }
+}
+</script>
+</body>
+</html>

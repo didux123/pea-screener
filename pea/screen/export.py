@@ -184,7 +184,15 @@ def write_export(con, run_id: str, cfg) -> Path:
     chemin = dossier / "data.json"
     texte = json.dumps(payload, ensure_ascii=False, indent=1)
     chemin.write_text(texte, encoding="utf-8")
+    # Copie intégrée : elle sert de repli quand la page est ouverte hors du conteneur.
+    repli = (
+        "// Copie du fichier de données, écrite à chaque classement. Repli hors ligne.\n"
+        "window.DONNEES_INTEGREES = " + json.dumps(payload, ensure_ascii=False) + ";\n"
+    )
+    (dossier / "donnees.js").write_text(repli, encoding="utf-8")
+
     dernier = Path(cfg.reports_dir) / "latest"
     dernier.mkdir(parents=True, exist_ok=True)
     (dernier / "data.json").write_text(texte, encoding="utf-8")
+    (dernier / "donnees.js").write_text(repli, encoding="utf-8")
     return chemin
