@@ -38,6 +38,7 @@ PRICE_COLUMNS = ("date", "open", "high", "low", "close", "adj_close", "volume", 
 FX_COLUMNS = ("date", "rate")
 STATEMENT_COLUMNS = ("statement", "period_type", "period_end", "field", "value", "currency")
 EARNINGS_COLUMNS = ("event_date", "eps_estimate", "eps_reported")
+NEWS_COLUMNS = ("url", "titre", "resume", "editeur", "publie_le")
 
 DESCRIPTOR_KEYS = (
     "long_name", "sector", "industry", "country", "quote_type", "exchange",
@@ -75,3 +76,6 @@ class DataProvider(Protocol):
 
     def earnings_dates(self, ticker: str) -> pd.DataFrame:
         """Dates de publication passées. Colonnes : EARNINGS_COLUMNS."""
+
+    def news(self, ticker: str) -> pd.DataFrame:
+        """Articles récents, datés et sourcés. Colonnes : NEWS_COLUMNS."""

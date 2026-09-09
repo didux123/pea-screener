@@ -22,6 +22,7 @@ from pea.data.provider import (
     CONSENSUS_KEYS,
     EARNINGS_COLUMNS,
     FX_COLUMNS,
+    NEWS_COLUMNS,
     PRICE_COLUMNS,
     STATEMENT_COLUMNS,
     NotFound,
@@ -119,6 +120,15 @@ def _as_int(value) -> int | None:
     return None if number is None else int(number)
 
 
+def _texte(value) -> str | None:
+    """Une chaîne vide n'est pas une valeur : Yahoo renvoie parfois un secteur vide,
+    qui formerait un faux groupe de comparaison au moment du classement."""
+    if not isinstance(value, str):
+        return None
+    nettoye = value.strip()
+    return nettoye or None
+
+
 def normalize_history(raw: pd.DataFrame) -> pd.DataFrame:
     """Cours bruts. L'index horodaté devient une date ; aucune valeur n'est imputée."""
     if raw is None or raw.empty:
@@ -179,15 +189,6 @@ def normalize_statement(raw: pd.DataFrame, statement: str, period_type: str, cur
     return pd.DataFrame(records, columns=list(STATEMENT_COLUMNS))
 
 
-def _texte(value) -> str | None:
-    """Une chaîne vide n'est pas une valeur : Yahoo renvoie parfois un secteur vide,
-    qui formerait un faux groupe de comparaison au moment du classement."""
-    if not isinstance(value, str):
-        return None
-    nettoye = value.strip()
-    return nettoye or None
-
-
 def normalize_info(raw: dict | None) -> dict:
     """Métadonnées. Une clé absente ou vide vaut None, jamais une valeur inventée."""
     raw = raw or {}
@@ -245,6 +246,31 @@ def normalize_consensus(
                 result["currency"] = values[0]
                 break
     return result
+
+
+def normalize_news(raw: list[dict] | None) -> pd.DataFrame:
+    """Articles Yahoo. Un article sans titre ni adresse n'est pas exploitable."""
+    records = []
+    for item in raw or []:
+        contenu = item.get("content") if isinstance(item.get("content"), dict) else item
+        titre = _texte(contenu.get("title"))
+        lien = contenu.get("canonicalUrl") or contenu.get("clickThroughUrl") or {}
+        url = _texte(lien.get("url") if isinstance(lien, dict) else lien) or _texte(contenu.get("link"))
+        if not titre or not url:
+            continue
+        editeur = contenu.get("provider")
+        records.append(
+            {
+                "url": url,
+                "titre": titre,
+                "resume": _texte(contenu.get("summary") or contenu.get("description")),
+                "editeur": _texte(editeur.get("displayName")) if isinstance(editeur, dict)
+                else _texte(contenu.get("publisher")),
+                "publie_le": _as_date(contenu.get("pubDate") or contenu.get("providerPublishTime")),
+            }
+        )
+    frame = pd.DataFrame(records, columns=list(NEWS_COLUMNS))
+    return frame.drop_duplicates(subset=["url"], keep="first")
 
 
 def normalize_earnings_dates(raw: pd.DataFrame | None, today: dt.date) -> pd.DataFrame:
@@ -411,6 +437,19 @@ class YahooProvider:
             lambda: yf.Ticker(ticker).get_earnings_dates(limit=60),
         )
         return normalize_earnings_dates(_restore_frame(raw, index_is_date=True), self.today)
+
+    def news(self, ticker: str) -> pd.DataFrame:
+        raw = self._cached_json("news", ticker, lambda: {"articles": self._fetch_news(ticker)})
+        return normalize_news(raw.get("articles", []))
+
+    def _fetch_news(self, ticker: str) -> list[dict]:
+        try:
+            return yf.Ticker(ticker).get_news(count=12) or []
+        except YFRateLimitError:
+            raise
+        except Exception as exc:
+            log.debug("news %s : %s", ticker, exc)
+            return []
 
     # -- appels bruts -----------------------------------------------------------
 

@@ -37,9 +37,19 @@ def test_status_sur_base_vide(projet, capsys):
     assert "valeurs actives" in capsys.readouterr().out
 
 
-def test_research_annonce_le_lot_2(projet, capsys):
-    assert cli.main(["--config", str(projet), "research"]) == cli.EXIT_OK
-    assert "lot 2" in capsys.readouterr().out
+def test_research_sans_cle_refuse_de_tourner(projet, capsys, monkeypatch):
+    """Sans clé d'accès au modèle, la commande explique quoi faire plutôt que d'échouer."""
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.setenv("LLM_PROVIDER", "gemini")
+    assert cli.main(["--config", str(projet), "research"]) == cli.EXIT_USAGE
+    assert ".env" in capsys.readouterr().err
+
+
+def test_research_sans_classement(projet, capsys, monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER", "gemini")
+    monkeypatch.setenv("GEMINI_API_KEY", "cle-de-test")
+    assert cli.main(["--config", str(projet), "research"]) == cli.EXIT_USAGE
+    assert "make screen" in capsys.readouterr().err
 
 
 def test_screen_sans_univers(projet, capsys):

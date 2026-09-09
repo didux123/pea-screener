@@ -384,6 +384,41 @@ def _store_consensus(con, ticker: str, data: dict) -> int:
 # ------------------------------------------------------------------------------ orchestration
 
 
+def ingest_news(con, provider, tickers: list[str], today: dt.date) -> IngestStats:
+    """Articles récents des valeurs qui vont recevoir un dossier d'investissement."""
+    stats = IngestStats()
+    guard = RateLimitGuard(con)
+    for ticker in tickers:
+        if _succeeded_today(con, ticker, "news", today):
+            continue
+        try:
+            frame = provider.news(ticker)
+        except NotFound as exc:
+            log_fetch(con, ticker, "news", "not_found", error=exc)
+            stats.not_found += 1
+            continue
+        except RateLimited as exc:
+            guard.hit(ticker, "news", exc)
+            continue
+        except ProviderError as exc:
+            log_fetch(con, ticker, "news", "error", error=exc)
+            stats.errors += 1
+            continue
+        if frame.empty:
+            log_fetch(con, ticker, "news", "empty", n_rows=0)
+            stats.empty += 1
+            continue
+        payload = frame.copy()
+        payload["ticker"] = ticker
+        payload["fetched_at_utc"] = db_module.now_utc()
+        db_module.insert_df(con, "news", payload, on_conflict="replace")
+        log_fetch(con, ticker, "news", "ok", n_rows=len(payload))
+        guard.ok()
+        stats.ok += 1
+        stats.rows += len(payload)
+    return stats
+
+
 def active_tickers(con) -> list[str]:
     rows = con.execute(
         """

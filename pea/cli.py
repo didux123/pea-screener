@@ -44,7 +44,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--as-of", type=_parse_date, help="date du classement à reprendre")
 
     sub.add_parser("status", help="état de la base : fraîcheur, couverture, valeurs dues")
-    sub.add_parser("research", help="dossiers d'investissement (lot 2)")
+
+    p = sub.add_parser("research", help="rédige les dossiers d'investissement")
+    p.add_argument("--as-of", type=_parse_date, help="classement à documenter (par défaut le dernier)")
+    p.add_argument("--limit", type=int, help="ne traite que les N premières valeurs")
+    p.add_argument("--isin", action="append", help="ne traite que ces codes ISIN")
+    p.add_argument("--no-news", action="store_true", help="ne récupère pas les articles récents")
 
     p = sub.add_parser("serve", help="sert les rapports en HTTP")
     p.add_argument("--port", type=int, default=8080)
@@ -77,9 +82,6 @@ def _dispatch(args, cfg) -> int:
 
     from pea import db as db_module
 
-    if args.command == "research":
-        print("Le module research arrive au lot 2.")
-        return EXIT_OK
     if args.command == "serve":
         return _serve(cfg, args.port)
 
@@ -100,6 +102,8 @@ def _dispatch(args, cfg) -> int:
             return _screen(con, cfg, args)
         if args.command == "report":
             return _report(con, cfg, args)
+        if args.command == "research":
+            return _research(con, cfg, args)
         print(f"Commande inconnue : {args.command}", file=sys.stderr)
         return EXIT_USAGE
     finally:
@@ -218,6 +222,68 @@ def _report(con, cfg, args) -> int:
     return EXIT_OK
 
 
+def _research(con, cfg, args) -> int:
+    from pea.data.ingest import ingest_news
+    from pea.research.llm import ClientLLM, cle_presente, fournisseur, modeles
+    from pea.research.pipeline import charger_travail, produire
+    from pea.research.selection import selectionner
+    from pea.screen.runs import latest_run_id
+
+    if not cle_presente():
+        print(
+            f"Aucune clé pour le fournisseur « {fournisseur()} ». Renseigne le fichier .env "
+            "à la racine du dépôt, puis relance.",
+            file=sys.stderr,
+        )
+        return EXIT_USAGE
+
+    run_id = latest_run_id(con, args.as_of)
+    if run_id is None:
+        print("Aucun classement enregistré. Lance d'abord `make screen`.", file=sys.stderr)
+        return EXIT_USAGE
+    as_of = con.execute("SELECT as_of FROM runs WHERE run_id = ?", [run_id]).fetchone()[0]
+
+    candidats = selectionner(con, run_id)
+    if args.isin:
+        voulus = {i.upper() for i in args.isin}
+        candidats = [c for c in candidats if c.isin in voulus]
+    if args.limit:
+        candidats = candidats[: args.limit]
+    if not candidats:
+        print("Aucune valeur à documenter.", file=sys.stderr)
+        return EXIT_USAGE
+
+    modele_eco, modele_fort = modeles()
+    print(f"Classement {run_id} au {as_of} — {len(candidats)} valeurs à documenter")
+    print(f"  extraction par {modele_eco}, débat et synthèse par {modele_fort}")
+
+    if not args.no_news:
+        tickers = [c.ticker for c in candidats if c.ticker]
+        stats = ingest_news(con, _provider(cfg), tickers, dt.date.today())
+        print(f"  articles récupérés : {stats.as_dict()}")
+
+    client = ClientLLM()
+    cout_total, valides, rejetes, echecs = 0.0, 0, 0, 0
+    for i, candidat in enumerate(candidats, start=1):
+        travail = charger_travail(con, candidat, as_of, run_id)
+        resultat = produire(con, candidat, travail, client, run_id=run_id)
+        cout_total += resultat.cout_eur
+        marque = {"valide": "ok", "rejete": "rejeté", "echec": "échec"}[resultat.statut]
+        conviction = f"conviction {resultat.conviction}" if resultat.conviction is not None else ""
+        print(f"  [{i:2d}/{len(candidats)}] {resultat.nom[:32]:34s} {marque:7s} "
+              f"{conviction:15s} {resultat.cout_eur:.4f} € en {resultat.duree_s:.0f} s")
+        if resultat.motifs and resultat.statut != "valide":
+            for motif in resultat.motifs[:3]:
+                print(f"        {motif}")
+        valides += resultat.statut == "valide"
+        rejetes += resultat.statut == "rejete"
+        echecs += resultat.statut == "echec"
+
+    print(f"\n  {valides} dossiers valides, {rejetes} rejetés, {echecs} en échec")
+    print(f"  coût total {cout_total:.3f} €, soit {cout_total / max(len(candidats), 1):.4f} € par dossier")
+    return EXIT_OK
+
+
 def _status(con) -> int:
     from pea.data.ingest import due_tickers
 
@@ -232,6 +298,8 @@ def _status(con) -> int:
         ("dernier cours", "SELECT max(date) FROM prices"),
         ("devises suivies", "SELECT count(DISTINCT quote_ccy) FROM fx_rates"),
         ("classements enregistrés", "SELECT count(*) FROM runs"),
+        ("dossiers valides", "SELECT count(*) FROM dossiers WHERE statut = 'valide'"),
+        ("dossiers rejetés", "SELECT count(*) FROM dossiers WHERE statut <> 'valide'"),
     ]
     for libelle, requete in lignes:
         print(f"{libelle:26s} {con.execute(requete).fetchone()[0]}")

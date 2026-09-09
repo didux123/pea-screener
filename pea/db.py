@@ -12,7 +12,7 @@ from pathlib import Path
 import duckdb
 import pandas as pd
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 DDL: tuple[str, ...] = (
     """
@@ -236,6 +236,56 @@ DDL: tuple[str, ...] = (
     )
     """,
     """
+    CREATE TABLE IF NOT EXISTS dossiers (
+        dossier_id VARCHAR PRIMARY KEY,   -- {as_of}_{isin}_{horodatage}
+        as_of DATE NOT NULL,
+        isin VARCHAR NOT NULL,
+        ticker VARCHAR,
+        name VARCHAR,
+        run_id VARCHAR,                   -- classement d'où vient la sélection
+        motif VARCHAR NOT NULL,           -- top60 | bond | detenue
+        rank INTEGER,
+        total_score DOUBLE,
+        statut VARCHAR NOT NULL,          -- valide | rejete | echec
+        motifs_rejet VARCHAR,
+        conviction INTEGER,
+        horizon_mois INTEGER,
+        contenu VARCHAR,                  -- le dossier, en JSON
+        faits VARCHAR,                    -- le dossier de travail fourni au modèle, en JSON
+        versions_prompts VARCHAR,
+        modele_extraction VARCHAR,
+        modele_synthese VARCHAR,
+        cout_eur DOUBLE,
+        duree_s DOUBLE,
+        git_sha VARCHAR,
+        genere_le_utc TIMESTAMP NOT NULL
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS llm_calls (
+        dossier_id VARCHAR NOT NULL,
+        etape VARCHAR NOT NULL,           -- extraction | debat | synthese
+        modele VARCHAR NOT NULL,
+        tokens_entree INTEGER,
+        tokens_sortie INTEGER,
+        cout_eur DOUBLE,
+        duree_s DOUBLE,
+        appele_le_utc TIMESTAMP NOT NULL
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS news (
+        ticker VARCHAR NOT NULL,
+        url VARCHAR NOT NULL,
+        titre VARCHAR NOT NULL,
+        resume VARCHAR,
+        editeur VARCHAR,
+        publie_le DATE,
+        fetched_at_utc TIMESTAMP NOT NULL,
+        PRIMARY KEY (ticker, url)
+    )
+    """,
+    """
     CREATE TABLE IF NOT EXISTS coverage (
         run_id VARCHAR NOT NULL,
         population VARCHAR NOT NULL,          -- universe|scored
@@ -263,6 +313,9 @@ TABLES: tuple[str, ...] = (
     "runs",
     "scores",
     "coverage",
+    "dossiers",
+    "llm_calls",
+    "news",
 )
 
 
@@ -286,14 +339,14 @@ def connect(db_path: Path | str, *, read_only: bool = False) -> duckdb.DuckDBPyC
         for statement in DDL:
             con.execute(statement)
         recorded = con.execute("SELECT max(version) FROM schema_version").fetchone()[0]
-        if recorded is None:
-            con.execute(
-                "INSERT INTO schema_version VALUES (?, ?)", [SCHEMA_VERSION, now_utc()]
-            )
-        elif recorded != SCHEMA_VERSION:
+        if recorded is None or recorded < SCHEMA_VERSION:
+            # Le schéma ne fait que s'enrichir : les nouvelles tables viennent d'être créées
+            # par le DDL ci-dessus, il suffit d'enregistrer la version atteinte.
+            con.execute("INSERT INTO schema_version VALUES (?, ?)", [SCHEMA_VERSION, now_utc()])
+        elif recorded > SCHEMA_VERSION:
             raise RuntimeError(
                 f"Base en version de schéma {recorded}, code en version {SCHEMA_VERSION}. "
-                "Supprime data/pea.duckdb et relance l'ingestion (le cache brut évite de re-télécharger)."
+                "Le code est plus ancien que la base : mets-le à jour."
             )
     return con
 
@@ -324,14 +377,18 @@ def insert_df(
 
     payload = _cast_to_table_types(con, table, df)
     cols = ", ".join(f'"{c}"' for c in payload.columns)
+    keys = _primary_key(con, table)
     con.register("_payload", payload)
     try:
-        if on_conflict == "ignore":
+        if not keys:
+            # Sans clé primaire, DuckDB refuse une clause ON CONFLICT : c'est une table
+            # d'ajout pur, comme le journal des appels au modèle.
+            suffix = ""
+        elif on_conflict == "ignore":
             suffix = " ON CONFLICT DO NOTHING"
         elif on_conflict == "replace":
-            keys = _primary_key(con, table)
             updates = [c for c in payload.columns if c not in keys]
-            if not keys or not updates:
+            if not updates:
                 suffix = " ON CONFLICT DO NOTHING"
             else:
                 assignments = ", ".join(f'"{c}" = EXCLUDED."{c}"' for c in updates)
