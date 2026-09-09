@@ -1,0 +1,8 @@
+# Heures locales (TZ=Europe/Paris). Les places européennes clôturent à 17 h 30.
+# La base DuckDB n'accepte qu'un seul processus écrivain : les commandes s'enchaînent.
+
+# Du lundi au vendredi : cours, taux, fondamentaux dus, puis classement du jour.
+0 22 * * 1-5 cd /app && pea ingest && pea screen
+
+# Le dimanche matin : rafraîchissement des listes de bourse et des symboles.
+0 10 * * 0 cd /app && pea universe

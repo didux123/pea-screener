@@ -68,6 +68,9 @@ def test_dataframe_vide(con):
     assert db_module.insert_df(con, "prices", pd.DataFrame()) == 0
 
 
-def test_now_utc_naif_sans_microsecondes():
-    now = db_module.now_utc()
-    assert now.tzinfo is None and now.microsecond == 0
+def test_now_utc_naif_et_strictement_croissant():
+    """L'horodatage sert d'estampille de version : deux appels ne doivent pas se confondre."""
+    premier = db_module.now_utc()
+    second = db_module.now_utc()
+    assert premier.tzinfo is None
+    assert second > premier

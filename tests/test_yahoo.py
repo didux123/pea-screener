@@ -157,11 +157,13 @@ def test_etats_financiers(provider):
     assert isinstance(revenus["period_end"].iloc[0], dt.date)
 
 
-def test_publication_semestrielle_sans_trimestriels(provider):
-    """Virbac publie deux fois par an : Yahoo ne fournit aucun compte de résultat trimestriel."""
+def test_seuls_les_exercices_annuels_sont_recuperes(provider):
+    """Virbac publie deux fois par an : Yahoo ne fournit aucun compte de résultat trimestriel.
+
+    C'est la raison pour laquelle le lot 1 ne s'appuie que sur les exercices annuels.
+    """
     frame = provider.statements("VIRP.PA")
-    trimestriel = frame[(frame["period_type"] == "quarterly") & (frame["statement"] == "income")]
-    assert trimestriel.empty
+    assert set(frame["period_type"]) == {"annual"}
     annuel = frame[(frame["period_type"] == "annual") & (frame["statement"] == "income")]
     assert not annuel.empty
 

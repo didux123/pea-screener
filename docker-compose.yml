@@ -1,0 +1,13 @@
+services:
+  pea:
+    build: .
+    image: pea:latest
+    container_name: pea
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "8080:8080"

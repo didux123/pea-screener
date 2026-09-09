@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classement PEA — {{ run.as_of }}</title>
+<style>
+  :root {
+    --fond: #fbfbf9; --texte: #1c1c1a; --gris: #6b6b66; --trait: #e0e0da;
+    --alerte: #8a4b2a; --bien: #2f6b45; --entete: #f2f2ee;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --fond: #16161a; --texte: #e8e8e4; --gris: #9a9a94; --trait: #2e2e34;
+            --alerte: #d69a72; --bien: #7fbf9a; --entete: #202028; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 1.5rem; background: var(--fond); color: var(--texte);
+         font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  h1 { font-size: 1.4rem; margin: 0 0 .3rem; font-weight: 600; }
+  h2 { font-size: 1.05rem; margin: 2rem 0 .6rem; font-weight: 600; }
+  .sous-titre { color: var(--gris); margin: 0 0 1.2rem; font-size: .9rem; }
+  .avertissement { border-left: 3px solid var(--alerte); background: var(--entete);
+                   padding: .7rem .9rem; margin: 0 0 1.2rem; font-size: .88rem; }
+  .cartes { display: flex; flex-wrap: wrap; gap: .8rem; margin-bottom: 1.4rem; }
+  .carte { border: 1px solid var(--trait); border-radius: 6px; padding: .6rem .9rem; min-width: 8.5rem; }
+  .carte .valeur { font-size: 1.25rem; font-weight: 600; display: block; }
+  .carte .libelle { color: var(--gris); font-size: .78rem; }
+  .defilement { overflow-x: auto; border: 1px solid var(--trait); border-radius: 6px; }
+  table { border-collapse: collapse; width: 100%; font-size: .84rem; }
+  th, td { padding: .4rem .6rem; text-align: right; white-space: nowrap;
+           border-bottom: 1px solid var(--trait); }
+  th { background: var(--entete); position: sticky; top: 0; font-weight: 600; text-align: right; }
+  th:nth-child(-n+3), td:nth-child(-n+3) { text-align: left; }
+  tbody tr:hover { background: var(--entete); }
+  .nombre { font-variant-numeric: tabular-nums; }
+  .drapeau { color: var(--alerte); font-size: .78rem; }
+  .note { color: var(--gris); font-size: .82rem; margin-top: .5rem; }
+  footer { margin-top: 2.5rem; color: var(--gris); font-size: .78rem;
+           border-top: 1px solid var(--trait); padding-top: .8rem; }
+  code { background: var(--entete); padding: .05rem .3rem; border-radius: 3px; font-size: .82rem; }
+</style>
+</head>
+<body>
+<h1>Classement PEA au {{ run.as_of }}</h1>
+<p class="sous-titre">
+  Régime {{ run.mode }} · calculé le {{ run.finished_at_utc }} UTC · version {{ run.git_sha or "inconnue" }}
+</p>
+
+{% if run.mode == 'reconstructed' %}
+<div class="avertissement">
+  <strong>Classement reconstitué.</strong> Cette date est antérieure au démarrage du système.
+  Les états financiers peuvent avoir été retraités depuis, le consensus des analystes n'existe
+  pas dans l'historique, et l'univers ne contient que des sociétés encore cotées aujourd'hui.
+  Ce classement montre ce que le système <em>aurait pu</em> voir, pas ce qu'il aurait vu.
+</div>
+{% endif %}
+
+<div class="cartes">
+  <div class="carte"><span class="valeur nombre">{{ run.n_universe }}</span><span class="libelle">valeurs examinées</span></div>
+  <div class="carte"><span class="valeur nombre">{{ run.n_scored }}</span><span class="libelle">classées</span></div>
+  <div class="carte"><span class="valeur nombre">{{ run.n_eliminated }}</span><span class="libelle">écartées</span></div>
+  <div class="carte"><span class="valeur nombre">{{ "%.0f"|format(couverture_moyenne * 100) }} %</span><span class="libelle">couverture moyenne</span></div>
+  <div class="carte"><span class="valeur nombre">{{ n_consensus_incomplet }}</span><span class="libelle">sans consensus</span></div>
+</div>
+
+<h2>Les {{ top|length }} premières</h2>
+<div class="defilement">
+<table>
+  <thead>
+    <tr>
+      <th>#</th><th>Valeur</th><th>Secteur</th>
+      <th>Score</th><th>Crois.<br>qualité</th><th>Momen&shy;tum</th><th>Valo.</th><th>Bilan</th><th>Consen&shy;sus</th>
+      <th>Croiss. CA<br>3 ans</th><th>Marge op.</th><th>ROCE</th><th>VE/RO</th><th>Rdt FCF</th>
+      <th>Dette<br>EBITDA</th><th>Mom. 12-1</th><th>Couv.</th><th>Signes</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for v in top %}
+    <tr>
+      <td class="nombre">{{ v.rank }}</td>
+      <td>{{ v.name }}</td>
+      <td>{{ v.sector or "—" }}</td>
+      <td class="nombre"><strong>{{ pct(v.total_score) }}</strong></td>
+      <td class="nombre">{{ pct(v.block_growth_quality) }}</td>
+      <td class="nombre">{{ pct(v.block_momentum) }}</td>
+      <td class="nombre">{{ pct(v.block_valuation) }}</td>
+      <td class="nombre">{{ pct(v.block_balance) }}</td>
+      <td class="nombre">{{ pct(v.block_consensus) }}{% if v.consensus_incomplete %}<span class="drapeau"> ?</span>{% endif %}</td>
+      <td class="nombre">{{ pourcent(v.m_rev_cagr_3y) }}</td>
+      <td class="nombre">{{ pourcent(v.m_op_margin) }}</td>
+      <td class="nombre">{{ pourcent(v.m_roce) }}</td>
+      <td class="nombre">{{ ratio(v.m_ev_ebit) }}</td>
+      <td class="nombre">{{ pourcent(v.m_fcf_yield) }}</td>
+      <td class="nombre">{{ ratio(v.m_nd_ebitda) }}</td>
+      <td class="nombre">{{ pourcent(v.m_mom_12_1) }}</td>
+      <td class="nombre">{{ pourcent(v.coverage_ratio) }}</td>
+      <td class="drapeau">{{ v.flags or "" }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+<p class="note">
+  Un point d'interrogation signale une composante consensus incomplète, fréquente sur les petites
+  valeurs sans couverture analyste. Une métrique absente vaut 20 sur 100 : elle pénalise sans
+  être inventée.
+</p>
+
+<h2>Pourquoi les valeurs ont été écartées</h2>
+<div class="defilement">
+<table>
+  <thead><tr><th>Raison</th><th>Valeurs</th></tr></thead>
+  <tbody>
+  {% for raison, n in raisons %}
+    <tr><td>{{ raison }}</td><td class="nombre">{{ n }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<h2>Couverture des données</h2>
+<div class="defilement">
+<table>
+  <thead><tr><th>Champ</th><th>Présent</th><th>Absent</th><th>Taux</th></tr></thead>
+  <tbody>
+  {% for c in couverture %}
+    <tr>
+      <td>{{ c.field }}</td>
+      <td class="nombre">{{ c.n_present }}</td>
+      <td class="nombre">{{ c.n_missing }}</td>
+      <td class="nombre">{{ "%.0f"|format(100 * c.n_present / (c.n_present + c.n_missing)) if (c.n_present + c.n_missing) else "—" }} %</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<footer>
+  Dernière information utilisée : {{ run.max_info_date_used or "—" }} ·
+  dernière récupération utilisée : {{ run.max_fetched_at_used_utc or "—" }} UTC ·
+  aucune donnée postérieure au {{ run.as_of }} n'entre dans ce calcul.<br>
+  Univers sans biais de survie : {{ "oui" if run.survivorship_complete else "non" }} ·
+  configuration <code>{{ (run.config_sha256 or "")[:12] }}</code> ·
+  fichiers détaillés : <a href="ranking.csv">classement</a>,
+  <a href="excluded.csv">valeurs écartées</a>, <a href="coverage.csv">couverture</a>.<br>
+  Ce document ne constitue pas un conseil en investissement.
+</footer>
+</body>
+</html>

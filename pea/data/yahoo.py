@@ -50,7 +50,10 @@ _STATEMENT_METHODS = {
     "balance": "get_balance_sheet",
     "cashflow": "get_cashflow",
 }
-_PERIOD_TYPES = {"annual": "yearly", "quarterly": "quarterly"}
+# Seuls les exercices annuels sont récupérés : les états trimestriels sont vides pour les
+# sociétés à publication semestrielle, et les mélanger fausserait les classements par
+# secteur. Les récupérer coûterait trois requêtes par valeur pour des données inutilisées.
+_PERIOD_TYPES = {"annual": "yearly"}
 
 
 class Pacer:

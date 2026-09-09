@@ -267,8 +267,13 @@ TABLES: tuple[str, ...] = (
 
 
 def now_utc() -> dt.datetime:
-    """Horodatage UTC naïf, à la seconde près (DuckDB stocke des TIMESTAMP sans fuseau)."""
-    return dt.datetime.now(dt.UTC).replace(tzinfo=None, microsecond=0)
+    """Horodatage UTC naïf (DuckDB stocke des TIMESTAMP sans fuseau).
+
+    La microseconde est conservée : cet horodatage sert d'estampille de version pour les
+    états financiers et les instantanés de métadonnées, deux écritures rapprochées ne
+    doivent pas se confondre.
+    """
+    return dt.datetime.now(dt.UTC).replace(tzinfo=None)
 
 
 def connect(db_path: Path | str, *, read_only: bool = False) -> duckdb.DuckDBPyConnection:
@@ -317,9 +322,7 @@ def insert_df(
     if unknown:
         raise ValueError(f"colonnes inconnues pour {table} : {unknown}")
 
-    payload = df.copy()
-    # DuckDB refuse les pd.NA de pandas 3 : on les ramène à des None/NaN qu'il sait lire.
-    payload = payload.astype(object).where(pd.notna(payload), None)
+    payload = _cast_to_table_types(con, table, df)
     cols = ", ".join(f'"{c}"' for c in payload.columns)
     con.register("_payload", payload)
     try:
@@ -340,6 +343,37 @@ def insert_df(
     finally:
         con.unregister("_payload")
     return len(payload)
+
+
+def _cast_to_table_types(
+    con: duckdb.DuckDBPyConnection, table: str, df: pd.DataFrame
+) -> pd.DataFrame:
+    """Aligne les colonnes sur les types déclarés de la table.
+
+    Sans cela DuckDB déduit le type d'après les premières lignes : un volume de quatre
+    milliards d'actions, après une série de petits nombres, faisait échouer l'insertion.
+    """
+    types = {
+        row[0]: row[1].upper()
+        for row in con.execute(f"SELECT column_name, column_type FROM (DESCRIBE {table})").fetchall()
+    }
+    payload = pd.DataFrame(index=df.index)
+    for column in df.columns:
+        serie = df[column]
+        declared = types.get(column, "")
+        if declared in ("BIGINT", "INTEGER", "HUGEINT", "SMALLINT"):
+            payload[column] = pd.to_numeric(serie, errors="coerce").astype("Int64")
+        elif declared in ("DOUBLE", "FLOAT", "DECIMAL", "REAL"):
+            payload[column] = pd.to_numeric(serie, errors="coerce").astype("Float64")
+        elif declared == "BOOLEAN":
+            payload[column] = serie.map(lambda v: None if pd.isna(v) else bool(v)).astype("boolean")
+        elif declared in ("DATE", "TIMESTAMP", "TIMESTAMP WITH TIME ZONE"):
+            payload[column] = serie.map(lambda v: None if v is None or pd.isna(v) else v)
+        else:
+            payload[column] = serie.map(
+                lambda v: None if v is None or (not isinstance(v, str) and pd.isna(v)) else str(v)
+            )
+    return payload
 
 
 def _primary_key(con: duckdb.DuckDBPyConnection, table: str) -> list[str]:

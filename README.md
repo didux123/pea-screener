@@ -120,11 +120,47 @@ Prises pour avancer sans te bloquer. Chacune est réversible ; elles sont testé
 ## Structure
 
 ```
-pea/config.py     lecture de config.toml et de .env
-pea/db.py         connexion DuckDB et schéma
-pea/universe.py   listes de bourse, éligibilité, radiations
-pea/data/         interface DataProvider, implémentation Yahoo, ingestion
-pea/screen/       accès à une date donnée, métriques, score, rapports
+pea/config.py       lecture de config.toml et de .env
+pea/db.py           connexion DuckDB et schéma
+pea/universe.py     listes de bourse, éligibilité, radiations
+pea/data/           interface DataProvider, implémentation Yahoo, ingestion
+pea/screen/         calcul à une date donnée, métriques, score, rapports
+pea/cli.py          ligne de commande
+scripts/            capture des réponses Yahoo servant de fixtures
+deploy/             crontab et point d'entrée du conteneur
 ```
 
 Les secrets vont dans `.env` (voir `.env.example`), jamais dans le dépôt.
+
+## Le score composite
+
+Score de 0 à 100 sur l'univers filtré. La valorisation est classée par percentile à
+l'intérieur de chaque secteur.
+
+| Bloc | Poids | Métriques |
+| --- | --- | --- |
+| Croissance et qualité | 35 | croissance du chiffre d'affaires et du résultat opérationnel sur 3 ans, marge opérationnelle et sa tendance, rentabilité des capitaux employés, conversion du résultat en trésorerie |
+| Momentum | 25 | performance 12 mois et 6 mois hors dernier mois, position par rapport à la moyenne mobile 200 jours |
+| Valorisation relative | 20 | valeur d'entreprise sur résultat opérationnel, rendement du flux de trésorerie disponible, cours sur bénéfice |
+| Solidité du bilan | 10 | dette nette sur EBITDA, couverture des intérêts, dilution sur 3 ans |
+| Dynamique du consensus | 10 | variation du consensus de bénéfice sur 3 mois, révisions nettes |
+
+Filtres appliqués avant le score : liquidité médiane inférieure à 150 000 € par jour, non
+éligible au PEA, dette nette sur EBITDA supérieure à 4, flux de trésorerie négatif trois
+années de suite, plus de 40 % des dix-neuf champs requis manquants, sociétés financières et
+foncières, classes d'actions en double.
+
+## Déploiement
+
+Un seul conteneur, qui sert les rapports sur le port 8080 et exécute les tâches planifiées
+(`deploy/crontab`) : ingestion et classement du lundi au vendredi à 22 h, rafraîchissement
+de l'univers le dimanche à 10 h.
+
+```bash
+docker compose up -d --build
+```
+
+Les données vivent dans `./data`, monté dans le conteneur : la base DuckDB, le cache des
+réponses brutes et les rapports. La première ingestion prend environ deux heures ; les
+suivantes une quarantaine de minutes. Une reprise après interruption ne coûte aucune
+requête, le cache disque faisant foi pour la journée.
