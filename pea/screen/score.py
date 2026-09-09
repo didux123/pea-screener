@@ -387,11 +387,10 @@ def _row(pit, contexte, metrics, raisons) -> dict:
         "flags": ";".join(metrics.flags),
     }
     for metric in METRIC_NAMES:
-        valeur = metrics.values.get(metric)
-        ligne[f"m_{metric}"] = None if valeur is None or valeur in (math.inf, -math.inf) else valeur
+        # Les sentinelles infinies (couverture des intérêts sans dette) servent au
+        # classement ; elles sont retirées au moment de l'enregistrement.
+        ligne[f"m_{metric}"] = metrics.values.get(metric)
         ligne[f"w_{metric}"] = metric in metrics.worst
-        if valeur == math.inf:
-            ligne[f"m_{metric}"] = math.inf   # sentinelle conservée pour le classement
     return ligne
 
 
