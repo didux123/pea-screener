@@ -1,0 +1,19 @@
+# Configuration versionnée, sans secret. Les secrets vont dans .env (voir .env.example).
+# Les poids et seuils du score sont des constantes dans pea/screen/score.py (fixés par le cahier des charges).
+
+[paths]
+data_dir = "data"            # relatif à la racine du dépôt (ou chemin absolu)
+
+[yahoo]
+requests_per_pause = 100     # après N requêtes...
+pause_seconds = 30           # ...on marque une pause
+min_interval_seconds = 0.5   # intervalle minimal entre deux requêtes
+
+[universe]
+# Marchés réglementés + Euronext Growth. Euronext Access (XMLI, MLXB, ENXL) volontairement exclu.
+euronext_mics = ["XPAR", "ALXP", "XAMS", "ALXA", "XBRU", "ALXB", "XLIS", "ALXL"]
+
+[costs]
+brokerage_fee_eur = 1.90                    # courtage par ordre
+ftt_rate = 0.004                            # taxe sur les transactions financières (achat, sociétés françaises)
+ftt_market_cap_threshold_eur = 1_000_000_000  # la TTF s'applique au-dessus de ce seuil de capitalisation
