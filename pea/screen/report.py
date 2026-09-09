@@ -64,9 +64,11 @@ def write_reports(con, run_id: str, cfg) -> list[Path]:
             if raison:
                 raisons[raison] = raisons.get(raison, 0) + 1
 
-    couverture_universe = couverture[couverture["population"] == "universe"]
+    couverture_universe = couverture[couverture["population"] == "universe"].copy()
     total = (couverture_universe["n_present"] + couverture_universe["n_missing"]).sum()
     couverture_moyenne = (couverture_universe["n_present"].sum() / total) if total else 0.0
+    # Les champs les moins renseignés en premier : c'est là que se joue la qualité du score.
+    couverture_universe = couverture_universe.sort_values(["n_present", "field"])
 
     html = _environment().get_template("ranking.html.j2").render(
         run=run,
