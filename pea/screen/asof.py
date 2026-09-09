@@ -201,18 +201,26 @@ def statements_at(con, as_of: dt.date, cutoff: dt.datetime, *, period_type: str 
     frame["first_fetched_date"] = frame["first_fetched_date"].map(
         lambda d: None if pd.isna(d) else pd.Timestamp(d).date()
     )
-    reelles, disponibles = [], []
-    for ticker, period_end in zip(frame["ticker"], frame["period_end"], strict=True):
+
+    # Les dates ne dépendent que du couple (valeur, exercice) : on les calcule une fois,
+    # et non pour chacune des centaines de milliers de lignes de champs.
+    couples = frame[["ticker", "period_end", "first_fetched_date"]].drop_duplicates(
+        subset=["ticker", "period_end"]
+    )
+    dates: dict[tuple[str, dt.date], tuple[dt.date | None, dt.date]] = {}
+    for ticker, period_end, premiere in couples.itertuples(index=False):
         publiee = published_at_for(period_end, period_type, publications.get(ticker, []))
-        reelles.append(publiee)
-        disponibles.append(publiee)
-    frame["published_at"] = reelles
+        dates[(ticker, period_end)] = (
+            publiee,
+            available_from(period_end, period_type, premiere, publiee),
+        )
+
+    frame["published_at"] = [
+        dates[(t, p)][0] for t, p in zip(frame["ticker"], frame["period_end"], strict=True)
+    ]
     frame["published_at_estimated"] = frame["published_at"].isna()
     frame["available_from"] = [
-        available_from(pe, period_type, ffd, pa)
-        for pe, ffd, pa in zip(
-            frame["period_end"], frame["first_fetched_date"], frame["published_at"], strict=True
-        )
+        dates[(t, p)][1] for t, p in zip(frame["ticker"], frame["period_end"], strict=True)
     ]
     return frame[frame["available_from"] <= as_of].reset_index(drop=True)
 
