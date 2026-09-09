@@ -150,6 +150,14 @@ de l'univers le dimanche à 10 h.
 docker compose up -d --build
 ```
 
+Le conteneur tourne sans les droits d'administrateur, sous l'utilisateur d'identifiant 10001. Le
+répertoire `data` monté depuis l'hôte doit donc lui appartenir, sans quoi le service ne peut rien
+écrire :
+
+```bash
+sudo chown -R 10001:10001 data
+```
+
 Les données vivent dans `./data`, monté dans le conteneur : la base DuckDB, le cache des
 réponses brutes et les rapports. La première collecte se lance à la main, une seule fois, et se
 détache pour survivre à la fermeture du terminal :

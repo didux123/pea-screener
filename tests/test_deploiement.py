@@ -71,6 +71,13 @@ def test_compose_monte_les_donnees_et_ne_reclame_pas_de_secret():
     assert "8080:8080" in contenu
 
 
+def test_le_readme_explique_les_droits_du_volume():
+    """Le conteneur tourne sans privilèges : le volume monté doit lui appartenir."""
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert "chown -R 10001:10001" in readme
+    assert "USER pea" in DOCKERFILE.read_text(encoding="utf-8")
+
+
 @pytest.mark.parametrize(
     "cible", ["install", "universe", "ingest", "screen", "research", "report", "test"]
 )
