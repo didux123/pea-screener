@@ -1,0 +1,226 @@
+{
+ "iTotalRecords": 22,
+ "iTotalDisplayRecords": 22,
+ "aaData": [
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0000120073-XPAR\" data-order=\"AIR LIQUIDE\" data-title-hover=\"AIR LIQUIDE\">AIR LIQUIDE</a>",
+   "FR0000120073",
+   "AI",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">171.44</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-0.99%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:42 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0013341781-ALXP\" data-order=\"2CRSI\" data-title-hover=\"2CRSI\">2CRSI</a>",
+   "FR0013341781",
+   "AL2SI",
+   "<div class=\"nowrap pointer\" title=\"Euronext Growth Paris\">ALXP</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">28.32</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-0.77%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:42 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/NL0000852564-XAMS\" data-order=\"AALBERTS NV\" data-title-hover=\"AALBERTS N.V.\">AALBERTS NV</a>",
+   "NL0000852564",
+   "AALB",
+   "<div class=\"nowrap pointer\" title=\"Euronext Amsterdam\">XAMS</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">43.32</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-0.60%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:41 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/BE0974278104-XBRU\" data-order=\"ABO GROUP\" data-title-hover=\"ABO GROUP ENVIRONMENT\">ABO GROUP</a>",
+   "BE0974278104",
+   "ABO",
+   "<div class=\"nowrap pointer\" title=\"Euronext Brussels, Paris\">XBRU, XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">3.76</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-2.08%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:34 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/PTGAL0AM0009-XLIS\" data-order=\"GALP ENERGIA-NOM\" data-title-hover=\"GALP ENERGIA-NOM\">GALP ENERGIA-NOM</a>",
+   "PTGAL0AM0009",
+   "GALP",
+   "<div class=\"nowrap pointer\" title=\"Euronext Lisbon\">XLIS</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">21.39</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=text-brand-kelly-green>1.42%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">08:39 WEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/GG00B1RMC548-XAMS\" data-order=\"TETRAGON FIN GRP\" data-title-hover=\"TETRAGON FINANCIAL GROUP\">TETRAGON FIN GRP</a>",
+   "GG00B1RMC548",
+   "TFG",
+   "<div class=\"nowrap pointer\" title=\"Euronext Amsterdam\">XAMS</div>",
+   "<div class=\"text-right pd_currency_es\">USD <span class=\"pd_last_price_es\">14.15</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=text-brand-kelly-green>0.35%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">08 Sep 2026<span class=\"tooltiptext\">17:35 CEST</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR001400ZRT0-XPAR\" data-order=\"AB SCIENCE BSA\" data-title-hover=\"AB SCIENCE BSA\">AB SCIENCE BSA</a>",
+   "FR001400ZRT0",
+   "ABBS",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">-</span></div>",
+   "<div class=\"text-right pd_percent\">-</div>",
+   "<div class=\"text-right pointer tooltipDesign\">-<span class=\"tooltiptext\"></span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/NL0006294274-XPAR\" data-order=\"EURONEXT\" data-title-hover=\"EURONEXT\">EURONEXT</a>",
+   "NL0006294274",
+   "ENX",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris, Amsterdam, Brussels\">XPAR, XAMS, XBRU</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">159.70</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-0.87%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:42 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/NL0000226223-XPAR\" data-order=\"STMICROELECTRONICS\" data-title-hover=\"STMICROELECTRONICS\">STMICROELECTRONICS</a>",
+   "NL0000226223",
+   "STMPA",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">44.875</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-0.29%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:42 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0011040500-XPAR\" data-order=\"74SOFTWARE\" data-title-hover=\"74SOFTWARE\">74SOFTWARE</a>",
+   "FR0011040500",
+   "74SW",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">38.10</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-0.52%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:28 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0000121014-XPAR\" data-order=\"LVMH\" data-title-hover=\"LVMH\">LVMH</a>",
+   "FR0000121014",
+   "MC",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">421.15</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-1.27%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:42 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0000120271-XPAR\" data-order=\"TOTALENERGIES\" data-title-hover=\"TOTALENERGIES\">TOTALENERGIES</a>",
+   "FR0000120271",
+   "TTE",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris, Brussels\">XPAR, XBRU</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">78.75</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=text-brand-kelly-green>1.29%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:42 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/BE0974293251-XBRU\" data-order=\"AB INBEV\" data-title-hover=\"AB INBEV\">AB INBEV</a>",
+   "BE0974293251",
+   "ABI",
+   "<div class=\"nowrap pointer\" title=\"Euronext Brussels\">XBRU</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">67.44</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-1.92%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:42 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/NL0010273215-XAMS\" data-order=\"ASML HOLDING\" data-title-hover=\"ASML HOLDING\">ASML HOLDING</a>",
+   "NL0010273215",
+   "ASML",
+   "<div class=\"nowrap pointer\" title=\"Euronext Amsterdam\">XAMS</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">1,506.40</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-0.76%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:42 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0010313833-XPAR\" data-order=\"ARKEMA\" data-title-hover=\"ARKEMA\">ARKEMA</a>",
+   "FR0010313833",
+   "AKE",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">60.00</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=text-brand-kelly-green>1.27%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:41 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0000044448-XPAR\" data-order=\"NEXANS\" data-title-hover=\"NEXANS\">NEXANS</a>",
+   "FR0000044448",
+   "NEX",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">141.10</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-0.14%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:40 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0010557264-XPAR\" data-order=\"AB SCIENCE\" data-title-hover=\"AB SCIENCE\">AB SCIENCE</a>",
+   "FR0010557264",
+   "AB",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">0.725</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-0.96%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:32 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR00140118Z8-ALXP\" data-order=\"AB SCIENCE BSA 25\" data-title-hover=\"AB SCIENCE BSA 25\">AB SCIENCE BSA 25</a>",
+   "FR00140118Z8",
+   "ABSBS",
+   "<div class=\"nowrap pointer\" title=\"Euronext Growth Paris\">ALXP</div>",
+   "<div class=\"text-right pd_currency_es\">-</span></div>",
+   "<div class=\"text-right pd_percent\">-</div>",
+   "<div class=\"text-right pointer tooltipDesign\">-<span class=\"tooltiptext\"></span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0014011S49-ALXP\" data-order=\"AB SCIENCE BSAAU25\" data-title-hover=\"AB SCIENCE BSAAU25\">AB SCIENCE BSAAU25</a>",
+   "FR0014011S49",
+   "ABBSA",
+   "<div class=\"nowrap pointer\" title=\"Euronext Growth Paris\">ALXP</div>",
+   "<div class=\"text-right pd_currency_es\">-</span></div>",
+   "<div class=\"text-right pd_percent\">-</div>",
+   "<div class=\"text-right pointer tooltipDesign\">-<span class=\"tooltiptext\"></span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0004040608-XPAR\" data-order=\"ABC ARBITRAGE\" data-title-hover=\"ABC ARBITRAGE\">ABC ARBITRAGE</a>",
+   "FR0004040608",
+   "ABCA",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">5.20</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=red>-0.95%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:32 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0013185857-XPAR\" data-order=\"ABEO\" data-title-hover=\"ABEO\">ABEO</a>",
+   "FR0013185857",
+   "ABEO",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">8.48</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=text-brand-kelly-green>0.47%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:00 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ],
+  [
+   "",
+   "<a href=\"/en/product/equities/FR0012616852-XPAR\" data-order=\"ABIONYX PHARMA\" data-title-hover=\"ABIONYX PHARMA\">ABIONYX PHARMA</a>",
+   "FR0012616852",
+   "ABNX",
+   "<div class=\"nowrap pointer\" title=\"Euronext Paris\">XPAR</div>",
+   "<div class=\"text-right pd_currency_es\">EUR <span class=\"pd_last_price_es\">1.936</span></div>",
+   "<div class=\"text-right pd_percent\"><span class=text-brand-kelly-green>4.99%</span></div>",
+   "<div class=\"text-right pointer tooltipDesign\">09:36 CEST<span class=\"tooltiptext\">09 Sep 2026</span></div>"
+  ]
+ ]
+}

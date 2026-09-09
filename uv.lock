@@ -669,6 +669,7 @@ dependencies = [
     { name = "pandas" },
     { name = "pyarrow" },
     { name = "python-dotenv" },
+    { name = "requests" },
     { name = "yfinance" },
 ]
 
@@ -685,6 +686,7 @@ requires-dist = [
     { name = "pandas", specifier = ">=2.2" },
     { name = "pyarrow", specifier = ">=17" },
     { name = "python-dotenv", specifier = ">=1.0" },
+    { name = "requests", specifier = ">=2.31" },
     { name = "yfinance", specifier = "==1.7.0" },
 ]
 

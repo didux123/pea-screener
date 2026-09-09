@@ -36,7 +36,11 @@ Prises pour avancer sans te bloquer. Chacune est réversible ; elles sont testé
 1. **Périmètre** : Euronext marchés réglementés et Growth (XPAR, ALXP, XAMS, ALXA, XBRU, ALXB,
    XLIS, ALXL) plus Xetra (XETR, lignes `Instrument Type = CS`). Euronext Access (XMLI, MLXB,
    ENXL) est exclu : ces valeurs sont presque toutes absentes de Yahoo et seraient de toute façon
-   écartées par le filtre de liquidité.
+   écartées par le filtre de liquidité. Seuls les ISIN de l'UE ou de l'EEE entrent dans l'univers :
+   sans ce filtre, sept cents lignes américaines cotées à Xetra consommeraient des requêtes pour
+   être écartées ensuite. Un ISIN du fichier d'exceptions traverse ce filtre.
+   Au 9 septembre 2026 l'univers compte **1 401 valeurs** (551 Xetra, 320 Paris, 285 Growth Paris,
+   104 Bruxelles, 101 Amsterdam, 32 Lisbonne, 8 Growth Bruxelles et Lisbonne).
 2. **Une ligne par ISIN.** La place de référence est celle du pays de l'ISIN (FR→XPAR, NL→XAMS,
    BE→XBRU, PT→XLIS, DE→XETR), sinon la première présente. Les autres cotations restent dans
    `listings` mais ne sont pas ingérées.
@@ -48,6 +52,9 @@ Prises pour avancer sans te bloquer. Chacune est réversible ; elles sont testé
    ces valeurs ; c'est de la donnée, pas une option de configuration.
 4. **Ticker Yahoo** : mnémonique plus suffixe de place, validé par les métadonnées Yahoo ; à défaut,
    résolution par ISIN ; sinon la valeur est marquée non résolue et apparaît dans le rapport.
+   L'ISIN vient toujours des listes de bourse, jamais de Yahoo : le champ ISIN de Yahoo est faux
+   (il donne FR0000053951 pour Air Liquide, dont l'ISIN réel est FR0000120073, et un ISIN argentin
+   pour ASML).
 5. **Radiations** : une valeur absente des listes reçoit une date de sortie et n'est jamais
    supprimée. Si elle réapparaît, la date est effacée. C'est ce qui protège les évaluations
    historiques du biais de survie, à partir de la première liste enregistrée.
