@@ -9,7 +9,7 @@ from __future__ import annotations
 import datetime as dt
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import AfterValidator, BaseModel, ConfigDict, Field, field_validator
 
 NON_DISPONIBLE = "non disponible"
 
@@ -19,6 +19,28 @@ RefFait = Annotated[str, Field(pattern=r"^[FSN]\d{1,3}$")]
 
 class Base(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+
+def _texte_ou_non_disponible(minimum: int):
+    """Un champ rédigé, ou l'aveu explicite que l'information manque.
+
+    La consigne donnée au modèle est d'écrire « non disponible » plutôt que d'inventer. Le
+    schéma doit donc accepter cette réponse, sans quoi la consigne serait contradictoire.
+    """
+
+    def valider(valeur: str) -> str:
+        nettoye = valeur.strip()
+        if nettoye.lower().startswith(NON_DISPONIBLE):
+            return NON_DISPONIBLE
+        if len(nettoye) < minimum:
+            raise ValueError(f"au moins {minimum} caractères, ou « {NON_DISPONIBLE} »")
+        return nettoye
+
+    return valider
+
+
+TexteLong = Annotated[str, AfterValidator(_texte_ou_non_disponible(80)), Field(max_length=900)]
+TexteMoyen = Annotated[str, AfterValidator(_texte_ou_non_disponible(40)), Field(max_length=900)]
 
 
 class Source(Base):
@@ -84,11 +106,11 @@ class Dossier(Base):
     """Le dossier d'investissement. Aucune taille de position, aucun ordre, aucun prix d'achat."""
 
     isin: str = Field(pattern=r"^[A-Z]{2}[A-Z0-9]{9}\d$")
-    activite: str = Field(min_length=80, max_length=900, description="trois phrases")
-    origine_du_chiffre_affaires: str = Field(min_length=40, max_length=900)
+    activite: TexteLong = Field(description="trois phrases")
+    origine_du_chiffre_affaires: TexteMoyen
     moteurs_de_croissance: list[str] = Field(min_length=1, max_length=5)
-    avantage_concurrentiel: str = Field(min_length=40, max_length=900)
-    ce_qui_le_ferait_disparaitre: str = Field(min_length=40, max_length=900)
+    avantage_concurrentiel: TexteMoyen
+    ce_qui_le_ferait_disparaitre: TexteMoyen
     risques: list[Risque] = Field(min_length=3, max_length=3)
     hausse_justifiee: HausseJustifiee
     signes_alerte: list[str] = Field(default_factory=list, max_length=8)

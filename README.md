@@ -12,7 +12,7 @@ que tu valides toi-même, et tient un portefeuille fictif pour mesurer honnêtem
 | --- | --- | --- |
 | 1 | Univers, données, score composite | livré |
 | 2 | Dossiers d'investissement, débat haussier contre baissier | à venir |
-| 3 | Deux portefeuilles fictifs, règles et agent, journal, Telegram | à venir |
+| 3 | Deux portefeuilles fictifs, règles et agent, journal, digest par courriel | à venir |
 | 4 | Évaluation (références, bras témoin, Sharpe déflaté) | à venir |
 
 ## Commandes

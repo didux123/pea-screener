@@ -38,7 +38,7 @@ TOURNURES_INTERDITES = (
 
 NOMBRE = re.compile(
     r"(?<![\w.])"
-    r"(\d{1,3}(?:[   ]\d{3})+|\d+(?:[.,]\d+)?)"
+    r"([+-]?(?:\d{1,3}(?:[   ]\d{3})+|\d+(?:[.,]\d+)?))"
     r"\s*(%|milliards?|millions?|milliers?|mds?|m€)?",
     re.IGNORECASE,
 )
@@ -107,17 +107,36 @@ def nombres_du_texte(texte: str) -> list[tuple[str, float]]:
     return trouves
 
 
-def _est_source(valeur: float, autorisees: set[float]) -> bool:
-    if valeur in PETITS_ENTIERS and float(valeur).is_integer():
+def _decimales(brut: str) -> int:
+    """Précision à laquelle le chiffre a été écrit : « 0,5 » en annonce une, « 42,68 » deux."""
+    partie = re.split(r"[.,]", brut.split()[0].replace(" ", "").replace(" ", ""))
+    return len(partie[-1]) if len(partie) > 1 else 0
+
+
+def _est_source(valeur: float, autorisees: set[float], brut: str = "") -> bool:
+    """Le chiffre écrit doit être un arrondi plausible d'un fait fourni.
+
+    Deux assouplissements, tirés des premiers dossiers réels. Le signe n'est pas
+    discriminant : en français le sens est porté par les mots, « une baisse de 3,1 % » et
+    « -3,1 % » désignent le même fait. Et la comparaison se fait à la précision d'écriture :
+    un fait à -0,53 % écrit « 0,5 % » est correctement rapporté, pas inventé.
+    """
+    cible = abs(valeur)
+    if cible in PETITS_ENTIERS and float(cible).is_integer():
         return True
-    if float(valeur).is_integer() and int(valeur) in ANNEES:
+    if float(cible).is_integer() and int(cible) in ANNEES:
         return True
+
+    precision = _decimales(brut) if brut else None
     for reference in autorisees:
-        if reference == 0:
-            if abs(valeur) < 1e-9:
+        attendu = abs(reference)
+        if attendu == 0:
+            if cible < 1e-9:
                 return True
             continue
-        if abs(valeur - reference) <= abs(reference) * TOLERANCE:
+        if abs(cible - attendu) <= attendu * TOLERANCE:
+            return True
+        if precision is not None and round(attendu, precision) == round(cible, precision):
             return True
     return False
 
@@ -139,7 +158,9 @@ def _textes_narratifs(dossier: Dossier) -> list[tuple[str, str]]:
     textes += [(f"risque[{i}]", r.explication) for i, r in enumerate(dossier.risques)]
     textes += [(f"catalyseur[{i}]", c.evenement) for i, c in enumerate(dossier.catalyseurs)]
     for i, critere in enumerate(dossier.criteres_invalidation):
-        textes.append((f"invalidation[{i}]", f"{critere.critere} {critere.mesure} {critere.seuil}"))
+        # Le seuil est choisi par l'analyste, pas observé : c'est le niveau à partir duquel il
+        # déclare sa thèse fausse. Il n'a donc pas à figurer dans les faits fournis.
+        textes.append((f"invalidation[{i}]", f"{critere.critere} {critere.mesure}"))
     return textes
 
 
@@ -157,7 +178,7 @@ def verifier(dossier: Dossier, travail: DossierDeTravail, *, suspects: list[str]
         if not texte or NON_DISPONIBLE in texte.lower():
             continue
         for brut, valeur in nombres_du_texte(texte):
-            if not _est_source(valeur, autorisees):
+            if not _est_source(valeur, autorisees, brut):
                 rapport.nombres_non_sources.append(f"{champ} : « {brut} »")
 
     # La fourchette de valorisation est un jugement, mais ses bornes doivent rester
