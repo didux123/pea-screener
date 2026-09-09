@@ -294,6 +294,19 @@
                 <strong style="font-weight:600;color:{{ sel.dossier.verdictCouleur }}">{{ sel.dossier.verdict }}</strong> — {{ sel.dossier.verdictExpl }}
               </div>
               <div>
+                <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--encre3);margin-bottom:6px">Le débat</div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:11px">
+                  <div style="border:1px solid var(--trait);border-left:3px solid var(--hausse);background:var(--carte);padding:12px 14px">
+                    <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--hausse);margin-bottom:4px">Pour</div>
+                    {{ sel.dossier.haussier }}
+                  </div>
+                  <div style="border:1px solid var(--trait);border-left:3px solid var(--baisse);background:var(--carte);padding:12px 14px">
+                    <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--baisse);margin-bottom:4px">Contre</div>
+                    {{ sel.dossier.baissier }}
+                  </div>
+                </div>
+              </div>
+              <div>
                 <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--alerte);margin-bottom:3px">Signes d’alerte</div>
                 {{ sel.dossier.alertes }}
               </div>
@@ -559,10 +572,14 @@ class Component extends DCLogic {
         verdict: { fondamentaux: 'Fondamentaux', recit: 'Récit', mixte: 'Mixte' }[dos.hausse_justifiee.verdict] || dos.hausse_justifiee.verdict,
         verdictCouleur: dos.hausse_justifiee.verdict === 'recit' ? 'var(--alerte)' : 'var(--encre)',
         verdictExpl: dos.hausse_justifiee.explication,
+        haussier: dos.debat ? dos.debat.haussier : 'Débat non disponible dans ce dossier.',
+        baissier: dos.debat ? dos.debat.baissier : 'Débat non disponible dans ce dossier.',
         alertes: dos.signes_alerte.length ? dos.signes_alerte.join(' · ') : 'Aucun signe d’alerte consigné dans le dossier.',
         catalyseurs: dos.catalyseurs.map(c => ({ date: c.date, evenement: c.evenement })),
         sources: dos.sources.map(s => ({ titre: s.titre, url: s.url, date: s.date })),
-        meta: 'Rédigé par ' + dos.version_prompt + ' · coût ' + SCR.nb(dos.cout_eur, 3) + ' €'
+        meta: 'Rédigé le ' + (dos.genere_le || '').slice(0, 10) + ' par ' + (dos.modele || 'modèle inconnu')
+          + ' · extraction, débat puis synthèse · ' + SCR.nb(dos.cout_eur, 3) + ' € · prompts '
+          + Object.values(dos.versions_prompts || {}).join(', ')
       } : null
     };
   }
