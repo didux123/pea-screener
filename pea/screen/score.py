@@ -258,6 +258,7 @@ def run_screen(pit: A.PITData, *, overrides_path=None) -> ScreenResult:
     consensus = pit.consensus.set_index("ticker").to_dict("index") if not pit.consensus.empty else {}
     etats = pit.statements.groupby("ticker") if not pit.statements.empty else None
     cours = pit.prices.groupby("ticker") if not pit.prices.empty else None
+    divisions = pit.splits.groupby("ticker") if not pit.splits.empty else None
 
     lignes: list[dict] = []
     couverture_champs: dict[str, int] = {champ: 0 for champ in REQUIRED_FIELDS}
@@ -268,7 +269,7 @@ def run_screen(pit: A.PITData, *, overrides_path=None) -> ScreenResult:
         descripteur = descripteurs.get(ticker, {}) if ticker else {}
         etats_valeur = _group(etats, ticker)
         cours_valeur = _group(cours, ticker)
-        splits = cours_valeur[cours_valeur["split_ratio"] > 0] if not cours_valeur.empty else cours_valeur
+        splits = _group(divisions, ticker)
 
         devise_etats = _statement_currency(etats_valeur) or descripteur.get("financial_currency")
         metrics = compute_stock_metrics(

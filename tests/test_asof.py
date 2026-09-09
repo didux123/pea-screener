@@ -282,6 +282,31 @@ def test_aucune_donnee_posterieure_n_entre_dans_le_calcul(base_complete):
     assert "Utilities" not in apres["secteurs"]
 
 
+def test_splits_charges_sur_tout_l_historique(con):
+    """La dilution sur trois ans a besoin de splits bien antérieurs à la fenêtre de cours."""
+    _universe_row(con, "FR0000120073", "AI.PA", first_seen=dt.date(2020, 1, 1))
+    _price(con, "AI.PA", dt.date(2026, 3, 13), 170.0)
+    db_module.insert_df(con, "prices", pd.DataFrame([{
+        "ticker": "AI.PA", "date": dt.date(2022, 6, 1), "close": 90.0, "open": 90.0,
+        "high": 90.0, "low": 90.0, "adj_close": 90.0, "volume": 1000, "dividend": 0.0,
+        "split_ratio": 2.0, "fetched_at_utc": dt.datetime(2026, 3, 10),
+    }]))
+    pit = A.load_pit(con, AS_OF)
+    # Le cours de 2022 sort de la fenêtre de 420 jours, mais le split doit rester connu.
+    assert dt.date(2022, 6, 1) not in set(pit.prices["date"])
+    assert list(pit.splits["split_ratio"]) == [2.0]
+
+
+def test_split_posterieur_a_la_date_ignore(con):
+    _universe_row(con, "FR0000120073", "AI.PA")
+    db_module.insert_df(con, "prices", pd.DataFrame([{
+        "ticker": "AI.PA", "date": dt.date(2026, 5, 1), "close": 90.0, "open": 90.0,
+        "high": 90.0, "low": 90.0, "adj_close": 90.0, "volume": 1000, "dividend": 0.0,
+        "split_ratio": 3.0, "fetched_at_utc": dt.datetime(2026, 5, 1),
+    }]))
+    assert A.load_pit(con, AS_OF).splits.empty
+
+
 def test_audit_renseigne(base_complete):
     pit = A.load_pit(base_complete, AS_OF)
     assert pit.mode == "live"

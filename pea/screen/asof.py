@@ -63,6 +63,7 @@ class PITData:
     universe: pd.DataFrame
     statements: pd.DataFrame
     prices: pd.DataFrame
+    splits: pd.DataFrame
     fx: pd.DataFrame
     descriptors: pd.DataFrame
     consensus: pd.DataFrame
@@ -327,12 +328,16 @@ def load_pit(con, as_of: dt.date) -> PITData:
     univers = universe_at(con, as_of, mode)
     etats = statements_at(con, as_of, cutoff)
     cours = prices_until(con, as_of)
+    # Les splits remontent au-delà de la fenêtre de cours : la dilution sur trois ans et la
+    # capitalisation en ont besoin pour aligner des nombres d'actions de dates différentes.
+    divisions = splits_until(con, as_of)
     changes = fx_at(con, as_of, cutoff)
     descripteurs = descriptors_at(con, cutoff)
     consensus = consensus_at(con, as_of, cutoff)
 
     audit.note_frame(etats, info="period_end")
     audit.note_frame(cours, info="date")
+    audit.note_frame(divisions, fetched=None, info="date")
     audit.note_frame(changes, info="date")
     audit.note_frame(descripteurs)
     audit.note_frame(consensus)
@@ -345,6 +350,7 @@ def load_pit(con, as_of: dt.date) -> PITData:
         universe=univers,
         statements=etats,
         prices=cours,
+        splits=divisions,
         fx=changes,
         descriptors=descripteurs,
         consensus=consensus,
