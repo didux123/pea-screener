@@ -1,8 +1,12 @@
 # Heures locales (TZ=Europe/Paris). Les places européennes clôturent à 17 h 30.
-# La base DuckDB n'accepte qu'un seul processus écrivain : les commandes s'enchaînent.
+# La base DuckDB n'accepte qu'un seul processus écrivain : les commandes s'enchaînent
+# dans une seule ligne plutôt que de tourner en parallèle.
 
 # Du lundi au vendredi : cours, taux, fondamentaux dus, puis classement du jour.
 0 22 * * 1-5 cd /app && pea ingest && pea screen
 
-# Le dimanche matin : rafraîchissement des listes de bourse et des symboles.
-0 10 * * 0 cd /app && pea universe
+# Le dimanche matin : listes de bourse rafraîchies, classement recalculé sur l'univers à
+# jour, puis rédaction des dossiers de la semaine. Compter une vingtaine de dossiers à
+# une quinzaine de centimes, soit environ trois euros par semaine chez le fournisseur
+# de modèle. La commande s'arrête d'elle-même si aucune clé n'est configurée.
+0 10 * * 0 cd /app && pea universe && pea screen && pea research

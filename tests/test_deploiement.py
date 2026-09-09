@@ -42,10 +42,20 @@ def test_les_taches_appellent_des_commandes_qui_existent():
 
 
 def test_l_ingestion_precede_le_classement():
-    """DuckDB n'accepte qu'un écrivain : les deux commandes s'enchaînent, sans parallèle."""
+    """DuckDB n'accepte qu'un écrivain : les commandes s'enchaînent, sans parallèle."""
     quotidienne = next(ligne for ligne in _lignes_de_taches() if "ingest" in ligne)
     assert quotidienne.index("ingest") < quotidienne.index("screen")
     assert "&&" in quotidienne
+
+
+def test_les_dossiers_sont_rediges_chaque_semaine():
+    """Le cahier des charges veut des dossiers hebdomadaires : ils doivent être planifiés."""
+    hebdomadaire = next(ligne for ligne in _lignes_de_taches() if "research" in ligne)
+    champs = hebdomadaire.split(maxsplit=5)
+    assert champs[4] == "0", "le dimanche"
+    # L'univers puis le classement précèdent la rédaction : les dossiers portent sur le
+    # classement du jour, pas sur celui de vendredi.
+    assert hebdomadaire.index("universe") < hebdomadaire.index("screen") < hebdomadaire.index("research")
 
 
 def test_point_d_entree_utilise_un_chemin_absolu():
