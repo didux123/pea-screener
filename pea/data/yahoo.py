@@ -25,6 +25,7 @@ from pea.data.provider import (
     PRICE_COLUMNS,
     STATEMENT_COLUMNS,
     NotFound,
+    ProviderError,
     RateLimited,
     Resolution,
 )
@@ -316,7 +317,12 @@ class YahooProvider:
         return payload
 
     def _call(self, fetch):
-        """Exécute un appel réseau sous limiteur, avec temporisation en cas de blocage."""
+        """Exécute un appel réseau sous limiteur, avec temporisation en cas de blocage.
+
+        C'est ici que passe la frontière avec yfinance : toute défaillance de la
+        bibliothèque devient une ProviderError, pour qu'une valeur mal formée chez Yahoo
+        n'interrompe pas une collecte de deux heures.
+        """
         attempt = 0
         while True:
             self.pacer.tick()
@@ -325,6 +331,10 @@ class YahooProvider:
             except YFRateLimitError:
                 self.pacer.backoff(attempt)
                 attempt += 1
+            except ProviderError:
+                raise
+            except Exception as exc:
+                raise ProviderError(f"{type(exc).__name__}: {exc}") from exc
 
     # -- protocole --------------------------------------------------------------
 

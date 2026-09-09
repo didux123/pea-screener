@@ -261,6 +261,33 @@ def test_trois_valeurs_bloquees_interrompent_l_ingestion(con, provider):
     ).fetchone()[0] >= I.MAX_CONSECUTIVE_RATE_LIMITED
 
 
+def test_valeur_qui_fait_echouer_la_bibliotheque_n_arrete_pas_la_collecte(con, provider):
+    """yfinance lève parfois une erreur brute sur une valeur mal formée chez Yahoo."""
+    _universe(con, ["CASSE.PA", "SAINE.PA"])
+    for ticker in ("CASSE.PA", "SAINE.PA"):
+        provider.prix[ticker] = _prix([dt.date(2026, 9, 8)], [10.0])
+        provider.infos[ticker] = {"sector": "Technology", "financial_currency": "EUR"}
+        provider.etats[ticker] = _etats(100.0)
+
+    def dates_cassees(ticker):
+        if ticker == "CASSE.PA":
+            raise KeyError("['Earnings Date']")   # erreur brute observée chez yfinance
+        return pd.DataFrame(columns=["event_date", "eps_estimate", "eps_reported"])
+
+    provider.earnings_dates = dates_cassees
+    stats = I.ingest_fundamentals(con, provider, ["CASSE.PA", "SAINE.PA"], dt.date(2026, 9, 9))
+
+    assert stats.errors == 1
+    assert stats.ok == 2                       # les deux valeurs ont été traitées
+    # La valeur suivante a bien été collectée malgré l'échec de la précédente.
+    assert con.execute(
+        "SELECT count(*) FROM statements WHERE ticker = 'SAINE.PA'"
+    ).fetchone()[0] == 1
+    assert con.execute(
+        "SELECT status FROM fetch_log WHERE ticker = 'CASSE.PA' AND endpoint = 'earnings_dates'"
+    ).fetchone()[0] == "error"
+
+
 def test_ingestion_complete(con, provider):
     _universe(con, ["AI.PA"])
     provider.prix["AI.PA"] = _prix([dt.date(2026, 9, 8)], [11.0])

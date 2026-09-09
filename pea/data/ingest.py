@@ -334,6 +334,11 @@ def ingest_fundamentals(
                 log_fetch(con, ticker, endpoint, "error", error=exc)
                 stats.errors += 1
                 continue
+            except Exception as exc:
+                log.exception("%s %s : erreur inattendue", ticker, endpoint)
+                log_fetch(con, ticker, endpoint, "error", error=exc)
+                stats.errors += 1
+                continue
             log_fetch(con, ticker, endpoint, "ok" if n_rows else "empty", n_rows=n_rows,
                       cache_path=getattr(provider, "last_cache_path", None))
             stats.rows += n_rows or 0
