@@ -138,6 +138,10 @@ Prises pour avancer sans te bloquer. Chacune est réversible ; elles sont testé
 - Les volumes Yahoo ne couvrent que la place principale : la liquidité mesurée est conservatrice.
 - La qualité des données Yahoo est inégale sur les petites valeurs. Le rapport de couverture est
   l'instrument de surveillance.
+- La liste Euronext ne distingue pas les actions des bons de souscription, contrairement à celle de
+  Xetra. Une quarantaine de ces lignes entrent donc dans l'univers, échouent à la résolution ou à la
+  collecte, puis sont listées comme non résolues et mises de côté. Elles coûtent quelques requêtes
+  une seule fois.
 
 ## Déploiement
 
