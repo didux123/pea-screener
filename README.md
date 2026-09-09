@@ -27,6 +27,24 @@ make report AS_OF=2026-03-15    # re-génère les fichiers d'un run déjà calcu
 make test                       # pytest (sans réseau)
 ```
 
+## Le score composite
+
+Score de 0 à 100 sur l'univers filtré. La valorisation est classée par percentile à
+l'intérieur de chaque secteur.
+
+| Bloc | Poids | Métriques |
+| --- | --- | --- |
+| Croissance et qualité | 35 | croissance du chiffre d'affaires et du résultat opérationnel sur 3 ans, marge opérationnelle et sa tendance, rentabilité des capitaux employés, conversion du résultat en trésorerie |
+| Momentum | 25 | performance 12 mois et 6 mois hors dernier mois, position par rapport à la moyenne mobile 200 jours |
+| Valorisation relative | 20 | valeur d'entreprise sur résultat opérationnel, rendement du flux de trésorerie disponible, cours sur bénéfice |
+| Solidité du bilan | 10 | dette nette sur EBITDA, couverture des intérêts, dilution sur 3 ans |
+| Dynamique du consensus | 10 | variation du consensus de bénéfice sur 3 mois, révisions nettes |
+
+Filtres appliqués avant le score : liquidité médiane inférieure à 150 000 € par jour, non
+éligible au PEA, dette nette sur EBITDA supérieure à 4, flux de trésorerie négatif trois
+années de suite, plus de 40 % des dix-neuf champs requis manquants, sociétés financières et
+foncières, classes d'actions en double.
+
 ## Décisions par défaut
 
 Prises pour avancer sans te bloquer. Chacune est réversible ; elles sont testées.
@@ -82,11 +100,13 @@ Prises pour avancer sans te bloquer. Chacune est réversible ; elles sont testé
     conservé mais jamais utilisé pour un calcul, car son ajustement rétroactif rend une série
     construite jour après jour incohérente. Le momentum passe par un indice de rendement total
     reconstruit à la demande.
-12. **Devises** : les ratios sans dimension restent dans la devise des états. Seuls les multiples qui
+12. 12. **Devises** : les ratios sans dimension restent dans la devise des états. Seuls les
+    multiples qui
     mêlent capitalisation en euros et compte de résultat sont convertis, au taux du jour de calcul.
     Taux ou devise de publication inconnus : ces trois multiples sont manquants, jamais supposés.
 13. **Débit Yahoo** : pause de 30 secondes toutes les 100 requêtes, temporisation croissante en cas
-    de blocage, puis abandon de la valeur et passage à la suivante. Les réponses brutes sont mises en
+    de blocage, puis abandon de la valeur et passage à la suivante. Les réponses brutes sont mises
+    en
     cache sur disque, ce qui rend toute reprise gratuite.
 14. **Cadence** : ingestion et classement chaque soir de semaine à 22 h, rafraîchissement de
     l'univers le dimanche. Une valeur voit ses fondamentaux rafraîchis une fois par semaine.
@@ -94,10 +114,12 @@ Prises pour avancer sans te bloquer. Chacune est réversible ; elles sont testé
 ### Score
 
 15. **Une donnée manquante n'est jamais imputée.** Elle vaut 20 sur 100 dans le classement, elle est
-    listée valeur par valeur et comptée dans le rapport de couverture. Un dénominateur négatif ou nul
+    listée valeur par valeur et comptée dans le rapport de couverture. Un dénominateur négatif ou
+    nul
     n'est pas une donnée manquante mais une information : il donne le pire score.
 16. **On n'écarte une valeur que sur preuve positive**, sauf pour l'éligibilité PEA et la liquidité
-    qui doivent être établies. Un endettement inconnu n'élimine pas ; il pénalise déjà le bloc bilan.
+    qui doivent être établies. Un endettement inconnu n'élimine pas ; il pénalise déjà le bloc
+    bilan.
     Tous les filtres sont évalués, chaque valeur porte la liste complète de ses raisons d'exclusion.
 17. **Percentiles** calculés sur les seules valeurs retenues ; la valorisation est classée dans le
     secteur, avec repli sur l'univers entier quand le secteur compte moins de dix valeurs.
@@ -117,39 +139,6 @@ Prises pour avancer sans te bloquer. Chacune est réversible ; elles sont testé
 - La qualité des données Yahoo est inégale sur les petites valeurs. Le rapport de couverture est
   l'instrument de surveillance.
 
-## Structure
-
-```
-pea/config.py       lecture de config.toml et de .env
-pea/db.py           connexion DuckDB et schéma
-pea/universe.py     listes de bourse, éligibilité, radiations
-pea/data/           interface DataProvider, implémentation Yahoo, ingestion
-pea/screen/         calcul à une date donnée, métriques, score, rapports
-pea/cli.py          ligne de commande
-scripts/            capture des réponses Yahoo servant de fixtures
-deploy/             crontab et point d'entrée du conteneur
-```
-
-Les secrets vont dans `.env` (voir `.env.example`), jamais dans le dépôt.
-
-## Le score composite
-
-Score de 0 à 100 sur l'univers filtré. La valorisation est classée par percentile à
-l'intérieur de chaque secteur.
-
-| Bloc | Poids | Métriques |
-| --- | --- | --- |
-| Croissance et qualité | 35 | croissance du chiffre d'affaires et du résultat opérationnel sur 3 ans, marge opérationnelle et sa tendance, rentabilité des capitaux employés, conversion du résultat en trésorerie |
-| Momentum | 25 | performance 12 mois et 6 mois hors dernier mois, position par rapport à la moyenne mobile 200 jours |
-| Valorisation relative | 20 | valeur d'entreprise sur résultat opérationnel, rendement du flux de trésorerie disponible, cours sur bénéfice |
-| Solidité du bilan | 10 | dette nette sur EBITDA, couverture des intérêts, dilution sur 3 ans |
-| Dynamique du consensus | 10 | variation du consensus de bénéfice sur 3 mois, révisions nettes |
-
-Filtres appliqués avant le score : liquidité médiane inférieure à 150 000 € par jour, non
-éligible au PEA, dette nette sur EBITDA supérieure à 4, flux de trésorerie négatif trois
-années de suite, plus de 40 % des dix-neuf champs requis manquants, sociétés financières et
-foncières, classes d'actions en double.
-
 ## Déploiement
 
 Un seul conteneur, qui sert les rapports sur le port 8080 et exécute les tâches planifiées
@@ -164,3 +153,18 @@ Les données vivent dans `./data`, monté dans le conteneur : la base DuckDB, le
 réponses brutes et les rapports. La première ingestion prend environ deux heures ; les
 suivantes une quarantaine de minutes. Une reprise après interruption ne coûte aucune
 requête, le cache disque faisant foi pour la journée.
+
+## Structure
+
+```
+pea/config.py       lecture de config.toml et de .env
+pea/db.py           connexion DuckDB et schéma
+pea/universe.py     listes de bourse, éligibilité, radiations
+pea/data/           interface DataProvider, implémentation Yahoo, ingestion
+pea/screen/         calcul à une date donnée, métriques, score, rapports
+pea/cli.py          ligne de commande
+scripts/            capture des réponses Yahoo servant de fixtures
+deploy/             crontab et point d'entrée du conteneur
+```
+
+Les secrets vont dans `.env` (voir `.env.example`), jamais dans le dépôt.
