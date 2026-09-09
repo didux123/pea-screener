@@ -314,7 +314,7 @@ class StockInputs:
     descriptor: dict                  # métadonnées (secteur, devises, nombre d'actions)
     consensus: dict | None            # consensus récent, ou None
     fx_rate: float | None             # 1 EUR = fx_rate (devise de publication) ; 1.0 si euro
-    quote_fx_rate: float | None = 1.0 # taux pour la devise de cotation
+    quote_fx_rate: float | None = 1.0 # 1 EUR = x devise de cotation ; None si inconnu
 
 
 def compute_stock_metrics(inp: StockInputs) -> StockMetrics:
@@ -343,8 +343,12 @@ def compute_stock_metrics(inp: StockInputs) -> StockMetrics:
         missing.append("prices.history_12m")
 
     traded = median_traded_value(prices, inp.as_of) if prices is not None else None
-    if traded is not None and inp.quote_fx_rate:
-        traded = traded / inp.quote_fx_rate
+    if traded is not None:
+        if inp.quote_fx_rate and inp.quote_fx_rate > 0:
+            traded = traded / inp.quote_fx_rate
+        else:
+            traded = None   # devise de cotation sans taux : la liquidité reste inconnue
+            m.flags.append("devise_de_cotation_sans_taux")
     m.traded_value_3m_eur = traded
 
     # -- exercices -----------------------------------------------------------
@@ -487,8 +491,9 @@ def _valorisation(m, inp, fy0, operating0, resultat, fcf0, actions0) -> None:
         return
     facteur = split_factor(inp.splits, fy0.period_end, m.price_date or inp.as_of)
     actions_now = actions0 * facteur
-    quote_rate = inp.quote_fx_rate or 1.0
-    m.market_cap_eur = m.price * actions_now / quote_rate
+    if not inp.quote_fx_rate or inp.quote_fx_rate <= 0:
+        return   # sans taux, la capitalisation en euros n'est pas calculable
+    m.market_cap_eur = m.price * actions_now / inp.quote_fx_rate
 
     rate = inp.fx_rate
     if rate is None or rate <= 0:

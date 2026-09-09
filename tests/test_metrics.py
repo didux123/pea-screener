@@ -302,6 +302,22 @@ def test_endettement_sans_ebitda_positif_est_signale():
     assert "ebitda_non_positif" in m.flags
 
 
+def test_cotation_hors_euro_sans_taux_rend_la_liquidite_inconnue():
+    """Compter une valeur cotée en devise comme si elle cotait en euros la surévaluerait."""
+    prices = _serie_quotidienne(AS_OF, 120)
+    prices["volume"] = 10_000
+    m = M.compute_stock_metrics(_inputs(prices=prices, quote_fx_rate=None))
+    assert m.traded_value_3m_eur is None
+    assert "devise_de_cotation_sans_taux" in m.flags
+
+
+def test_cotation_hors_euro_convertie():
+    prices = _serie_quotidienne(AS_OF, 120)
+    prices["volume"] = 10_000
+    m = M.compute_stock_metrics(_inputs(prices=prices, quote_fx_rate=1.25))
+    assert m.traded_value_3m_eur == pytest.approx(1_000_000 / 1.25, rel=0.02)
+
+
 def test_conversion_de_devise_pour_les_multiples():
     """Comptes en dollars, cours en euros : seuls les multiples convertissent."""
     etats = _valeur_complete()

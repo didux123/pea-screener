@@ -282,9 +282,11 @@ def run_screen(pit: A.PITData, *, overrides_path=None) -> ScreenResult:
                 descriptor=descripteur,
                 consensus=consensus.get(ticker) if ticker else None,
                 fx_rate=_rate_for(devise_etats, taux),
+                # Sans taux pour la devise de cotation, la liquidité reste inconnue plutôt
+                # que d'être comptée comme si la valeur cotait en euros.
                 quote_fx_rate=_rate_for(
-                    descripteur.get("quote_currency") or valeur.get("quote_currency") or "EUR", taux
-                ) or 1.0,
+                    descripteur.get("quote_currency") or valeur.get("quote_currency"), taux
+                ),
             )
         )
 
