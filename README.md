@@ -1,5 +1,15 @@
 # pea — screener PEA
 
+> **🧪 Proof of concept.** Projet personnel exploratoire, publié pour partager
+> l'approche technique. Pas de support, pas de garantie de maintenance ni de
+> compatibilité ascendante — ce n'est pas un produit fini.
+>
+> ⚠️ **Ceci n'est pas un conseil en investissement.** Le projet produit une
+> analyse automatisée à titre informatif et pédagogique. Il ne passe aucun
+> ordre et n'est relié à aucun courtier. Les performances passées ne préjugent
+> pas des performances futures ; vous restez seul responsable de vos décisions
+> et vous pouvez perdre tout ou partie de votre capital.
+
 Système auto-hébergé qui identifie des actions européennes éligibles au PEA à fort potentiel
 sur un horizon de 6 mois à 3 ans, et qui les présente sous forme de dossiers argumentés.
 
